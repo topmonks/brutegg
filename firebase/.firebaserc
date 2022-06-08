@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "brute-gg"
+  },
+  "targets": {
+    "brute-gg": {
+      "hosting": {
+        "storefront": [
+          "brute-gg"
+        ]
+      }
+    }
   }
 }

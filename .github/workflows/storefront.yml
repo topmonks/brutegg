@@ -1,0 +1,72 @@
+name: App
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    concurrency:
+      group: ${{ github.ref }}-storefront-build
+      cancel-in-progress: true
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: storefront
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: storefront/package-lock.json
+      - name: Install Dependencies
+        run: npm ci
+      - name: Nextjs build
+        run: npm run build
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: storefront/.next
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-cloud-development
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: firebase/functions/package-lock.json
+      - name: Install Dependencies
+        run: npm ci --prefix firebase/functions
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: firebase/functions/nextjs/.next
+      - name: Copy public statis assets
+        run: cp -rT storefront/public firebase/storefront-public
+      - name: Deploy Firebase Hosting
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:storefront
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          PROJECT_PATH: firebase
+      - name: Deploy Firebase Functions
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions:nextjs-server
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          PROJECT_PATH: firebase
