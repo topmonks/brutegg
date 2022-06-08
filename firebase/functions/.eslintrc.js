@@ -1,14 +1,12 @@
 module.exports = {
   root: true,
+  parserOptions: {
+    ecmaVersion: 2018,
+  },
   env: {
-    es6: true,
     node: true,
+    es6: true,
   },
-  extends: [
-    "eslint:recommended",
-    "google",
-  ],
-  rules: {
-    quotes: ["error", "double"],
-  },
+  plugins: ["promise"],
+  extends: ["eslint:recommended", "plugin:prettier/recommended"],
 };
