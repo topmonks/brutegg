@@ -4,4 +4,4 @@ const nextConfig = {
   distDir: "nextjs/.next",
 };
 
-module.exports = nextConfig;
+export default nextConfig;

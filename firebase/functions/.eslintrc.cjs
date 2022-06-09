@@ -1,7 +1,11 @@
-module.exports = {
+/**
+ * @type {import("eslint/lib/shared/types").ConfigData}
+ */
+const config = {
   root: true,
   parserOptions: {
     ecmaVersion: 2018,
+    sourceType: "module",
   },
   env: {
     node: true,
@@ -10,3 +14,5 @@ module.exports = {
   plugins: ["promise"],
   extends: ["eslint:recommended", "plugin:prettier/recommended"],
 };
+
+module.exports = config;

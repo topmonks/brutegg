@@ -1,8 +1,6 @@
-exports.nextjs = require("./nextjs");
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+import { initializeApp } from "firebase-admin/app";
+import * as nextjs from "./nextjs/index.js";
+
+initializeApp();
+
+export { nextjs };

@@ -18,6 +18,7 @@
     "firebase-functions": "3.21.2",
     "next": "12.1.6"
   },
+  "type": "module",
   "devDependencies": {
     "eslint": "8.17.0",
     "eslint-config-prettier": "8.5.0",
