@@ -1,5 +1,7 @@
-// eslint-disable-next-line no-undef
-module.exports = {
+/**
+ * @type {import("eslint/lib/shared/types").ConfigData}
+ */
+const config = {
   parserOptions: {
     ecmaVersion: 2020,
     ecmaFeatures: {
@@ -23,6 +25,9 @@ module.exports = {
     browser: true,
     es6: true,
   },
+  globals: {
+    process: true,
+  },
   rules: {
     "react/jsx-sort-props": "error",
     "react/react-in-jsx-scope": "off",
@@ -30,10 +35,12 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["./*.config.js"],
+      files: ["./*.config.js", ".eslintrc.js"],
       env: {
         node: true,
       },
     },
   ],
 };
+
+module.exports = config;
