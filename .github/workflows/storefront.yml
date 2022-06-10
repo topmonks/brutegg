@@ -55,7 +55,9 @@ jobs:
           name: dist
           path: firebase/functions/nextjs/.next
       - name: Copy public statis assets
-        run: cp -rT storefront/public firebase/storefront-public
+        run: |
+          cp -rT storefront/public firebase/storefront-public
+          cp ./storefront/next.config.js ./firebase/functions/nextjs/next.config.cjs
       - name: Deploy Firebase Hosting
         uses: w9jds/firebase-action@master
         with:

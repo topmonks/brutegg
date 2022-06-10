@@ -1,10 +1,10 @@
 import functions from "firebase-functions";
 import next from "next";
 
-import config from "./next.config.js";
+import config from "./next.config.cjs";
 
 const app = next({
-  conf: config,
+  conf: { ...config, distDir: "nextjs/.next" },
 });
 const handle = app.getRequestHandler();
 

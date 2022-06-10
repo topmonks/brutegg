@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { inspect } from "util";
 import { Fragment, useCallback, useEffect } from "react";
-import { swell } from "../../libs/swell";
+import swell from "swell-js";
 import { Button } from "@mui/material";
 import { useRecoilValue } from "recoil";
 import { ethereumState } from "../../state/ethereum";
@@ -12,7 +12,7 @@ export async function getServerSideProps(context) {
    * @type {{results: import("../../types/swell").Product[]}}
    */
   const products = await swell.products.list({ expand: ["variants"] });
-  console.log(inspect(products.results[3], false, null, true));
+  // console.log(inspect(products.results[3], false, null, true));
   return {
     props: { products }, // will be passed to the page component as props
   };
