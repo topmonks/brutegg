@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "../libs/swell";
+import "../translation/i18n";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "../libs/theme";

@@ -10,6 +10,10 @@ const nextConfig = {
       },
     ];
   },
+  i18n: {
+    locales: ["cs"],
+    defaultLocale: "cs",
+  },
 };
 
 module.exports = nextConfig;

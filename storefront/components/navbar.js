@@ -1,9 +1,11 @@
 import { Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
   const [value, setValue] = useState("/quests");
+  const { t } = useTranslation("Navbar");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -17,9 +19,9 @@ export default function Navbar() {
         onChange={handleChange}
         value={value}
       >
-        <Tab label="Questy" value="/quests" />
-        <Tab label="Obchod" value="/store" />
-        <Tab label="Nápověda" value="/faq" />
+        <Tab label={t("Quests")} value="/quests" />
+        <Tab label={t("Store")} value="/store" />
+        <Tab label={t("FAQ")} value="/faq" />
       </Tabs>
     </Box>
   );
