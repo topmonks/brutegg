@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
 import { inspect } from "util";
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import { swell } from "../../libs/swell";
 import { Button } from "@mui/material";
+import { useRecoilValue } from "recoil";
+import { ethereumState } from "../../state/ethereum";
+import Product from "../../components/store/product";
 
 export async function getServerSideProps(context) {
   /**
@@ -16,12 +19,11 @@ export async function getServerSideProps(context) {
 }
 
 export default function Store(props) {
-  const addToCart = useCallback(async (p) => {
-    await swell.cart.addItem({
-      product_id: p.id,
-      quantity: 1,
-    });
-  }, []);
+  const ethereum = useRecoilValue(ethereumState);
+
+  useEffect(() => {
+    console.log(ethereum);
+  }, [ethereum]);
 
   const checkout = useCallback(async () => {
     await swell.cart.update({
@@ -31,7 +33,7 @@ export default function Store(props) {
     });
     const cart = await swell.cart.get();
 
-    await swell.cart.submitOrder();
+    // await swell.cart.submitOrder();
 
     console.log(cart);
   }, []);
@@ -41,14 +43,7 @@ export default function Store(props) {
       <Button onClick={checkout}>checkout</Button>
       <br />
       {props.products.results.map((p) => {
-        return (
-          <Fragment key={p.id}>
-            {p.name}
-            <Button onClick={() => addToCart(p)}>buy</Button>
-            <br />
-            <br />
-          </Fragment>
-        );
+        return <Product key={p.id} product={p} />;
       })}
     </Fragment>
   );

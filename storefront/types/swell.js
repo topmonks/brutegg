@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 /**
  * @typedef {object} Product
  * @property {string} id
@@ -73,3 +75,100 @@
  */
 
 export default {};
+
+export const ProductPropTypes = PropTypes.shape({
+  id: PropTypes.string,
+  content: PropTypes.shape({
+    product_benefits: PropTypes.arrayOf(
+      PropTypes.shape({
+        icon: PropTypes.string,
+        text: PropTypes.string,
+      })
+    ),
+    enable_quantity: PropTypes.bool,
+    max_quantity: PropTypes.number,
+    up_sell_cols: PropTypes.number,
+  }),
+  currency: PropTypes.string,
+  description: PropTypes.string,
+  bundle: PropTypes.bool,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      file: PropTypes.shape({
+        height: PropTypes.number,
+        md5: PropTypes.string,
+        url: PropTypes.string,
+        width: PropTypes.number,
+      }),
+    })
+  ),
+  name: PropTypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      values: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          name: PropTypes.string,
+          price: PropTypes.any,
+          shipment_weight: PropTypes.any,
+          description: PropTypes.any,
+        })
+      ),
+      name: PropTypes.string,
+      active: PropTypes.bool,
+      input_type: PropTypes.string,
+      variant: PropTypes.bool,
+      description: PropTypes.any,
+      required: PropTypes.bool,
+      attribute_id: PropTypes.string,
+    })
+  ),
+  price: PropTypes.number,
+  sku: PropTypes.string,
+  slug: PropTypes.string,
+  stock_status: PropTypes.any,
+  stock_tracking: PropTypes.bool,
+  stock_purchasable: PropTypes.bool,
+  attributes: PropTypes.shape({
+    brand: PropTypes.shape({
+      name: PropTypes.string,
+      type: PropTypes.string,
+      visible: PropTypes.bool,
+      filterable: PropTypes.bool,
+      id: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  }),
+  tags: PropTypes.array,
+  meta_title: PropTypes.any,
+  meta_description: PropTypes.string,
+  variants: PropTypes.shape({
+    count: PropTypes.number,
+    results: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        currency: PropTypes.string,
+        images: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string,
+            file: PropTypes.shape({
+              height: PropTypes.number,
+              md5: PropTypes.string,
+              url: PropTypes.string,
+              width: PropTypes.number,
+            }),
+          })
+        ),
+        name: PropTypes.string,
+        option_value_ids: PropTypes.arrayOf(PropTypes.string),
+        price: PropTypes.number,
+        sku: PropTypes.string,
+        stock_status: PropTypes.any,
+      })
+    ),
+    page: PropTypes.number,
+  }),
+  sale: PropTypes.bool,
+});

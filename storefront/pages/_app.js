@@ -3,9 +3,10 @@ import "../libs/swell";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "../libs/theme";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import Script from "next/script";
 import Layout from "../components/layout";
+import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -16,11 +17,15 @@ function MyApp({ Component, pageProps }) {
         strategy="afterInteractive"
       />
       <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
+      <RecoilRoot>
+        <Suspense fallback="Loading">
+          <ThemeProvider theme={theme}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </Suspense>
+      </RecoilRoot>
     </Fragment>
   );
 }

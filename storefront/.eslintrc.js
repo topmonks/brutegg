@@ -22,16 +22,17 @@ const config = {
     "plugin:react-hooks/recommended",
   ],
   env: {
-    browser: true,
     es6: true,
   },
   globals: {
     process: true,
+    console: true,
   },
   rules: {
     "react/jsx-sort-props": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": 1,
+    "no-unused-vars": 1,
   },
   overrides: [
     {
