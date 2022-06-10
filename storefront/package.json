@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "node scripts/copy_deps_to_firestore_functions.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.9.0",
