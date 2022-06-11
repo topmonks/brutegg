@@ -1,18 +1,23 @@
 import PropTypes from "prop-types";
-import { inspect } from "util";
 import { Fragment, useCallback, useEffect } from "react";
 import swell from "swell-js";
 import { Button } from "@mui/material";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ethereumState } from "../../state/ethereum";
 import Product from "../../components/store/product";
+import { productsState } from "../../state/products";
 
-export async function getServerSideProps(context) {
+async function getProducts() {
   /**
    * @type {{results: import("../../types/swell").Product[]}}
    */
   const products = await swell.products.list({ expand: ["variants"] });
-  // console.log(inspect(products.results[3], false, null, true));
+
+  return products;
+}
+
+export async function getServerSideProps(context) {
+  const products = await getProducts();
   return {
     props: { products }, // will be passed to the page component as props
   };
@@ -20,6 +25,18 @@ export async function getServerSideProps(context) {
 
 export default function Store(props) {
   const ethereum = useRecoilValue(ethereumState);
+
+  const [products, setProducts] = useRecoilState(productsState);
+
+  useEffect(() => {
+    setProducts(props.products.results);
+  }, [props.products, setProducts]);
+
+  useEffect(() => {
+    getProducts().then(({ results }) => {
+      setProducts(results);
+    });
+  }, [setProducts]);
 
   useEffect(() => {
     console.log(ethereum);
@@ -42,7 +59,7 @@ export default function Store(props) {
     <Fragment>
       <Button onClick={checkout}>checkout</Button>
       <br />
-      {props.products.results.map((p) => {
+      {products.map((p) => {
         return <Product key={p.id} product={p} />;
       })}
     </Fragment>

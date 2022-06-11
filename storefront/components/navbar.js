@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
+import { withLocale } from "../libs/router";
 
 const LINKS = {
   QUESTS: "/quests",
@@ -24,7 +25,7 @@ export default function Navbar() {
   const { t } = useTranslation("Navbar");
 
   const handleChange = (event, newValue) => {
-    router.push("/" + (router.locale ?? "") + newValue);
+    router.push(withLocale(router.locale, newValue));
   };
 
   return (
