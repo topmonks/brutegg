@@ -1,14 +1,22 @@
 import { Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
+  const router = useRouter();
+
   const [value, setValue] = useState("/quests");
+
+  useEffect(() => {
+    setValue(router.asPath);
+  }, [router.asPath]);
+
   const { t } = useTranslation("Navbar");
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    router.push("/" + (router.locale ?? "") + newValue);
   };
 
   return (
