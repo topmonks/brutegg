@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase-admin/app";
-import * as nextjs from "./nextjs/index.js";
+// import { initializeApp } from "firebase-admin/app";
+// initializeApp();
 
-initializeApp();
+import * as nextjs from "./nextjs/index.js";
 
 export { nextjs };
