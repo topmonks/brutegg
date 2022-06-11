@@ -17,8 +17,9 @@ export default function Navbar() {
   const [value, setValue] = useState("/quests");
 
   useEffect(() => {
-    if (Object.values(LINKS).includes(router.asPath)) {
-      setValue(router.asPath);
+    const link = Object.values(LINKS).find((l) => router.asPath.startsWith(l));
+    if (link) {
+      setValue(link);
     }
   }, [router.asPath]);
 
