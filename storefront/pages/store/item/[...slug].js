@@ -6,7 +6,6 @@ import { withLocale } from "../../../libs/router";
 import { productsState } from "../../../state/products";
 
 export async function getServerSideProps(context) {
-  console.log(context);
   return {
     props: {}, // will be passed to the page component as props
   };

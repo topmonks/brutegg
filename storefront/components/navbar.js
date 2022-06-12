@@ -37,9 +37,18 @@ export default function Navbar() {
         onChange={handleChange}
         value={value}
       >
-        <Tab label={t("Quests")} value={LINKS.QUESTS} />
-        <Tab label={t("Store")} value={LINKS.STORE} />
-        <Tab label={t("FAQ")} value={LINKS.FAQ} />
+        {[
+          [t("Quests"), LINKS.QUESTS],
+          [t("Store"), LINKS.STORE],
+          [t("FAQ"), LINKS.FAQ],
+        ].map(([label, value]) => (
+          <Tab
+            key={value}
+            label={label}
+            onClick={(e) => handleChange(e, value)}
+            value={value}
+          />
+        ))}
       </Tabs>
     </Box>
   );
