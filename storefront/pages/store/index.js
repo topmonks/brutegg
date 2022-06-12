@@ -45,7 +45,7 @@ export default function Store(props) {
   const checkout = useCallback(async () => {
     await swell.cart.update({
       account: {
-        email: "jan.fabian+guest@topmonks.com",
+        email: "0x1C8fF2d39bf4d08C23A24e24fb6dF4818ac45325@polygon.com",
       },
     });
     const cart = await swell.cart.get();

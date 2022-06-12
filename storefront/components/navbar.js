@@ -1,6 +1,6 @@
 import { Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { withLocale } from "../libs/router";
@@ -13,19 +13,24 @@ const LINKS = {
 
 export default function Navbar() {
   const router = useRouter();
+  const findLink = useCallback(
+    () => Object.values(LINKS).find((l) => router.asPath.startsWith(l)),
+    [router.asPath]
+  );
 
-  const [value, setValue] = useState("/quests");
+  const [value, setValue] = useState(findLink());
 
   useEffect(() => {
-    const link = Object.values(LINKS).find((l) => router.asPath.startsWith(l));
+    const link = findLink();
     if (link) {
       setValue(link);
     }
-  }, [router.asPath]);
+  }, [findLink]);
 
   const { t } = useTranslation("Navbar");
 
   const handleChange = (event, newValue) => {
+    setValue(newValue);
     router.push(withLocale(router.locale, newValue));
   };
 
