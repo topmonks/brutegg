@@ -22,7 +22,14 @@ export const server = onRequest(
       structuredData: true,
     });
 
-    response.set("Cache-Control", "public, max-age=300, s-maxage=3600"); //max-age=5minutes, s-maxage=1hour
+    response.set("Cache-Control", "public, max-age=300, s-maxage=86400"); //max-age=5minutes, s-maxage=1 day
+
+    if ([".js", ".css"].find((ext) => request.originalUrl.endsWith(ext))) {
+      response.set(
+        "Cache-Control",
+        "public, max-age=31536000, s-maxage=31536000"
+      ); //max-age=1year, s-maxage=1year
+    }
 
     return app.prepare().then(() => handle(request, response));
   }
