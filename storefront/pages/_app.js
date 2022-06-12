@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
       <Script
         onLoad={() => console.log("web3 loaded")}
         src="https://unpkg.com/web3@latest/dist/web3.min.js"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
       <CssBaseline />
       <RecoilRoot>
