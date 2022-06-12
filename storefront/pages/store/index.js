@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { ethereumState } from "../../state/ethereum";
 import Product from "../../components/store/product";
 import { productsState } from "../../state/products";
+import Head from "next/head";
 
 async function getProducts() {
   /**
@@ -26,17 +27,11 @@ export async function getServerSideProps(context) {
 export default function Store(props) {
   const ethereum = useRecoilValue(ethereumState);
 
-  const [products, setProducts] = useRecoilState(productsState);
+  const [, setProducts] = useRecoilState(productsState);
 
   useEffect(() => {
     setProducts(props.products.results);
   }, [props.products, setProducts]);
-
-  useEffect(() => {
-    getProducts().then(({ results }) => {
-      setProducts(results);
-    });
-  }, [setProducts]);
 
   useEffect(() => {
     console.log(ethereum);
@@ -57,8 +52,27 @@ export default function Store(props) {
 
   return (
     <Fragment>
+      <Head>
+        <title>Brute merch - Store</title>
+      </Head>
       <Button onClick={checkout}>checkout</Button>
       <br />
+      <ProductList />
+    </Fragment>
+  );
+}
+
+export function ProductList() {
+  const [products, setProducts] = useRecoilState(productsState);
+
+  useEffect(() => {
+    getProducts().then(({ results }) => {
+      setProducts(results);
+    });
+  }, [setProducts]);
+
+  return (
+    <Fragment>
       {products.map((p) => {
         return <Product key={p.id} product={p} />;
       })}

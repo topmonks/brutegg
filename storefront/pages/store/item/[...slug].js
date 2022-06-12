@@ -1,10 +1,8 @@
 import { Button, Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import { useRecoilValue } from "recoil";
-import Store from "..";
+import { ProductList } from "..";
 import { withLocale } from "../../../libs/router";
-import { productsState } from "../../../state/products";
 
 export async function getServerSideProps(context) {
   return {
@@ -15,7 +13,6 @@ export async function getServerSideProps(context) {
 export default function Item() {
   const router = useRouter();
   const { slug } = router.query;
-  const products = useRecoilValue(productsState);
   const [productDisplayed, setProductDisplayed] = useState(true);
 
   const close = useCallback(() => {
@@ -25,10 +22,14 @@ export default function Item() {
 
   return (
     <Grid container>
-      <Grid item sm={productDisplayed ? 6 : 12}>
-        <Store products={{ results: products }} />
+      <Grid
+        item
+        sm={productDisplayed ? 6 : 12}
+        sx={[productDisplayed && { display: { xs: "none", sm: "block" } }]}
+      >
+        <ProductList />
       </Grid>
-      <Grid item sm={6} sx={[!productDisplayed && { display: "none" }]}>
+      <Grid item sm={6} sx={[!productDisplayed && { display: "none" }]} xs={12}>
         <Button onClick={close}>Close</Button>
         <div>Item {slug}</div>
       </Grid>
