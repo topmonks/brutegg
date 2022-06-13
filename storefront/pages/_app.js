@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import "../libs/swell";
 import "../translation/i18n";
 
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import theme from "../libs/theme";
 import { Fragment, Suspense } from "react";
 import Script from "next/script";
@@ -17,10 +17,15 @@ function MyApp({ Component, pageProps }) {
         src="https://unpkg.com/web3@latest/dist/web3.min.js"
         strategy="lazyOnload"
       />
-      <CssBaseline />
       <RecoilRoot>
         <Suspense fallback="Loading">
           <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <GlobalStyles
+              styles={{
+                body: { backgroundColor: "black" },
+              }}
+            />
             <Layout>
               <Component {...pageProps} />
             </Layout>

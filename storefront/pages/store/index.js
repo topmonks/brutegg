@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
-import { Fragment, useCallback, useEffect } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import swell from "swell-js";
-import { Button } from "@mui/material";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ethereumState } from "../../state/ethereum";
-import Product from "../../components/store/product";
+import ProductListItem from "../../components/store/product-list-item";
 import { productsState } from "../../state/products";
 import Head from "next/head";
+import StoreLayout from "../../components/store-layout";
+import useEventTarget from "../../hooks/useEventTarget";
 
 async function getProducts() {
   /**
@@ -20,7 +21,7 @@ async function getProducts() {
 export async function getServerSideProps(context) {
   const products = await getProducts();
   return {
-    props: { products }, // will be passed to the page component as props
+    props: { products },
   };
 }
 
@@ -28,6 +29,12 @@ export default function Store(props) {
   const ethereum = useRecoilValue(ethereumState);
 
   const [, setProducts] = useRecoilState(productsState);
+  const [productDisplayed, setProductDisplayed] = useState(false);
+
+  const expandProductSkeleton = useCallback(() => {
+    setProductDisplayed(true);
+  }, []);
+  useEventTarget("/store/item", expandProductSkeleton);
 
   useEffect(() => {
     setProducts(props.products.results);
@@ -55,15 +62,18 @@ export default function Store(props) {
       <Head>
         <title>Brute merch - Store</title>
       </Head>
-      <Button onClick={checkout}>checkout</Button>
-      <br />
-      <ProductList />
+      <StoreLayout rightExpanded={productDisplayed}>
+        <ProductList ssr={{ products: props.products.results }} />
+
+        <Fragment>SKELETON</Fragment>
+      </StoreLayout>
     </Fragment>
   );
 }
 
-export function ProductList() {
-  const [products, setProducts] = useRecoilState(productsState);
+export function ProductList({ ssr = { products: [] } }) {
+  const [_products, setProducts] = useRecoilState(productsState);
+  const products = _products.length ? _products : ssr.products;
 
   useEffect(() => {
     getProducts().then(({ results }) => {
@@ -74,11 +84,17 @@ export function ProductList() {
   return (
     <Fragment>
       {products.map((p) => {
-        return <Product key={p.id} product={p} />;
+        return <ProductListItem key={p.id} product={p} />;
       })}
     </Fragment>
   );
 }
+
+ProductList.propTypes = {
+  ssr: PropTypes.shape({
+    products: PropTypes.array,
+  }),
+};
 
 Store.propTypes = {
   products: PropTypes.shape({
