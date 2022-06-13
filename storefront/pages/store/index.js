@@ -10,6 +10,7 @@ import StoreLayout from "../../components/store-layout";
 import useEventTarget from "../../hooks/useEventTarget";
 import { Grid } from "@mui/material";
 import { ProductDetailSkeleton } from "../../components/store/product-detail-skeleton";
+import { STORE_ITEM_CHANGE } from "../../state/event-target";
 
 async function getProducts() {
   /**
@@ -33,11 +34,10 @@ export default function Store(props) {
   const [, setProducts] = useRecoilState(productsState);
   const [productDisplayed, setProductDisplayed] = useState(false);
 
-  const expandProductSkeleton = useCallback((event) => {
-    console.log(event);
+  const onStoreItemChange = useCallback(() => {
     setProductDisplayed(true);
   }, []);
-  useEventTarget("/store/item", expandProductSkeleton);
+  useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
   useEffect(() => {
     setProducts(props.products.results);
@@ -79,6 +79,21 @@ export default function Store(props) {
   );
 }
 
+export const STRETCHED_STORE_LIST_GRID = {
+  xxl: 4,
+  lg: 6,
+  md: 12,
+  sm: 12,
+  xs: 12,
+};
+
+export const FULL_STORE_LIST_GRID = {
+  lg: 3,
+  md: 4,
+  sm: 6,
+  xs: 12,
+};
+
 export function ProductList({
   ssr = { products: [] },
   stretched,
@@ -90,11 +105,11 @@ export function ProductList({
   const [_selectedProductId, setSelectedProductId] =
     useState(selectedProductId);
 
-  const selectProductOnClick = useCallback((event) => {
-    setSelectedProductId(event.detail.product.id);
+  const onStoreItemChange = useCallback((event) => {
+    setSelectedProductId(event.detail.product?.id);
   }, []);
 
-  useEventTarget("/store/item", selectProductOnClick);
+  useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
   useEffect(() => {
     getProducts().then(({ results }) => {
@@ -103,36 +118,15 @@ export function ProductList({
   }, [setProducts]);
 
   const gridItemAttrs = stretched
-    ? {
-        xxl: 4,
-        lg: 6,
-        md: 12,
-        sm: 12,
-        xs: 12,
-      }
-    : {
-        lg: 3,
-        md: 4,
-        sm: 6,
-        xs: 12,
-      };
+    ? STRETCHED_STORE_LIST_GRID
+    : FULL_STORE_LIST_GRID;
 
   return (
     <Fragment>
-      <Grid columns={12} container>
+      <Grid columns={12} container spacing={1}>
         {products.map((p) => {
           return (
-            <Grid
-              item
-              key={p.id}
-              sx={{
-                p: {
-                  xs: 0,
-                  sm: 1,
-                },
-              }}
-              {...gridItemAttrs}
-            >
+            <Grid item key={p.id} {...gridItemAttrs}>
               <ProductListItem
                 product={p}
                 selected={p.id === _selectedProductId}

@@ -1,12 +1,12 @@
-import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useState } from "react";
 import { ProductList } from "..";
 import StoreLayout from "../../../components/store-layout";
+import { ProductDetail } from "../../../components/store/product-detail";
 import { ProductDetailSkeleton } from "../../../components/store/product-detail-skeleton";
 import useEventTarget from "../../../hooks/useEventTarget";
-import { withLocale } from "../../../libs/router";
 import { swell } from "../../../libs/swell";
+import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { ProductPropTypes } from "../../../types/swell";
 
 async function getProduct(slugOrId) {
@@ -39,28 +39,20 @@ export async function getServerSideProps(context) {
 export default function Item({ product }) {
   const router = useRouter();
   const {
-    slug: [id, slug],
+    slug: [id],
   } = router.query;
   const [productDisplayed, setProductDisplayed] = useState(true);
-
-  const addToCart = useCallback(async () => {
-    await swell.cart.addItem({
-      product_id: product.id,
-      quantity: 1,
-    });
-  }, [product]);
-
-  const close = useCallback(() => {
-    setProductDisplayed(false);
-    router.push(withLocale(router.locale, "/store"));
-  }, [router]);
 
   const [selectedProductIdOnClick, setSelectedProductIdOnClick] = useState(id);
 
   const onStoreItemChange = useCallback((event) => {
-    setSelectedProductIdOnClick(event.detail.product.id);
+    const selectedProductId = event.detail.product?.id;
+    if (!selectedProductId) {
+      setProductDisplayed(false);
+    }
+    setSelectedProductIdOnClick(selectedProductId);
   }, []);
-  useEventTarget("/store/item", onStoreItemChange);
+  useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
   return (
     <StoreLayout rightExpanded={productDisplayed}>
@@ -70,13 +62,7 @@ export default function Item({ product }) {
         {selectedProductIdOnClick !== id ? (
           <ProductDetailSkeleton />
         ) : (
-          <Fragment>
-            <Button onClick={close}>Close</Button>
-            <div>
-              Item id:{id}, slug: {slug}
-            </div>
-            <Button onClick={addToCart}>buy</Button>
-          </Fragment>
+          <ProductDetail product={product} />
         )}
       </Fragment>
     </StoreLayout>

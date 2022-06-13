@@ -4,8 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { withLocale } from "../libs/router";
+import { useRecoilValue } from "recoil";
+import { eventTargetState, NAVBAR_CHANGE } from "../state/event-target";
+import window from "../libs/window";
 
-const LINKS = {
+export const LINKS = {
   QUESTS: "/quests",
   STORE: "/store",
   FAQ: "/faq",
@@ -17,6 +20,7 @@ export default function Navbar() {
     () => Object.values(LINKS).find((l) => router.asPath.startsWith(l)),
     [router.asPath]
   );
+  const eventTarget = useRecoilValue(eventTargetState);
 
   const [value, setValue] = useState(findLink());
 
@@ -31,6 +35,15 @@ export default function Navbar() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    if (eventTarget && window.CustomEvent) {
+      eventTarget.dispatchEvent(
+        new window.CustomEvent(NAVBAR_CHANGE, {
+          detail: {
+            target: newValue,
+          },
+        })
+      );
+    }
     router.push(withLocale(router.locale, newValue));
   };
 

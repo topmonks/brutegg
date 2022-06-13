@@ -1,10 +1,11 @@
+import PropTypes from "prop-types";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
 import { withLocale } from "../../libs/router";
 import window from "../../libs/window";
-import { eventTargetState } from "../../state/event-target";
+import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
 
 /**
@@ -19,7 +20,7 @@ export default function ProductListItem({ product, selected }) {
   const goToProduct = useCallback(() => {
     if (eventTarget && window.CustomEvent) {
       eventTarget.dispatchEvent(
-        new window.CustomEvent("/store/item", {
+        new window.CustomEvent(STORE_ITEM_CHANGE, {
           detail: {
             product,
           },
@@ -30,7 +31,9 @@ export default function ProductListItem({ product, selected }) {
       withLocale(
         router.locale,
         "/store/item/" + product.id + "/" + product.slug
-      )
+      ),
+      undefined,
+      { scroll: false }
     );
   }, [router, product, eventTarget]);
 
@@ -39,6 +42,7 @@ export default function ProductListItem({ product, selected }) {
       onClick={goToProduct}
       sx={[
         {
+          height: "250px",
           cursor: "pointer",
           p: 1,
           mb: 1,
@@ -59,4 +63,5 @@ export default function ProductListItem({ product, selected }) {
 
 ProductListItem.propTypes = {
   product: ProductPropTypes,
+  selected: PropTypes.bool,
 };
