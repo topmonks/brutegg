@@ -11,6 +11,10 @@ import useEventTarget from "../../hooks/useEventTarget";
 import { Grid } from "@mui/material";
 import { ProductDetailSkeleton } from "../../components/store/product-detail-skeleton";
 import { STORE_ITEM_CHANGE } from "../../state/event-target";
+import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
+import pageSkeleton from "../../components/page-skeleton";
+import { LINKS } from "../../components/navbar";
+import window from "../../libs/window";
 
 async function getProducts() {
   /**
@@ -32,10 +36,25 @@ export default function Store(props) {
   const ethereum = useRecoilValue(ethereumState);
 
   const [, setProducts] = useRecoilState(productsState);
-  const [productDisplayed, setProductDisplayed] = useState(false);
+  const [productSkeletonDisplayed, setProductSkeletonDisplayed] =
+    useState(false);
 
-  const onStoreItemChange = useCallback(() => {
-    setProductDisplayed(true);
+  const onStoreItemChange = useCallback((event) => {
+    setProductSkeletonDisplayed(true);
+
+    // eslint-disable-next-line no-undef
+    setTimeout(() => {
+      const clickedProductId = event.detail.product?.id;
+      if (clickedProductId && window.document) {
+        const element = window.document.querySelector(
+          `[data-product-id="${clickedProductId}"]`
+        );
+
+        if (element) {
+          element.scrollIntoView();
+        }
+      }
+    }, 0);
   }, []);
   useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
@@ -65,14 +84,16 @@ export default function Store(props) {
       <Head>
         <title>Brute merch - Store</title>
       </Head>
-      <StoreLayout rightExpanded={productDisplayed}>
+      <StoreLayout rightExpanded={productSkeletonDisplayed}>
         <ProductList
           ssr={{ products: props.products.results }}
-          stretched={productDisplayed}
+          stretched={productSkeletonDisplayed}
         />
 
         <Fragment>
-          <ProductDetailSkeleton />
+          <ProductDetailStickyWrapper>
+            <ProductDetailSkeleton />
+          </ProductDetailStickyWrapper>
         </Fragment>
       </StoreLayout>
     </Fragment>
@@ -100,6 +121,7 @@ export function ProductList({
   selectedProductId,
 }) {
   const [_products, setProducts] = useRecoilState(productsState);
+  const [productsLoading, setProductsLoading] = useState(false);
   const products = _products.length ? _products : ssr.products;
 
   const [_selectedProductId, setSelectedProductId] =
@@ -112,25 +134,32 @@ export function ProductList({
   useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
   useEffect(() => {
-    getProducts().then(({ results }) => {
-      setProducts(results);
-    });
+    setProductsLoading(true);
+    getProducts()
+      .then(({ results }) => {
+        setProducts(results);
+      })
+      .finally(() => setProductsLoading(false));
   }, [setProducts]);
 
   const gridItemAttrs = stretched
     ? STRETCHED_STORE_LIST_GRID
     : FULL_STORE_LIST_GRID;
 
+  if (productsLoading && !products.length) {
+    const StoreSkeleton = pageSkeleton[LINKS.STORE];
+
+    return <StoreSkeleton stretched={stretched} />;
+  }
+
   return (
     <Fragment>
       <Grid columns={12} container spacing={1}>
         {products.map((p) => {
+          const isSelectedProduct = p.id === _selectedProductId;
           return (
-            <Grid item key={p.id} {...gridItemAttrs}>
-              <ProductListItem
-                product={p}
-                selected={p.id === _selectedProductId}
-              />
+            <Grid item key={p.id} {...gridItemAttrs} data-product-id={p.id}>
+              <ProductListItem product={p} selected={isSelectedProduct} />
             </Grid>
           );
         })}

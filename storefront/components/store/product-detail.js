@@ -29,7 +29,7 @@ export function ProductDetail({ product }) {
         detail: {},
       })
     );
-    router.push(withLocale(router.locale, "/store"));
+    router.push(withLocale(router.locale, "/store"), null, { scroll: false });
   }, [router, eventTarget]);
 
   return (

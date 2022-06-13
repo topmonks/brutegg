@@ -4,6 +4,7 @@ import { ProductList } from "..";
 import StoreLayout from "../../../components/store-layout";
 import { ProductDetail } from "../../../components/store/product-detail";
 import { ProductDetailSkeleton } from "../../../components/store/product-detail-skeleton";
+import { ProductDetailStickyWrapper } from "../../../components/store/product-detail-sticky-wrapper";
 import useEventTarget from "../../../hooks/useEventTarget";
 import { swell } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
@@ -59,11 +60,13 @@ export default function Item({ product }) {
       <ProductList selectedProductId={id} stretched={productDisplayed} />
 
       <Fragment>
-        {selectedProductIdOnClick !== id ? (
-          <ProductDetailSkeleton />
-        ) : (
-          <ProductDetail product={product} />
-        )}
+        <ProductDetailStickyWrapper>
+          {selectedProductIdOnClick !== id ? (
+            <ProductDetailSkeleton />
+          ) : (
+            <ProductDetail product={product} />
+          )}
+        </ProductDetailStickyWrapper>
       </Fragment>
     </StoreLayout>
   );
