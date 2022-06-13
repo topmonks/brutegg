@@ -8,6 +8,6 @@ cp -rT ./storefront/.next ./firebase/functions/nextjs/.next
 cp -rT ./storefront/next.config.js ./firebase/functions/nextjs/next.config.cjs
 
 cd firebase
-firebase deploy --only hosting:storefront
 firebase deploy --only functions:nextjs-server
+firebase deploy --only hosting:storefront
 cd -

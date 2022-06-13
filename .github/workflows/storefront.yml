@@ -58,17 +58,17 @@ jobs:
         run: |
           cp -rT storefront/public firebase/storefront-public
           cp ./storefront/next.config.js ./firebase/functions/nextjs/next.config.cjs
-      - name: Deploy Firebase Hosting
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting:storefront
-        env:
-          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
-          PROJECT_PATH: firebase
       - name: Deploy Firebase Functions
         uses: docker://w9jds/firebase-action:master
         with:
           args: deploy --only functions:nextjs-server
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          PROJECT_PATH: firebase
+      - name: Deploy Firebase Hosting
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:storefront
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           PROJECT_PATH: firebase
