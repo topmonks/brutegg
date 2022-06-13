@@ -8,6 +8,8 @@ import { productsState } from "../../state/products";
 import Head from "next/head";
 import StoreLayout from "../../components/store-layout";
 import useEventTarget from "../../hooks/useEventTarget";
+import { Grid } from "@mui/material";
+import { ProductDetailSkeleton } from "../../components/store/product-detail-skeleton";
 
 async function getProducts() {
   /**
@@ -31,7 +33,8 @@ export default function Store(props) {
   const [, setProducts] = useRecoilState(productsState);
   const [productDisplayed, setProductDisplayed] = useState(false);
 
-  const expandProductSkeleton = useCallback(() => {
+  const expandProductSkeleton = useCallback((event) => {
+    console.log(event);
     setProductDisplayed(true);
   }, []);
   useEventTarget("/store/item", expandProductSkeleton);
@@ -63,17 +66,35 @@ export default function Store(props) {
         <title>Brute merch - Store</title>
       </Head>
       <StoreLayout rightExpanded={productDisplayed}>
-        <ProductList ssr={{ products: props.products.results }} />
+        <ProductList
+          ssr={{ products: props.products.results }}
+          stretched={productDisplayed}
+        />
 
-        <Fragment>SKELETON</Fragment>
+        <Fragment>
+          <ProductDetailSkeleton />
+        </Fragment>
       </StoreLayout>
     </Fragment>
   );
 }
 
-export function ProductList({ ssr = { products: [] } }) {
+export function ProductList({
+  ssr = { products: [] },
+  stretched,
+  selectedProductId,
+}) {
   const [_products, setProducts] = useRecoilState(productsState);
   const products = _products.length ? _products : ssr.products;
+
+  const [_selectedProductId, setSelectedProductId] =
+    useState(selectedProductId);
+
+  const selectProductOnClick = useCallback((event) => {
+    setSelectedProductId(event.detail.product.id);
+  }, []);
+
+  useEventTarget("/store/item", selectProductOnClick);
 
   useEffect(() => {
     getProducts().then(({ results }) => {
@@ -81,19 +102,55 @@ export function ProductList({ ssr = { products: [] } }) {
     });
   }, [setProducts]);
 
+  const gridItemAttrs = stretched
+    ? {
+        xxl: 4,
+        lg: 6,
+        md: 12,
+        sm: 12,
+        xs: 12,
+      }
+    : {
+        lg: 3,
+        md: 4,
+        sm: 6,
+        xs: 12,
+      };
+
   return (
     <Fragment>
-      {products.map((p) => {
-        return <ProductListItem key={p.id} product={p} />;
-      })}
+      <Grid columns={12} container>
+        {products.map((p) => {
+          return (
+            <Grid
+              item
+              key={p.id}
+              sx={{
+                p: {
+                  xs: 0,
+                  sm: 1,
+                },
+              }}
+              {...gridItemAttrs}
+            >
+              <ProductListItem
+                product={p}
+                selected={p.id === _selectedProductId}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
     </Fragment>
   );
 }
 
 ProductList.propTypes = {
+  selectedProductId: PropTypes.string,
   ssr: PropTypes.shape({
     products: PropTypes.array,
   }),
+  stretched: PropTypes.bool,
 };
 
 Store.propTypes = {

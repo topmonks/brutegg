@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { Fragment, useCallback, useState } from "react";
 import { ProductList } from "..";
 import StoreLayout from "../../../components/store-layout";
+import { ProductDetailSkeleton } from "../../../components/store/product-detail-skeleton";
+import useEventTarget from "../../../hooks/useEventTarget";
 import { withLocale } from "../../../libs/router";
 import { swell } from "../../../libs/swell";
 import { ProductPropTypes } from "../../../types/swell";
@@ -36,7 +38,9 @@ export async function getServerSideProps(context) {
 
 export default function Item({ product }) {
   const router = useRouter();
-  const { slug } = router.query;
+  const {
+    slug: [id, slug],
+  } = router.query;
   const [productDisplayed, setProductDisplayed] = useState(true);
 
   const addToCart = useCallback(async () => {
@@ -51,14 +55,29 @@ export default function Item({ product }) {
     router.push(withLocale(router.locale, "/store"));
   }, [router]);
 
+  const [selectedProductIdOnClick, setSelectedProductIdOnClick] = useState(id);
+
+  const onStoreItemChange = useCallback((event) => {
+    setSelectedProductIdOnClick(event.detail.product.id);
+  }, []);
+  useEventTarget("/store/item", onStoreItemChange);
+
   return (
     <StoreLayout rightExpanded={productDisplayed}>
-      <ProductList />
+      <ProductList selectedProductId={id} stretched={productDisplayed} />
 
       <Fragment>
-        <Button onClick={close}>Close</Button>
-        <div>Item {slug}</div>
-        <Button onClick={addToCart}>buy</Button>
+        {selectedProductIdOnClick !== id ? (
+          <ProductDetailSkeleton />
+        ) : (
+          <Fragment>
+            <Button onClick={close}>Close</Button>
+            <div>
+              Item id:{id}, slug: {slug}
+            </div>
+            <Button onClick={addToCart}>buy</Button>
+          </Fragment>
+        )}
       </Fragment>
     </StoreLayout>
   );

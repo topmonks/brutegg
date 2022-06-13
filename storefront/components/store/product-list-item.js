@@ -12,7 +12,7 @@ import { ProductPropTypes } from "../../types/swell";
  * @param {object} params
  * @param {import("../../types/swell").Product} params.product
  */
-export default function ProductListItem({ product }) {
+export default function ProductListItem({ product, selected }) {
   const router = useRouter();
   const eventTarget = useRecoilValue(eventTargetState);
 
@@ -37,12 +37,18 @@ export default function ProductListItem({ product }) {
   return (
     <Box
       onClick={goToProduct}
-      sx={{
-        cursor: "pointer",
-        p: 1,
-        mb: 1,
-        border: (theme) => "1px solid " + theme.palette.primary.light,
-      }}
+      sx={[
+        {
+          cursor: "pointer",
+          p: 1,
+          mb: 1,
+          border: (theme) => "1px solid " + theme.palette.primary.light,
+        },
+        selected && {
+          background: (theme) => theme.palette.primary.light,
+          color: "black",
+        },
+      ]}
     >
       <span>{product.name}</span>
       <br />

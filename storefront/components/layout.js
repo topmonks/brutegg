@@ -7,7 +7,7 @@ import { Container } from "@mui/material";
 export default function Layout({ children }) {
   return (
     <Fragment>
-      <Container maxWidth="lg">
+      <Container maxWidth="xxl">
         <GlobalHead />
         <Navbar />
         {children}
