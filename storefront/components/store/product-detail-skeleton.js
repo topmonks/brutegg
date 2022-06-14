@@ -1,22 +1,29 @@
 import { Box } from "@mui/system";
 import { Typography, Skeleton } from "@mui/material";
 import { Fragment } from "react";
+import useDisplayAfterDelay from "../../hooks/useDisplayAfterDelay";
 
 export function ProductDetailSkeleton() {
+  const display = useDisplayAfterDelay(200);
+
+  if (!display) {
+    return <Fragment></Fragment>;
+  }
+
   return (
     <Fragment>
       <Typography variant="button">
         <Skeleton animation="wave" />
       </Typography>
       <Box>
-        <Typography component="h1" variant="h3">
+        <Typography variant="h1">
           <Skeleton animation="wave" />
         </Typography>
         <Skeleton
           animation="wave"
           height={500}
           sx={{
-            mt: 2,
+            mt: 1,
           }}
           variant="rectangular"
         />
