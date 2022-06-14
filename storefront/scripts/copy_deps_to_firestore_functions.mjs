@@ -8,10 +8,21 @@ let dependencies = {
   ...storefrontPackage.dependencies,
 };
 
-const filtered = ["react", "react-dom", "@mui/icons-material"];
+const filtered = ["react", "react-dom"];
 
 dependencies = Object.fromEntries(
-  Object.entries(dependencies).filter(([key]) => !filtered.includes(key))
+  Object.entries(dependencies)
+    .filter(([key]) => !filtered.includes(key))
+    .sort(([key1], [key2]) => {
+      if (key1 < key2) {
+        return -1;
+      }
+      if (key1 > key2) {
+        return 1;
+      }
+
+      return 0;
+    })
 );
 
 firebasePackage.dependencies = dependencies;
