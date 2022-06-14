@@ -31,6 +31,7 @@ jobs:
         with:
           name: dist
           path: storefront/.next
+          retention-days: 1
 
   deploy:
     name: Deploy
