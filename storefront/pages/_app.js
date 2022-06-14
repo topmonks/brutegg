@@ -9,10 +9,12 @@ import { Fragment, Suspense } from "react";
 import Script from "next/script";
 import Layout from "../components/layout";
 import { RecoilRoot } from "recoil";
+import GlobalHead from "../components/global-head";
 
 function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
+      <GlobalHead />
       <Script
         onLoad={() => console.log("web3 loaded")}
         src="https://unpkg.com/web3@latest/dist/web3.min.js"

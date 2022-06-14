@@ -25,12 +25,13 @@ export const FULL_STORE_LIST_GRID = {
   xs: 12,
 };
 
-export function ProductList({
+export default function ProductList({
   ssr = { products: [] },
   stretched,
   selectedProductId,
 }) {
   const [_products, setProducts] = useRecoilState(productsState);
+
   const [productsLoading, setProductsLoading] = useState(false);
   const products = _products.length ? _products : ssr.products;
 

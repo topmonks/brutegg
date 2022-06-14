@@ -1,13 +1,20 @@
 import PropTypes from "prop-types";
 import { Grid, Skeleton } from "@mui/material";
+
+import { LINKS } from "./navbar";
 import {
   FULL_STORE_LIST_GRID,
   STRETCHED_STORE_LIST_GRID,
-} from "../pages/store";
-import { LINKS } from "./navbar";
+} from "./store/product-list";
+import { Fragment } from "react";
 
 function QuestsSkeleton() {
-  return "QUESTS SKELETON";
+  return (
+    <Fragment>
+      <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
+      <Skeleton height={500} variant="rectangular"></Skeleton>
+    </Fragment>
+  );
 }
 function StoreSkeleton({ stretched }) {
   const gridItemAttrs = stretched
@@ -32,7 +39,12 @@ StoreSkeleton.propTypes = {
 };
 
 function FaqSkeleton() {
-  return "FAQ SKELETON";
+  return (
+    <Fragment>
+      <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
+      <Skeleton height={500} variant="rectangular"></Skeleton>
+    </Fragment>
+  );
 }
 
 export default {

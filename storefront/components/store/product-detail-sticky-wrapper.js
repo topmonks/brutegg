@@ -8,6 +8,7 @@ export function ProductDetailStickyWrapper({ children }) {
         position: "sticky",
         top: (theme) => theme.spacing(2),
         ml: { sm: 2 },
+        p: 2,
         height: (theme) => ({
           sm: `calc(100vh - ${theme.spacing(4)})`,
         }),

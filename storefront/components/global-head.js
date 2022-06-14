@@ -25,6 +25,13 @@ export default function GlobalHead() {
       <link color="#5bbad5" href="/safari-pinned-tab.svg" rel="mask-icon" />
       <meta content="#b91d47" name="msapplication-TileColor" />
       <meta content="#333333" name="theme-color" />
+
+      <link href="https://fonts.googleapis.com" rel="preconnect" />
+      <link crossOrigin href="https://fonts.gstatic.com" rel="preconnect" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+        rel="stylesheet"
+      ></link>
     </Head>
   );
 }

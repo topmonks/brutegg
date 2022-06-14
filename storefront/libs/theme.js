@@ -1,26 +1,38 @@
-import { createTheme, darkScrollbar } from "@mui/material";
+import { createTheme, darkScrollbar, responsiveFontSizes } from "@mui/material";
 
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: {
-      main: "#EA2122",
+const theme = responsiveFontSizes(
+  createTheme({
+    palette: {
+      mode: "dark",
+      primary: {
+        main: "#EA2122",
+      },
+      secondary: {
+        main: "#EA2122",
+      },
     },
-    secondary: {
-      main: "#EA2122",
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+        xxl: 2000,
+      },
     },
-  },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-      xxl: 2000,
+    typography: {
+      fontFamily: ["Montserrat", "sans-serif"].join(","),
+      h3: {
+        textShadow: "0px 0px 12px #EA2122",
+        fontWeight: "bold",
+      },
     },
-  },
-});
+  }),
+  {
+    factor: 10,
+  }
+);
 
 export const darkTheme = createTheme(theme, {
   palette: {

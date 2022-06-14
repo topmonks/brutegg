@@ -14,3 +14,12 @@ export async function getProducts() {
 
   return products;
 }
+
+export async function getProduct(slugOrId) {
+  /**
+   * @type {{results: import("../../types/swell").Product}}
+   */
+  const product = await swell.products.get(slugOrId);
+
+  return product;
+}

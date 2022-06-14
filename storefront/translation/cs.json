@@ -1,4 +1,8 @@
 {
+  "Common": {
+    "Buy": "Koupit",
+    "Close": "Zavřít"
+  },
   "Navbar": {
     "Quests": "Questy",
     "Store": "Obchod",

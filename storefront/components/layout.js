@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import Navbar from "./navbar";
-import GlobalHead from "./global-head";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { NAVBAR_CHANGE } from "../state/event-target";
 import useEventTarget from "../hooks/useEventTarget";
 
@@ -27,9 +26,10 @@ export default function Layout({ children }) {
   return (
     <Fragment>
       <Container maxWidth="xxl">
-        <GlobalHead />
         <Navbar />
-        {SkeletonComponent ? <SkeletonComponent /> : children}
+        <Box sx={{ mt: 2 }}>
+          {SkeletonComponent ? <SkeletonComponent /> : children}
+        </Box>
       </Container>
     </Fragment>
   );
