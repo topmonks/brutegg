@@ -21,7 +21,7 @@ export function ProductDetailSkeleton() {
         </Typography>
         <Skeleton
           animation="wave"
-          height={500}
+          height={350}
           sx={{
             mt: 1,
           }}
