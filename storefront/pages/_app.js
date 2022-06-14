@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import "../styles/globals.css";
 import "../libs/swell";
 import "../translation/i18n";
@@ -35,5 +36,10 @@ function MyApp({ Component, pageProps }) {
     </Fragment>
   );
 }
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType,
+  pageProps: PropTypes.object,
+};
 
 export default MyApp;

@@ -32,7 +32,7 @@ const config = {
     "react/jsx-sort-props": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": 1,
-    "no-unused-vars": 1,
+    "no-unused-vars": [1, { argsIgnorePattern: "^_" }],
   },
   overrides: [
     {

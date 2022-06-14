@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import swell from "swell-js";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ethereumState } from "../../state/ethereum";
 import ProductListItem from "../../components/store/product-list-item";
@@ -15,17 +14,9 @@ import { ProductDetailStickyWrapper } from "../../components/store/product-detai
 import pageSkeleton from "../../components/page-skeleton";
 import { LINKS } from "../../components/navbar";
 import window from "../../libs/window";
+import swell, { getProducts } from "../../libs/swell";
 
-async function getProducts() {
-  /**
-   * @type {{results: import("../../types/swell").Product[]}}
-   */
-  const products = await swell.products.list({ expand: ["variants"] });
-
-  return products;
-}
-
-export async function getServerSideProps(context) {
+export async function getServerSideProps(_context) {
   const products = await getProducts();
   return {
     props: { products },
@@ -66,6 +57,7 @@ export default function Store(props) {
     console.log(ethereum);
   }, [ethereum]);
 
+  // eslint-disable-next-line no-unused-vars
   const checkout = useCallback(async () => {
     await swell.cart.update({
       account: {

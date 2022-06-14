@@ -1,4 +1,5 @@
-import { Box, Grid, Skeleton } from "@mui/material";
+import PropTypes from "prop-types";
+import { Grid, Skeleton } from "@mui/material";
 import {
   FULL_STORE_LIST_GRID,
   STRETCHED_STORE_LIST_GRID,
@@ -25,6 +26,11 @@ function StoreSkeleton({ stretched }) {
     </Grid>
   );
 }
+
+StoreSkeleton.propTypes = {
+  stretched: PropTypes.bool,
+};
+
 function FaqSkeleton() {
   return "FAQ SKELETON";
 }

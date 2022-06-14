@@ -1,9 +1,9 @@
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback } from "react";
 import { useRecoilValue } from "recoil";
 import { withLocale } from "../../libs/router";
-import { swell } from "../../libs/swell";
+import swell from "../../libs/swell";
 import window from "../../libs/window";
 import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";

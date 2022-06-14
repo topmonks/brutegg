@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Grid } from "@mui/material";
 
 export default function StoreLayout({ children, rightExpanded }) {
@@ -16,3 +17,8 @@ export default function StoreLayout({ children, rightExpanded }) {
     </Grid>
   );
 }
+
+StoreLayout.propTypes = {
+  children: PropTypes.node,
+  rightExpanded: PropTypes.bool,
+};
