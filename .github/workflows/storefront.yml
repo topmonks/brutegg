@@ -75,3 +75,5 @@ jobs:
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           PROJECT_PATH: firebase
+      - name: Curl function
+        run: curl --silent -XGET --max-time 1 https://brute-gg.web.app/
