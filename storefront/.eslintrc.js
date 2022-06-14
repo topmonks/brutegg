@@ -27,6 +27,7 @@ const config = {
   globals: {
     process: true,
     console: true,
+    setTimeout: true,
   },
   rules: {
     "react/jsx-sort-props": "error",

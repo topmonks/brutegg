@@ -9,9 +9,10 @@ import useEventTarget from "../../hooks/useEventTarget";
 import { ProductDetailSkeleton } from "../../components/store/product-detail-skeleton";
 import { STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
-import window from "../../libs/window";
 import swell, { getProducts } from "../../libs/swell";
-import ProductList from "../../components/store/product-list";
+import ProductList, {
+  scrollToProductId,
+} from "../../components/store/product-list";
 
 export async function getServerSideProps(_context) {
   const products = await getProducts();
@@ -30,18 +31,8 @@ export default function Store(props) {
   const onStoreItemChange = useCallback((event) => {
     setProductSkeletonDisplayed(true);
 
-    // eslint-disable-next-line no-undef
     setTimeout(() => {
-      const clickedProductId = event.detail.product?.id;
-      if (clickedProductId && window.document) {
-        const element = window.document.querySelector(
-          `[data-product-id="${clickedProductId}"]`
-        );
-
-        if (element) {
-          element.scrollIntoView();
-        }
-      }
+      scrollToProductId(event.detail.product?.id);
     }, 0);
   }, []);
   useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);

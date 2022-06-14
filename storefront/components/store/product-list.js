@@ -9,6 +9,7 @@ import { STORE_ITEM_CHANGE } from "../../state/event-target";
 import pageSkeleton from "../../components/page-skeleton";
 import { LINKS } from "../../components/navbar";
 import { getProducts } from "../../libs/swell";
+import window from "../../libs/window";
 
 export const STRETCHED_STORE_LIST_GRID = {
   xxl: 4,
@@ -24,6 +25,18 @@ export const FULL_STORE_LIST_GRID = {
   sm: 6,
   xs: 12,
 };
+
+export const PRODUCT_ID_DATA_ATTR_NAME = "data-product-id";
+
+export function scrollToProductId(id) {
+  if (id && window.document) {
+    const element = window.document.querySelector(`[data-product-id="${id}"]`);
+
+    if (element) {
+      element.scrollIntoView();
+    }
+  }
+}
 
 export default function ProductList({
   ssr = { products: [] },
@@ -69,7 +82,12 @@ export default function ProductList({
         {products.map((p) => {
           const isSelectedProduct = p.id === _selectedProductId;
           return (
-            <Grid item key={p.id} {...gridItemAttrs} data-product-id={p.id}>
+            <Grid
+              item
+              key={p.id}
+              {...gridItemAttrs}
+              {...{ [PRODUCT_ID_DATA_ATTR_NAME]: p.id }}
+            >
               <ProductListItem product={p} selected={isSelectedProduct} />
             </Grid>
           );

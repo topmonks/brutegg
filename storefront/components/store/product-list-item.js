@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
+import { Avatar, Grid, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
@@ -54,9 +55,44 @@ export default function ProductListItem({ product, selected }) {
         },
       ]}
     >
-      <span>{product.name}</span>
-      <br />
-      <br />
+      <Grid
+        alignItems="stretch"
+        container
+        direction="column"
+        justifyContent="space-between"
+        sx={{ height: "100%" }}
+      >
+        <Grid item sx={{ height: "70%" }}>
+          <Avatar
+            sx={{
+              mx: "auto",
+              mt: 2,
+              width: 100,
+              height: 100,
+              fontWeight: "bold",
+              color: (theme) =>
+                selected ? theme.palette.primary.light : "black",
+              bgcolor: (theme) =>
+                selected ? "black" : theme.palette.primary.light,
+            }}
+          >
+            {product.name
+              .split(" ")
+              .map((w) => w.charAt(0))
+              .join("")}
+          </Avatar>
+        </Grid>
+        <Grid item sx={{ height: "30%" }}>
+          <Typography
+            component="h3"
+            display="block"
+            sx={{ textAlign: "center" }}
+            variant="h6"
+          >
+            {product.name}
+          </Typography>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
