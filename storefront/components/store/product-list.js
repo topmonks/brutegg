@@ -30,7 +30,9 @@ export const PRODUCT_ID_DATA_ATTR_NAME = "data-product-id";
 
 export function scrollToProductId(id) {
   if (id && window.document) {
-    const element = window.document.querySelector(`[data-product-id="${id}"]`);
+    const element = window.document.querySelector(
+      `[${PRODUCT_ID_DATA_ATTR_NAME}="${id}"]`
+    );
 
     if (element) {
       element.scrollIntoView();

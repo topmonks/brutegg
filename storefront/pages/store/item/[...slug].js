@@ -11,7 +11,6 @@ import useEventTarget from "../../../hooks/useEventTarget";
 import { getProduct } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { ProductPropTypes } from "../../../types/swell";
-import { useMediaQuery } from "@mui/material";
 
 export async function getServerSideProps(context) {
   const {
@@ -37,7 +36,6 @@ export default function Item({ product }) {
     slug: [id],
   } = router.query;
   const [productDisplayed, setProductDisplayed] = useState(true);
-  const downSm = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [selectedProductIdOnClick, setSelectedProductIdOnClick] = useState(id);
 
@@ -47,16 +45,14 @@ export default function Item({ product }) {
       if (!selectedProductId) {
         setProductDisplayed(false);
 
-        if (downSm) {
-          setTimeout(() => {
-            scrollToProductId(id);
-          }, 0);
-        }
+        setTimeout(() => {
+          scrollToProductId(id);
+        }, 0);
       }
 
       setSelectedProductIdOnClick(selectedProductId);
     },
-    [downSm, id]
+    [id]
   );
 
   useEffect(() => {
