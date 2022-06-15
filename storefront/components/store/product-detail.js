@@ -7,7 +7,7 @@ import swell, { getProduct } from "../../libs/swell";
 import window from "../../libs/window";
 import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
-import { Close } from "@mui/icons-material";
+import Close from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
 import { productState } from "../../state/products";
 import { useTranslation } from "react-i18next";
