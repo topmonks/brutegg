@@ -36,7 +36,7 @@ export default function ProfileLayout({ children }) {
         <ContextMenu links={links} />
       </Grid>
       <Grid item lg={10} sm={9} xs={12}>
-        {children[1]}
+        {children}
       </Grid>
     </Grid>
   );

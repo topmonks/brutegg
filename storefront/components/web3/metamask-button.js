@@ -29,6 +29,7 @@ import { Box } from "@mui/system";
 import PriceTag from "../price-tag";
 import { useRouter } from "next/router";
 import { withLocale } from "../../libs/router";
+import { sessionState } from "../../state/session";
 
 const buttonAnimation = (color) => keyframes`
   from {
@@ -157,6 +158,7 @@ function ConnectedButton() {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const [, setSnackbar] = useRecoilState(snackbarState);
+  const [, setSession] = useRecoilState(sessionState);
 
   const disconnect = () => {
     handleClose();
@@ -165,6 +167,10 @@ function ConnectedButton() {
     setSnackbar({
       message: t("Wallet successfully disconnected"),
     });
+    window?.fetch("/api/logout", {
+      method: "POST",
+    });
+    setSession(null);
   };
 
   const changeToPolygon = () => {
