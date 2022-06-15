@@ -90,12 +90,12 @@ export default function Navbar() {
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
       <Grid
-        alignItems="baseline"
+        alignItems="flex-end"
         container
         direction="row"
         justifyContent="space-between"
       >
-        <Grid item md={5} sm={10} xs={12}>
+        <Grid item lg={5} sm={10} xs={12}>
           <Tabs
             aria-label="basic tabs example"
             indicatorColor="secondary"
@@ -120,17 +120,17 @@ export default function Navbar() {
               ))}
           </Tabs>
         </Grid>
-        <Grid item md={1} sx={{ display: { xs: "none", md: "block" } }}>
+        <Grid item lg={1} sx={{ display: { xs: "none", lg: "block" }, my: 3 }}>
           <Image
             alt="Brute gg logo"
-            height={150}
+            height={47}
             src="/brute-logo.svg"
-            width={200}
+            width={143}
           />
         </Grid>
         <Grid
           item
-          md={5}
+          lg={5}
           sm={2}
           sx={{ display: { xs: "none", sm: "block" }, textAlign: "right" }}
         >

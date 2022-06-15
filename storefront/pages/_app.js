@@ -23,7 +23,10 @@ function MyApp({ Component, pageProps }) {
             <CssBaseline />
             <GlobalStyles
               styles={{
-                body: { backgroundColor: "black" },
+                body: {
+                  backgroundColor: "black",
+                  overflowY: "scroll",
+                },
               }}
             />
             <Suspense>
