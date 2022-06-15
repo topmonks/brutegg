@@ -15,7 +15,7 @@ export const server = onRequest(
     cors: ["brute-gg.web.app"],
     // firebase hosting only supports us-central1
     region: "us-central1",
-    memory: "1GiB",
+    memory: "2GiB",
     maxInstances: 10,
   },
   (request, response) => {
