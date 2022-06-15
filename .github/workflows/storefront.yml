@@ -27,6 +27,7 @@ jobs:
       - name: Nextjs build
         run: |
           npm run build
+          rm -rf ./.next/cache
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
