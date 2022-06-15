@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LinkIcon from "@mui/icons-material/Link";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { Fragment, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -26,6 +27,8 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { Box } from "@mui/system";
 import PriceTag from "../price-tag";
+import { useRouter } from "next/router";
+import { withLocale } from "../../libs/router";
 
 const buttonAnimation = (color) => keyframes`
   from {
@@ -37,9 +40,11 @@ const buttonAnimation = (color) => keyframes`
 `;
 
 const BaseButton = styled(Button)(({ theme }) => ({
-  animation: `${buttonAnimation(
-    theme.palette.primary.main
-  )} 2s ease-out infinite alternate`,
+  "&.MuiButton-outlined": {
+    animation: `${buttonAnimation(
+      theme.palette.primary.main
+    )} 2s ease-out infinite alternate`,
+  },
 
   "&:hover": {
     border: "1px solid " + theme.palette.primary.main,
@@ -145,6 +150,7 @@ function clearAccountLocalStorage(account) {
 }
 
 function ConnectedButton() {
+  const router = useRouter();
   const { t } = useTranslation("MetamaskButton");
   const [ethereum, setEthereum] = useRecoilState(ethereumState);
   const anchorEl = useRef();
@@ -164,6 +170,11 @@ function ConnectedButton() {
   const changeToPolygon = () => {
     handleClose();
     optionallySwitchToPolygonChain();
+  };
+
+  const goToProfile = () => {
+    handleClose();
+    router.push(withLocale(router.locale, "/profile"));
   };
 
   return (
@@ -189,6 +200,12 @@ function ConnectedButton() {
             </ListItemText>
           </MenuItem>
         )}
+        <MenuItem onClick={goToProfile}>
+          <ListItemIcon>
+            <AccountBoxIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>{t("Profile", { ns: "Common" })}</ListItemText>
+        </MenuItem>
         <MenuItem onClick={disconnect}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
@@ -197,7 +214,6 @@ function ConnectedButton() {
         </MenuItem>
       </Menu>
       <BaseButton
-        disableElevation
         onClick={() => setOpen(true)}
         ref={anchorEl}
         sx={{
@@ -206,7 +222,7 @@ function ConnectedButton() {
             height: 52,
           },
         }}
-        variant="contained"
+        variant="text"
       >
         <Box alignItems="center" display="flex" justifyContent="center">
           <Box

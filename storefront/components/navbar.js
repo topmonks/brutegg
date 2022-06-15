@@ -11,6 +11,7 @@ import { keyframes } from "@emotion/react";
 import window from "../libs/window";
 import styled from "@emotion/styled";
 import MetamaskButton from "./web3/metamask-button";
+import { ethereumState } from "../state/ethereum";
 
 const backgroundAnimation = keyframes`
   from {
@@ -47,21 +48,27 @@ export const LINKS = {
   FAQ: "/faq",
 };
 
+export const USER_LINKS = {
+  PROFILE: "/profile",
+};
+
 export default function Navbar() {
+  const ethereum = useRecoilValue(ethereumState);
   const router = useRouter();
   const findLink = useCallback(
-    () => Object.values(LINKS).find((l) => router.asPath.startsWith(l)),
-    [router.asPath]
+    () =>
+      Object.values(LINKS).find((l) => router.asPath.startsWith(l)) ||
+      (ethereum.account &&
+        Object.values(USER_LINKS).find((l) => router.asPath.startsWith(l))) ||
+      false,
+    [router.asPath, ethereum]
   );
   const eventTarget = useRecoilValue(eventTargetState);
 
   const [value, setValue] = useState(findLink());
 
   useEffect(() => {
-    const link = findLink();
-    if (link) {
-      setValue(link);
-    }
+    setValue(findLink());
   }, [findLink]);
 
   const { t } = useTranslation("Navbar");
@@ -100,14 +107,17 @@ export default function Navbar() {
               [t("Quests"), LINKS.QUESTS],
               [t("Store"), LINKS.STORE],
               [t("FAQ"), LINKS.FAQ],
-            ].map(([label, value]) => (
-              <CustomTab
-                key={value}
-                label={label}
-                onClick={(e) => handleChange(e, value)}
-                value={value}
-              />
-            ))}
+              ethereum.account && [t("Profile"), USER_LINKS.PROFILE],
+            ]
+              .filter(Boolean)
+              .map(([label, value]) => (
+                <CustomTab
+                  key={value}
+                  label={label}
+                  onClick={(e) => handleChange(e, value)}
+                  value={value}
+                />
+              ))}
           </Tabs>
         </Grid>
         <Grid item md={1} sx={{ display: { xs: "none", md: "block" } }}>

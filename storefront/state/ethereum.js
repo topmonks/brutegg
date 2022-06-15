@@ -6,6 +6,7 @@ export const ethereumState = atom({
     initialized: false,
     isInstalled: false,
     isConnected: false,
+    web3Loaded: false,
     chainId: null,
     account: null,
   },

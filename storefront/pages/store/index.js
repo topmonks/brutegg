@@ -41,10 +41,6 @@ export default function Store(props) {
     setProducts(props.products.results);
   }, [props.products, setProducts]);
 
-  useEffect(() => {
-    console.log(ethereum);
-  }, [ethereum]);
-
   const _checkout = useCallback(async () => {
     await swell.cart.update({
       account: {

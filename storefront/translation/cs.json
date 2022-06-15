@@ -1,12 +1,17 @@
 {
   "Common": {
     "Buy": "Koupit",
-    "Close": "Zavřít"
+    "Close": "Zavřít",
+    "Profile": "Profil"
   },
   "Navbar": {
     "Quests": "Questy",
     "Store": "Obchod",
-    "FAQ": "Nápověda"
+    "FAQ": "Nápověda",
+    "Profile": "Profil"
+  },
+  "Profile": {
+    "Wallet": "Peněženka"
   },
   "MetamaskButton": {
     "Install MetaMask": "Nainstalujte Metamask",
