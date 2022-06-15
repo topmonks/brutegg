@@ -8,11 +8,24 @@ import { ProductDetail } from "../../../components/store/product-detail";
 import { ProductDetailSkeleton } from "../../../components/store/product-detail-skeleton";
 import { ProductDetailStickyWrapper } from "../../../components/store/product-detail-sticky-wrapper";
 import useEventTarget from "../../../hooks/useEventTarget";
-import { getProduct } from "../../../libs/swell";
+import { getProduct, getProducts } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { ProductPropTypes } from "../../../types/swell";
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+  const products = await getProducts();
+
+  const paths = products.results.map((p) => ({
+    params: { slug: [p.id, p.slug] },
+  }));
+
+  return {
+    paths: paths,
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps(context) {
   const {
     slug: [id, slug],
   } = context.params;
