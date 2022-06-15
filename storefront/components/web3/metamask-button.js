@@ -150,11 +150,15 @@ function ConnectedButton() {
   const anchorEl = useRef();
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
+  const [, setSnackbar] = useRecoilState(snackbarState);
 
   const disconnect = () => {
     handleClose();
     clearAccountLocalStorage(ethereum.account);
     setEthereum((e) => ({ ...e, account: undefined }));
+    setSnackbar({
+      message: t("Wallet successfully disconnected"),
+    });
   };
 
   const changeToPolygon = () => {

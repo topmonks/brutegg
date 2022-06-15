@@ -7,5 +7,11 @@
     "Quests": "Questy",
     "Store": "Obchod",
     "FAQ": "Nápověda"
+  },
+  "MetamaskButton": {
+    "Install MetaMask": "Nainstalujte Metamask",
+    "Connect wallet": "Propojte Metamask",
+    "Wallet successfully connected": "Peněženka úspěšně propojena",
+    "Wallet successfully disconnected": "Peněženka úspěšně odpojena"
   }
 }

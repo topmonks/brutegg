@@ -11,6 +11,7 @@ import Layout from "../components/layout";
 import { RecoilRoot } from "recoil";
 import GlobalHead from "../components/global-head";
 import MetamaskWatcher from "../components/web3/metamask-watcher";
+import Snackbar from "../components/snackbar";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps }) {
             <Suspense>
               <MetamaskWatcher />
             </Suspense>
+            <Snackbar />
             <Layout>
               <Component {...pageProps} />
             </Layout>
