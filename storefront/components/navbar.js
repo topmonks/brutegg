@@ -24,10 +24,10 @@ const backgroundAnimation = keyframes`
 
 const CustomTab = styled((props) => <Tab {...props} />)(({ theme }) => ({
   "&:hover": {
-    animation: `${backgroundAnimation} 1s ease-out`,
+    animation: `${backgroundAnimation} 1s ease-out infinite alternate-reverse`,
     background: `radial-gradient(ellipse at 50% 300%, ${
       theme.palette.primary.main
-    }, ${alpha(theme.palette.primary.main, 0)} 60%) center no-repeat`,
+    }, ${alpha(theme.palette.primary.main, 0)} 65%) center no-repeat`,
   },
   "&.Mui-selected": {
     background: `radial-gradient(ellipse at 50% 300%, ${
