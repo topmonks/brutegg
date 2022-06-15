@@ -14,7 +14,7 @@ import ProductList, {
   scrollToProductId,
 } from "../../components/store/product-list";
 
-export async function getServerSideProps(_context) {
+export async function getStaticProps(_context) {
   const products = await getProducts();
   return {
     props: { products },
