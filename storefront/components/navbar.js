@@ -10,6 +10,7 @@ import { eventTargetState, NAVBAR_CHANGE } from "../state/event-target";
 import { keyframes } from "@emotion/react";
 import window from "../libs/window";
 import styled from "@emotion/styled";
+import MetamaskButton from "./web3/metamask-button";
 
 const backgroundAnimation = keyframes`
   from {
@@ -21,7 +22,12 @@ const backgroundAnimation = keyframes`
 `;
 
 const CustomTab = styled((props) => <Tab {...props} />)(({ theme }) => ({
-  "&:hover": {},
+  "&:hover": {
+    animation: `${backgroundAnimation} 1s ease-out`,
+    background: `radial-gradient(ellipse at 50% 300%, ${
+      theme.palette.primary.main
+    }, ${alpha(theme.palette.primary.main, 0)} 60%) center no-repeat`,
+  },
   "&.Mui-selected": {
     background: `radial-gradient(ellipse at 50% 300%, ${
       theme.palette.primary.main
@@ -82,13 +88,11 @@ export default function Navbar() {
         direction="row"
         justifyContent="space-between"
       >
-        <Grid item sm={5} xs={12}>
+        <Grid item md={5} sm={10} xs={12}>
           <Tabs
-            allowScrollButtonsMobile
             aria-label="basic tabs example"
             indicatorColor="secondary"
             onChange={handleChange}
-            scrollButtons="auto"
             value={value}
             variant="scrollable"
           >
@@ -106,15 +110,24 @@ export default function Navbar() {
             ))}
           </Tabs>
         </Grid>
-        <Grid item sm={2} sx={{ display: { xs: "none", sm: "block" } }}>
+        <Grid item md={1} sx={{ display: { xs: "none", md: "block" } }}>
           <Image
-            alt="Picture of the author"
-            height={80}
+            alt="Brute gg logo"
+            height={150}
             src="/brute-logo.svg"
             width={200}
           />
         </Grid>
-        <Grid item sm={5} sx={{ display: { xs: "none", sm: "block" } }}></Grid>
+        <Grid
+          item
+          md={5}
+          sm={2}
+          sx={{ display: { xs: "none", sm: "block" }, textAlign: "right" }}
+        >
+          <Box sx={{ mb: 1 }}>
+            <MetamaskButton />
+          </Box>
+        </Grid>
       </Grid>
     </Box>
   );

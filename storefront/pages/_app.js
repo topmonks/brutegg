@@ -10,6 +10,7 @@ import Script from "next/script";
 import Layout from "../components/layout";
 import { RecoilRoot } from "recoil";
 import GlobalHead from "../components/global-head";
+import MetamaskWatcher from "../components/web3/metamask-watcher";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -29,6 +30,9 @@ function MyApp({ Component, pageProps }) {
                 body: { backgroundColor: "black" },
               }}
             />
+            <Suspense>
+              <MetamaskWatcher />
+            </Suspense>
             <Layout>
               <Component {...pageProps} />
             </Layout>
