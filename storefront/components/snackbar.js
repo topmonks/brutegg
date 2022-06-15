@@ -73,7 +73,7 @@ export default function Snackbar() {
           </IconButton>
         )
       }
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       autoHideDuration={autoHide}
       message={displayedSnackbar.current?.message}
       onClose={handleClose}

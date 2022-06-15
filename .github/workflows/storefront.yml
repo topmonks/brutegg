@@ -26,8 +26,8 @@ jobs:
         run: npm ci
       - name: Copy secrets
         run: |
-          echo >> env/.env.production
-          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> env/.env.production
+          echo >> .env.production
+          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env.production
       - name: Nextjs build
         run: |
           npm run build
