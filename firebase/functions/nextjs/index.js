@@ -16,6 +16,7 @@ export const server = onRequest(
     // firebase hosting only supports us-central1
     region: "us-central1",
     memory: "1GiB",
+    maxInstances: 10,
   },
   (request, response) => {
     logger.info("File: " + request.originalUrl, {
