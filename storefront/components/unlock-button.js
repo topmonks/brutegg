@@ -7,8 +7,9 @@ import { snackbarState } from "../state/snackbar";
 import { useTranslation } from "react-i18next";
 import { sessionState } from "../state/session";
 import getWeb3, { composeNonce } from "../libs/web3";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 
-export default function UnlockButton() {
+export default function UnlockButton(props) {
   const { t } = useTranslation("UnlockButton");
   const ethereum = useRecoilValue(ethereumState);
   const [, setSnackbar] = useRecoilState(snackbarState);
@@ -55,10 +56,16 @@ export default function UnlockButton() {
     login(signature, message, date);
   }, [ethereum, t, login]);
 
-  console.log(ethereum);
   return (
-    <Button disabled={!ethereum.web3Loaded} onClick={sign}>
-      Unlock
+    <Button
+      disableElevation
+      disabled={!ethereum.web3Loaded}
+      onClick={sign}
+      startIcon={<LockOpenIcon />}
+      variant="contained"
+      {...props}
+    >
+      {t("Unlock your account")}
     </Button>
   );
 }

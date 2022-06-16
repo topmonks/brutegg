@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -40,7 +41,11 @@ export default function Profile({ user }) {
     if (isUnlocked) {
       content = "FORM";
     } else {
-      content = <UnlockButton />;
+      content = (
+        <Box display="flex" justifyContent="center">
+          <UnlockButton size="large" sx={{ fontWeight: "bold" }} />
+        </Box>
+      );
     }
   } else {
     content = <MetamaskButton />;
