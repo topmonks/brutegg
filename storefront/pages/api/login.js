@@ -7,7 +7,6 @@ function checkSignature(nonce, signature) {
     data: nonce,
     signature: signature,
   };
-  console.log(msgParams);
   return recoverPersonalSignature(msgParams);
 }
 
@@ -19,10 +18,28 @@ async function loginRoute(req, res) {
     composeNonce(message, date),
     signature
   );
-  console.log({ address, recoveredAddress });
+
+  if (recoveredAddress !== address) {
+    res.status(400).send({
+      error: `signature check failed, address sent ${address}, recovered address ${recoveredAddress}`,
+    });
+    return;
+  }
+
+  const timeDiff = Date.now() - new Date(date).getTime();
+
+  // 10minutes
+  if (timeDiff > 6e5) {
+    res.status(400).send({
+      error: `expired time nonce, time diff ${timeDiff}`,
+    });
+    return;
+  }
+
   req.session.user = {
-    address: "address",
+    address,
   };
+
   try {
     await req.session.save();
   } catch (e) {

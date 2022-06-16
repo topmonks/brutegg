@@ -55,6 +55,7 @@ export default function UnlockButton() {
     login(signature, message, date);
   }, [ethereum, t, login]);
 
+  console.log(ethereum);
   return (
     <Button disabled={!ethereum.web3Loaded} onClick={sign}>
       Unlock

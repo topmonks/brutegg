@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
-import { Fragment, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import ProfileLayout from "../../components/profile-layout";
 import UnlockButton from "../../components/unlock-button";
+import MetamaskButton from "../../components/web3/metamask-button";
+import useMetamaskUnlocked from "../../hooks/useMetamaskUnlocked";
 import { withSessionSsr } from "../../libs/with-session";
+import { ethereumState } from "../../state/ethereum";
 import { sessionState } from "../../state/session";
 
 export const getServerSideProps = withSessionSsr(
@@ -19,6 +22,7 @@ export const getServerSideProps = withSessionSsr(
 
 export default function Profile({ user }) {
   const [session, setSession] = useRecoilState(sessionState);
+  const ethereum = useRecoilValue(ethereumState);
 
   useEffect(() => {
     setSession((s) => ({ ...s, user }));
@@ -28,13 +32,21 @@ export default function Profile({ user }) {
     console.log(session);
   }, [session]);
 
-  return (
-    <ProfileLayout>
-      <Fragment>
-        <UnlockButton />
-      </Fragment>
-    </ProfileLayout>
-  );
+  const isUnlocked = useMetamaskUnlocked(session?.user?.address);
+
+  let content;
+
+  if (ethereum.account) {
+    if (isUnlocked) {
+      content = "FORM";
+    } else {
+      content = <UnlockButton />;
+    }
+  } else {
+    content = <MetamaskButton />;
+  }
+
+  return <ProfileLayout>{content}</ProfileLayout>;
 }
 
 Profile.propTypes = {

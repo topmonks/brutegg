@@ -15,7 +15,7 @@ export default function ProfileLayout({ children }) {
 
   useEffect(() => {
     if (ethereum.initialized && !ethereum.account) {
-      router.push(withLocale(router.locale, "/store"));
+      // router.push(withLocale(router.locale, "/store"));
     }
   }, [router, ethereum]);
 
@@ -35,7 +35,7 @@ export default function ProfileLayout({ children }) {
       <Grid item lg={2} sm={3} sx={{ display: { xs: "none", sm: "block" } }}>
         <ContextMenu links={links} />
       </Grid>
-      <Grid item lg={10} sm={9} xs={12}>
+      <Grid item lg={10} sm={9} sx={{ pl: { md: 3 }, pt: { md: 2 } }} xs={12}>
         {children}
       </Grid>
     </Grid>

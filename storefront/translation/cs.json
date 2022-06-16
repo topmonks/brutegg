@@ -2,7 +2,8 @@
   "Common": {
     "Buy": "Koupit",
     "Close": "Zavřít",
-    "Profile": "Profil"
+    "Profile": "Profil",
+    "Disconnect": "Odpojit"
   },
   "Navbar": {
     "Quests": "Questy",
@@ -12,6 +13,10 @@
   },
   "Profile": {
     "Wallet": "Peněženka"
+  },
+  "Profile.Wallet": {
+    "MetaMask wallet settings": "Nastavení peněženky MetaMask",
+    "Connected wallet": "Připojená peněženka"
   },
   "MetamaskButton": {
     "Install MetaMask": "Nainstalujte Metamask",

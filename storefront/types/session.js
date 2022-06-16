@@ -1,6 +1,7 @@
 /**
  * @typedef {Object} SessionState
- * @property {string} address
+ * @property {Object} user
+ * @property {string} user.address
  */
 
 export default {};
