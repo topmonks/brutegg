@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import StoreLayout from "../../../components/store-layout";
+import StoreLayout from "../../../components/store/store-layout";
 import ProductList, {
   scrollToProductId,
 } from "../../../components/store/product-list";

@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import ProfileLayout from "../../components/profile-layout";
+import ProfileLayout from "../../components/profile/profile-layout";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useRecoilValue } from "recoil";

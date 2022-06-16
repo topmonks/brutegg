@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import { Grid } from "@mui/material";
-import ContextMenu from "./context-menu";
+import ContextMenu from "../context-menu";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { ethereumState } from "../state/ethereum";
-import { withLocale } from "../libs/router";
+import { ethereumState } from "../../state/ethereum";
+import { withLocale } from "../../libs/router";
 
 export default function ProfileLayout({ children }) {
   const { t } = useTranslation("Profile");

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import ProfileLayout from "../../components/profile-layout";
+import ProfileLayout from "../../components/profile/profile-layout";
 import UnlockButton from "../../components/unlock-button";
 import MetamaskButton from "../../components/web3/metamask-button";
 import useMetamaskUnlocked from "../../hooks/useMetamaskUnlocked";
