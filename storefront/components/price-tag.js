@@ -10,6 +10,7 @@ export default function PriceTag({ amount, displayLogo = true }) {
         <Image
           alt="Brutecoin logo"
           height={16}
+          layout="fixed"
           src="/letter-b.svg"
           width={13}
         />

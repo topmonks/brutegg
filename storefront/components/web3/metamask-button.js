@@ -224,9 +224,10 @@ function ConnectedButton() {
         ref={anchorEl}
         sx={{
           width: {
-            md: 250,
+            sm: 250,
             height: 52,
           },
+          maxWidth: "100%",
         }}
         variant="text"
       >
