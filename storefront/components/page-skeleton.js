@@ -7,8 +7,15 @@ import {
   STRETCHED_STORE_LIST_GRID,
 } from "./store/product-list";
 import { Fragment } from "react";
+import useDisplayAfterDelay from "../hooks/useDisplayAfterDelay";
 
 function QuestsSkeleton() {
+  const display = useDisplayAfterDelay(400);
+
+  if (!display) {
+    return <Fragment></Fragment>;
+  }
+
   return (
     <Fragment>
       <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
@@ -17,6 +24,12 @@ function QuestsSkeleton() {
   );
 }
 function StoreSkeleton({ stretched }) {
+  const display = useDisplayAfterDelay(300);
+
+  if (!display) {
+    return <Fragment></Fragment>;
+  }
+
   const gridItemAttrs = stretched
     ? STRETCHED_STORE_LIST_GRID
     : FULL_STORE_LIST_GRID;
@@ -39,6 +52,12 @@ StoreSkeleton.propTypes = {
 };
 
 function FaqSkeleton() {
+  const display = useDisplayAfterDelay(400);
+
+  if (!display) {
+    return <Fragment></Fragment>;
+  }
+
   return (
     <Fragment>
       <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>

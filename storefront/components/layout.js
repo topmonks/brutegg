@@ -17,6 +17,7 @@ export default function Layout({ children }) {
       setSkeletonComponent(() => skeleton);
     }
   }, []);
+
   useEventTarget(NAVBAR_CHANGE, onNavbarChange);
 
   useEffect(() => {
