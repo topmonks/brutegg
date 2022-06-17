@@ -35,7 +35,7 @@
     "@maticnetwork/maticjs": "2.0.51",
     "@truffle/hdwallet-provider": "1.4.2",
     "abi-decoder": "2.4.0",
-    "dotenv": "9.0.0",
+    "dotenv": "9.0.2",
     "eslint": "8.13.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.0.0",
