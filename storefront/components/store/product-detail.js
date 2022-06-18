@@ -8,9 +8,11 @@ import window from "../../libs/window";
 import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
 import Close from "@mui/icons-material/Close";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import { Box } from "@mui/system";
 import { productState } from "../../state/products";
 import { useTranslation } from "react-i18next";
+import StyledDescription from "../styled-description";
 
 /**
  *
@@ -55,30 +57,39 @@ export function ProductDetail({ product: _product }) {
 
   return (
     <Fragment>
-      <Button onClick={close} startIcon={<Close />} variant="outlined">
-        {t("Close", { ns: "Common" })}
-      </Button>
-      <Box>
-        <Typography component="h1" variant="h3">
-          {product.name}
-        </Typography>
-        <Typography
-          component="div"
-          dangerouslySetInnerHTML={{ __html: product.description }}
-          sx={{
-            mt: 2,
-          }}
-          variant="body1"
-        ></Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", maxHeight: "100%" }}>
+        <Box sx={{ flexGrow: 1, pb: 2 }}>
+          <Button
+            onClick={close}
+            startIcon={<Close />}
+            sx={{ float: "right" }}
+            variant="outlined"
+          >
+            {t("Close", { ns: "Common" })}
+          </Button>
+          <Typography component="h1" variant="h3">
+            {product.name}
+          </Typography>
+        </Box>
+        <Box sx={{ flexGrow: 2, overflowY: "auto" }}>
+          <StyledDescription
+            dangerouslySetInnerHTML={{ __html: product.description }}
+          ></StyledDescription>
+        </Box>
+        <Box sx={{ flexGrow: 1, mt: 3 }}>
+          <Button
+            disableElevation
+            fullWidth
+            onClick={addToCart}
+            size="large"
+            startIcon={<ShoppingCartCheckoutIcon />}
+            sx={{ fontWeight: "bold" }}
+            variant="contained"
+          >
+            {t("Buy", { ns: "Common" })}
+          </Button>
+        </Box>
       </Box>
-      <Button
-        disableElevation
-        fullWidth
-        onClick={addToCart}
-        variant="contained"
-      >
-        {t("Buy", { ns: "Common" })}
-      </Button>
     </Fragment>
   );
 }

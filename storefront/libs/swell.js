@@ -23,3 +23,12 @@ export async function getProduct(slugOrId) {
 
   return product;
 }
+
+export async function getCategory(slugOrId) {
+  /**
+   * @type {{results: import("../../types/swell").Product}}
+   */
+  const category = await swell.categories.get(slugOrId);
+
+  return category;
+}

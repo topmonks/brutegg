@@ -10,6 +10,7 @@ export function ProductDetailStickyWrapper({ children }) {
         ml: { sm: 2 },
         p: 2,
         height: (theme) => ({
+          xs: `calc(100vh - 80px)`,
           sm: `calc(100vh - ${theme.spacing(4)})`,
         }),
         border: "1px solid white",
