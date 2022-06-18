@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -59,14 +59,15 @@ export function ProductDetail({ product: _product }) {
     <Fragment>
       <Box sx={{ display: "flex", flexDirection: "column", maxHeight: "100%" }}>
         <Box sx={{ flexGrow: 1, pb: 2 }}>
-          <Button
+          <IconButton
+            aria-label={t("Close", { ns: "Common" })}
+            color="primary"
             onClick={close}
-            startIcon={<Close />}
+            size="large"
             sx={{ float: "right" }}
-            variant="outlined"
           >
-            {t("Close", { ns: "Common" })}
-          </Button>
+            <Close />
+          </IconButton>
           <Typography component="h1" variant="h3">
             {product.name}
           </Typography>
