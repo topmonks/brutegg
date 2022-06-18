@@ -6,12 +6,12 @@ export default function StoreLayout({ children, rightExpanded }) {
     <Grid container>
       <Grid
         item
-        sm={rightExpanded ? 6 : 12}
+        sm={rightExpanded ? 5 : 12}
         sx={[rightExpanded && { display: { xs: "none", sm: "block" } }]}
       >
         {children[0]}
       </Grid>
-      <Grid item sm={6} sx={[!rightExpanded && { display: "none" }]} xs={12}>
+      <Grid item sm={7} sx={[!rightExpanded && { display: "none" }]} xs={12}>
         {children[1]}
       </Grid>
     </Grid>
