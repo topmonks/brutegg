@@ -50,3 +50,36 @@ export const server = onRequest(
     return app.prepare().then(() => handle(request, response));
   }
 );
+
+import fetch from "node-fetch";
+
+export const rebuild = onRequest(
+  {
+    // firebase hosting only supports us-central1
+    region: "us-central1",
+    memory: "2GiB",
+    maxInstances: 1,
+    concurrency: 10,
+    timeoutSeconds: 10,
+  },
+  (request, response) => {
+    if (
+      request.query.NEXT_REBUILD_PASSWORD !== process.env.NEXT_REBUILD_PASSWORD
+    ) {
+      response.status(403);
+      response.end();
+      return;
+    }
+
+    fetch("https://api.github.com/repos/topmonks/brutegg/dispatches", {
+      method: "POST",
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+        Authorization: "token " + process.env.GH_DISPATCH_ACCESS_TOKEN,
+      },
+      body: JSON.stringify({ event_type: "next-rebuild" }),
+    }).then((res) => {
+      res.body.pipe(response);
+    });
+  }
+);
