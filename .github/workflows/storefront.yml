@@ -3,6 +3,9 @@ name: Storefront
 on:
   push:
   pull_request:
+  repository_dispatch:
+    types:
+      - next-rebuild
 
 jobs:
   build:
