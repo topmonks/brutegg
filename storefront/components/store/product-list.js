@@ -66,7 +66,6 @@ export default function ProductList({
       sort: "attributes.brute_price desc",
     })
       .then(({ results }) => {
-        console.log(results);
         setProducts(results);
       })
       .finally(() => setProductsLoading(false));

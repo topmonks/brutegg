@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import ProductListItem from "../store/product-list-item";
 import useEventTarget from "../../hooks/useEventTarget";
 import { Grid } from "@mui/material";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
@@ -10,25 +9,19 @@ import { LINKS } from "../navbar";
 import { getProducts } from "../../libs/swell";
 import window from "../../libs/window";
 import { questsState } from "../../state/quests";
+import QuestListItem from "./quest-list-item";
 
 export const STRETCHED_STORE_LIST_GRID = {
-  xxl: 4,
-  lg: 6,
-  md: 12,
-  sm: 12,
   xs: 12,
 };
 
 export const FULL_STORE_LIST_GRID = {
-  lg: 3,
-  md: 4,
-  sm: 6,
   xs: 12,
 };
 
 export const QUEST_ID_DATA_ATTR_NAME = "data-quest-id";
 
-export function scrollToProductId(id) {
+export function scrollToQuestId(id) {
   if (id && window.document) {
     const element = window.document.querySelector(
       `[${QUEST_ID_DATA_ATTR_NAME}="${id}"]`
@@ -53,7 +46,7 @@ export default function QuestList({
   const [_selectedQuestId, setSelectedQuestId] = useState(selectedQuestId);
 
   const onQuestsItemChange = useCallback((event) => {
-    setSelectedQuestId(event.detail.product?.id);
+    setSelectedQuestId(event.detail.quest?.id);
   }, []);
 
   useEventTarget(QUESTS_ITEM_CHANGE, onQuestsItemChange);
@@ -80,17 +73,17 @@ export default function QuestList({
   return (
     <Fragment>
       <Grid columns={12} container spacing={1}>
-        {quests.map((p) => {
-          const isSelectedQuest = p.id === _selectedQuestId;
+        {quests.map((q) => {
+          const isSelectedQuest = q.id === _selectedQuestId;
 
           return (
             <Grid
               item
-              key={p.id}
+              key={q.id}
               {...gridItemAttrs}
-              {...{ [QUEST_ID_DATA_ATTR_NAME]: p.id }}
+              {...{ [QUEST_ID_DATA_ATTR_NAME]: q.id }}
             >
-              <ProductListItem product={p} selected={isSelectedQuest} />
+              <QuestListItem quest={q} selected={isSelectedQuest} />
             </Grid>
           );
         })}

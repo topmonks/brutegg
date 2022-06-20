@@ -10,7 +10,7 @@ import { Fragment } from "react";
 import useDisplayAfterDelay from "../hooks/useDisplayAfterDelay";
 
 function QuestsSkeleton() {
-  const display = useDisplayAfterDelay(400);
+  const display = useDisplayAfterDelay(300);
 
   if (!display) {
     return <Fragment></Fragment>;
@@ -18,8 +18,15 @@ function QuestsSkeleton() {
 
   return (
     <Fragment>
-      <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
-      <Skeleton height={500} variant="rectangular"></Skeleton>
+      <Grid container justifyContent={"center"} spacing={1}>
+        {new Array(20).fill().map((_, ix) => {
+          return (
+            <Grid item key={ix} xs={8}>
+              <Skeleton animation="wave" height={50} variant="rectangular" />
+            </Grid>
+          );
+        })}
+      </Grid>
     </Fragment>
   );
 }
