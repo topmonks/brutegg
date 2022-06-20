@@ -8,7 +8,7 @@ import { Grid } from "@mui/material";
 import { STORE_ITEM_CHANGE } from "../../state/event-target";
 import pageSkeleton from "../../components/page-skeleton";
 import { LINKS } from "../../components/navbar";
-import { getProducts } from "../../libs/swell";
+import { getStoreProducts } from "../../libs/swell";
 import window from "../../libs/window";
 
 export const STRETCHED_STORE_LIST_GRID = {
@@ -61,8 +61,12 @@ export default function ProductList({
 
   useEffect(() => {
     setProductsLoading(true);
-    getProducts()
+    getStoreProducts({
+      expand: ["attributes"],
+      sort: "attributes.brute_price desc",
+    })
       .then(({ results }) => {
+        console.log(results);
         setProducts(results);
       })
       .finally(() => setProductsLoading(false));

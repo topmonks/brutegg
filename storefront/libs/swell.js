@@ -6,11 +6,22 @@ swell.init(
 );
 export default swell;
 
-export async function getProducts() {
+export async function getStoreProducts(opts) {
+  const category = await getCategory("store");
+  const storeCategories = category.children.results
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ id }) => id);
+
+  const products = await getProducts({ ...opts, categories: storeCategories });
+
+  return products;
+}
+
+export async function getProducts(opts) {
   /**
    * @type {{results: import("../types/swell").Product[]}}
    */
-  const products = await swell.products.list({ expand: ["variants"] });
+  const products = await swell.products.list({ ...opts });
 
   return products;
 }

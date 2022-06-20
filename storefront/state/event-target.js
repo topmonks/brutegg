@@ -3,6 +3,7 @@ import window from "../libs/window";
 
 export const NAVBAR_CHANGE = "navbar-change";
 export const STORE_ITEM_CHANGE = "store-item-change";
+export const QUESTS_ITEM_CHANGE = "quests-item-change";
 
 export const eventTargetState = atom({
   key: "eventTargetState",

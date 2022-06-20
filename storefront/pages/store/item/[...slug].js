@@ -13,7 +13,7 @@ import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { ProductPropTypes } from "../../../types/swell";
 
 export async function getStaticPaths() {
-  const products = await getProducts();
+  const products = await getProducts({ category: "store" });
 
   const paths = products.results.map((p) => ({
     params: { slug: [p.id, p.slug] },

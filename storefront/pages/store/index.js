@@ -9,13 +9,16 @@ import useEventTarget from "../../hooks/useEventTarget";
 import { ProductDetailSkeleton } from "../../components/store/product-detail-skeleton";
 import { STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
-import swell, { getProducts } from "../../libs/swell";
+import swell, { getStoreProducts } from "../../libs/swell";
 import ProductList, {
   scrollToProductId,
 } from "../../components/store/product-list";
 
 export async function getStaticProps(_context) {
-  const products = await getProducts();
+  const products = await getStoreProducts({
+    expand: ["attributes"],
+    sort: "attributes.brute_price desc",
+  });
   return {
     props: { products },
   };
