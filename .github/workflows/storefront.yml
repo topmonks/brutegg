@@ -27,6 +27,7 @@ jobs:
       - name: Nextjs build
         run: |
           npm run build
+          rm -rf ./.next/cache
       - name: Archive Production Artifact
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@master
