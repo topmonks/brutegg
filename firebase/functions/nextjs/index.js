@@ -16,6 +16,7 @@ export const server = onRequest(
     // firebase hosting only supports us-central1
     region: "us-central1",
     memory: "2GiB",
+    minInstances: 0,
     maxInstances: 100,
   },
   (request, response) => {
@@ -44,6 +45,7 @@ export const rebuild = onRequest(
     // firebase hosting only supports us-central1
     region: "us-central1",
     memory: "256MiB",
+    minInstances: 0,
     maxInstances: 1,
     concurrency: 10,
     timeoutSeconds: 10,
