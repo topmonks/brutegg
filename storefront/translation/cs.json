@@ -28,5 +28,9 @@
     "Account successfully unlocked": "Metamask účet úspěšně odemknut",
     "Sign the login to brute-gg.web.app": "Podepsat přihlášení do brute-gg.web.app",
     "Unlock your account": "Odemkněte svůj účet"
+  },
+  "Quests": {
+    "Deadline": "Deadline",
+    "Reward": "Výhra"
   }
 }

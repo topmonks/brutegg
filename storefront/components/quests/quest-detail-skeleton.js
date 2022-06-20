@@ -16,9 +16,6 @@ export function QuestDetailSkeleton() {
         <Skeleton animation="wave" />
       </Typography>
       <Box>
-        <Typography variant="h1">
-          <Skeleton animation="wave" />
-        </Typography>
         <Skeleton
           animation="wave"
           height={350}

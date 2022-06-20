@@ -8,6 +8,8 @@ import { withLocale } from "../../libs/router";
 import window from "../../libs/window";
 import { eventTargetState, QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
+import { useTranslation } from "react-i18next";
+import PriceTag from "../price-tag";
 
 /**
  *
@@ -15,6 +17,7 @@ import { ProductPropTypes } from "../../types/swell";
  * @param {import("../../types/swell").Product} params.quest
  */
 export default function QuestListItem({ quest, selected }) {
+  const { t } = useTranslation("Quests");
   const router = useRouter();
   const eventTarget = useRecoilValue(eventTargetState);
 
@@ -35,6 +38,16 @@ export default function QuestListItem({ quest, selected }) {
     );
   }, [router, quest, eventTarget]);
 
+  let validUntil = quest.attributes.brute_quest_valid_until?.value;
+  validUntil = validUntil ? new Date(validUntil) : null;
+
+  let reward = quest.attributes.brute_reward?.value;
+  try {
+    reward = reward ? parseFloat(reward).toLocaleString(router.locale) : null;
+  } catch (e) {
+    console.error(e);
+  }
+
   return (
     <Box
       onClick={goToQuest}
@@ -48,12 +61,34 @@ export default function QuestListItem({ quest, selected }) {
         selected && {},
       ]}
     >
-      <Grid container>
+      <Grid container justifyContent="space-between">
         <Grid item>
-          <Typography component="h3" display="block" variant="h6">
+          <Typography component="h3" variant="h6">
             {quest.name}
           </Typography>
         </Grid>
+        {validUntil && (
+          <Grid item>
+            <Typography variant="caption">
+              {t("Deadline")}: {validUntil.toLocaleDateString(router.locale)}
+            </Typography>
+          </Grid>
+        )}
+      </Grid>
+      <Grid container justifyContent="space-between">
+        <Grid item>
+          <Typography variant="subtitle1">
+            {quest.attributes.brute_quest_perex?.value}
+          </Typography>
+        </Grid>
+        {reward && (
+          <Grid item>
+            <Typography variant="subtitle1">
+              {t("Reward")}:{" "}
+              <PriceTag amount={reward} sx={{ fontWeight: "bold" }} />
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

@@ -22,7 +22,7 @@ function QuestsSkeleton() {
         {new Array(20).fill().map((_, ix) => {
           return (
             <Grid item key={ix} xs={8}>
-              <Skeleton animation="wave" height={50} variant="rectangular" />
+              <Skeleton animation="wave" height={80} variant="rectangular" />
             </Grid>
           );
         })}
