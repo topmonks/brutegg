@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { Typography, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { Fragment } from "react";
 import useDisplayAfterDelay from "../../hooks/useDisplayAfterDelay";
 
@@ -12,9 +12,7 @@ export function QuestDetailSkeleton() {
 
   return (
     <Fragment>
-      <Typography variant="button">
-        <Skeleton animation="wave" />
-      </Typography>
+      <Skeleton animation="wave" height={60} variant="rectangular" />
       <Box>
         <Skeleton
           animation="wave"

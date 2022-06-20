@@ -239,7 +239,7 @@ function ConnectedButton() {
               borderRight: "1px solid white",
             }}
           >
-            <PriceTag amount="500" />
+            <PriceTag amount="500" sx={{ fontWeight: "bold" }} />
           </Box>
           <span>
             {ethereum.account?.substring(0, 5)}...

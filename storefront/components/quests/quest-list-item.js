@@ -42,11 +42,6 @@ export default function QuestListItem({ quest, selected }) {
   validUntil = validUntil ? new Date(validUntil) : null;
 
   let reward = quest.attributes.brute_reward?.value;
-  try {
-    reward = reward ? parseFloat(reward).toLocaleString(router.locale) : null;
-  } catch (e) {
-    console.error(e);
-  }
 
   return (
     <Box
