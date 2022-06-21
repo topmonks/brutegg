@@ -49,6 +49,6 @@
     "@openzeppelin/contracts": "4.6.0",
     "@openzeppelin/contracts-upgradeable": "4.6.0",
     "truffle-token-test-utils": "1.0.0",
-    "web3": "1.7.3"
+    "web3": "1.7.4"
   }
 }
