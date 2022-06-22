@@ -35,7 +35,11 @@ export function scrollToProductId(id) {
     );
 
     if (element) {
-      element.scrollIntoView();
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
+      });
     }
   }
 }

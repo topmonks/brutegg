@@ -63,6 +63,9 @@ export function QuestDetail({ product: _product }) {
           <Typography component="h1" variant="h3">
             {product.name}
           </Typography>
+          <Typography sx={{ mt: 2 }} variant="subtitle1">
+            {product.attributes.brute_quest_perex?.value}
+          </Typography>
         </Box>
         <Box sx={{ flexGrow: 2, overflowY: "auto" }}>
           <StyledDescription

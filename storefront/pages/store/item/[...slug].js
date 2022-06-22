@@ -11,6 +11,8 @@ import useEventTarget from "../../../hooks/useEventTarget";
 import { getProduct, getProducts } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { ProductPropTypes } from "../../../types/swell";
+import { useMediaQuery } from "@mui/material";
+import window from "../../../libs/window";
 
 export async function getStaticPaths() {
   const products = await getProducts({ category: "store" });
@@ -48,6 +50,7 @@ export default function Item({ product }) {
   const {
     slug: [id],
   } = router.query;
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [productDisplayed, setProductDisplayed] = useState(true);
 
   const [selectedProductIdOnClick, setSelectedProductIdOnClick] = useState(id);
@@ -59,13 +62,17 @@ export default function Item({ product }) {
         setProductDisplayed(false);
 
         setTimeout(() => {
-          scrollToProductId(id);
+          if (isXs) {
+            scrollToProductId(id);
+          } else {
+            window?.scrollTo({ top: 0, behavior: "smooth" });
+          }
         }, 0);
       }
 
       setSelectedProductIdOnClick(selectedProductId);
     },
-    [id]
+    [id, isXs]
   );
 
   useEffect(() => {
