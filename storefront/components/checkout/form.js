@@ -4,14 +4,21 @@ import { Fragment, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useFormData from "../../hooks/use-form-data";
 import { checkoutValidator } from "../../validations/checkout";
-import { common } from "../../validations/i18n";
 import CountrySelect from "./form/country";
 import FirstName from "./form/first-name";
 import LastName from "./form/last-name";
+import AddressOne from "./form/address-1";
+import AddressTwo from "./form/address-2";
+import City from "./form/city";
+import Zip from "./form/zip";
 
 const defaultFormState = {
   firstName: "",
   lastName: "",
+  address1: "",
+  address2: "",
+  city: "",
+  zip: "",
   country: "",
 };
 
@@ -54,8 +61,39 @@ export default function Form({ onSubmit }) {
           <Typography component="h3" variant="h6">
             {t("Address")}
           </Typography>
+          <AddressOne formData={formData} onChange={onChange} />
+          <AddressTwo formData={formData} onChange={onChange} />
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              flexWrap: { xs: "wrap", sm: "nowrap" },
+            }}
+          >
+            <City formData={formData} onChange={onChange} />
+            <Zip formData={formData} onChange={onChange} />
+          </Box>
           <CountrySelect formData={formData} onChange={setFormData} />
-          <Button type="submit">{t("Continue to payment")}</Button>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              flexWrap: { xs: "wrap", sm: "nowrap" },
+              mb: { xs: 2, sm: 10 },
+            }}
+          >
+            <Button
+              disableElevation
+              size="large"
+              type="submit"
+              variant="contained"
+            >
+              {t("Continue to payment")}
+            </Button>
+            <Button size="large" variant="text">
+              {t("Back to the store")}
+            </Button>
+          </Box>
         </Box>
       </form>
     </Fragment>

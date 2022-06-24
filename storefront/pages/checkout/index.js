@@ -28,9 +28,19 @@ export default function Checkout() {
         })
         .then(async (res) => {
           if (res.status === 200) {
-            setSnackbar({
-              message: t("Account successfully updated"),
-            });
+            const user = await res.json();
+            if (user.errors) {
+              setSnackbar({
+                message:
+                  t("Error response", { ns: "Common" }) +
+                  " " +
+                  Object.values(user.errors).map((e) => e.message),
+              });
+            } else {
+              setSnackbar({
+                message: t("Account successfully updated"),
+              });
+            }
           } else {
             setSnackbar({
               message:
@@ -47,7 +57,9 @@ export default function Checkout() {
   return (
     <Grid container direction="row-reverse">
       <Grid item md={3} sm={5} xs={12}>
-        items
+        <Typography component="h3" variant="h6">
+          {t("Items")}
+        </Typography>
       </Grid>
       <Grid item md={9} sm={7} xs={12}>
         <Box

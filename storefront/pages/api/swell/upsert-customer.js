@@ -11,8 +11,6 @@ async function upsertCustomerRoute(req, res) {
     return;
   }
 
-  const email = composeVirtualEmailFromAddress(publicAddress);
-
   let {
     results: [user],
   } = await swellNodeClient.get("/accounts", {
@@ -25,14 +23,18 @@ async function upsertCustomerRoute(req, res) {
   });
 
   const body = req.body;
-  console.log(body);
+  const email = composeVirtualEmailFromAddress(publicAddress);
+
   const update = {
     email,
+    first_name: body.firstName,
+    last_name: body.lastName,
     shipping: {
-      address1: "Pod svahem 20",
-      city: "Praha",
-      zip: "14700",
-      country: "CZ",
+      address1: body.address1,
+      address2: body.address2,
+      city: body.city,
+      zip: body.zip,
+      country: body.country,
     },
     public_address: publicAddress,
   };
@@ -40,7 +42,7 @@ async function upsertCustomerRoute(req, res) {
   if (!user) {
     user = await swellNodeClient.post("/accounts", update);
   } else {
-    await swellNodeClient.put(`/accounts/${user.id}}`, update);
+    user = await swellNodeClient.put(`/accounts/${user.id}`, update);
   }
 
   res.send(user);

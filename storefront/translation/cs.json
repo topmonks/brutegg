@@ -42,7 +42,13 @@
     "Address": "Adresa",
     "Account successfully updated": "Informace k účtu úspěšně aktualizovány",
     "Choose a country": "Vyberte zemi",
-    "Continue to payment": "Pokračujte k platbě"
+    "Continue to payment": "Pokračujte k platbě",
+    "Street, house number": "Ulice, číslo popisné",
+    "Apartment, building": "Byt, budova (volitelné)",
+    "City": "Město",
+    "Zip": "PSČ",
+    "Back to the store": "Zpět do obchodu",
+    "Checkout": "Dokončit objednávku"
   },
   "Validations": {
     "Input is not allowed to be empty": "Pole musí být vyplněno",

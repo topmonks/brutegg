@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import window from "../../../libs/window";
 import { common } from "../../../validations/i18n";
-import { countryValidation } from "../../../validations/checkout";
+import { countryValidator } from "../../../validations/checkout";
 import useFormValidation from "../../../hooks/use-form-validation";
 
 const defaultAvailableCountries = ["CZ", "SK"];
@@ -15,7 +15,7 @@ export default function CountrySelect({ formData, onChange }) {
   const { t } = useTranslation("Countries");
   const [invalidCountry, setCountryBlurred] = useFormValidation(
     formData.get("country"),
-    countryValidation.messages({
+    countryValidator.messages({
       ...common(t),
     })
   );
