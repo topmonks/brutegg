@@ -34,13 +34,18 @@ export default function CountrySelect({ formData, onChange }) {
     return () => (unmounted = true);
   }, []);
 
+  const value = countries.find(
+    (c) => c.code === (formData.get("country") || "CZ")
+  );
+
   return (
     <Autocomplete
       autoHighlight
-      defaultValue={{ code: "CZ", label: "Czech Republic" }}
+      defaultValue={value}
       fullWidth
       getOptionLabel={(option) => t(option.label)}
       id="country"
+      isOptionEqualToValue={(option, value) => option.code === value.code}
       name="country"
       onBlur={setCountryBlurred}
       onChange={(event, value) => {
@@ -78,6 +83,7 @@ export default function CountrySelect({ formData, onChange }) {
           {t(option.label)}
         </Box>
       )}
+      value={value}
     />
   );
 }

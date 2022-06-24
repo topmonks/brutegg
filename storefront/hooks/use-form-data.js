@@ -18,9 +18,12 @@ export default function useFormData(initial, parsers = {}) {
     return formState.map((value, key) => (parsers[key] || identity)(value));
   }, [formState, parsers]);
 
-  const clear = useCallback(() => {
-    setFormState(Map(initial));
-  }, [setFormState, initial]);
+  const reset = useCallback(
+    (providedInitial) => {
+      setFormState(Map(providedInitial || initial));
+    },
+    [setFormState, initial]
+  );
 
-  return [formState, setFormState, onChange, parsedFormState, clear];
+  return [formState, setFormState, onChange, parsedFormState, reset];
 }

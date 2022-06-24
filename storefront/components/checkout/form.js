@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Box, Button, Typography } from "@mui/material";
-import { Fragment, useCallback, useMemo } from "react";
+import { Fragment, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useFormData from "../../hooks/use-form-data";
 import { checkoutValidator } from "../../validations/checkout";
@@ -11,6 +11,7 @@ import AddressOne from "./form/address-1";
 import AddressTwo from "./form/address-2";
 import City from "./form/city";
 import Zip from "./form/zip";
+import { removeEmpty } from "../../libs/util";
 
 const defaultFormState = {
   firstName: "",
@@ -22,10 +23,18 @@ const defaultFormState = {
   country: "",
 };
 
-export default function Form({ onSubmit }) {
+export default function Form({ onSubmit, initialFormState }) {
   const { t } = useTranslation("Checkout");
-  const [formData, setFormData, onChange, , clear] =
+  const [formData, setFormData, onChange, , resetForm] =
     useFormData(defaultFormState);
+
+  useEffect(() => {
+    if (!initialFormState) {
+      return;
+    }
+
+    setFormData((f) => f.merge(removeEmpty(initialFormState)));
+  }, [initialFormState, setFormData]);
 
   const handleSubmit = useCallback(
     (event) => {
@@ -34,8 +43,6 @@ export default function Form({ onSubmit }) {
     },
     [onSubmit, formData]
   );
-
-  console.log(formData.toJSON());
 
   const checkoutEnabled = useMemo(() => {
     return checkoutValidator().validate(formData.toJSON()).error == null;
@@ -101,5 +108,6 @@ export default function Form({ onSubmit }) {
 }
 
 Form.propTypes = {
+  initialFormState: PropTypes.object,
   onSubmit: PropTypes.func,
 };

@@ -5,10 +5,46 @@ import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import swell from "swell-js";
 import Form from "../../components/checkout/form";
+import { swellNodeClient } from "../../libs/swell-node";
 import window from "../../libs/window";
+import { withSessionSsr } from "../../libs/with-session";
 import { snackbarState } from "../../state/snackbar";
 
-export default function Checkout() {
+export const getServerSideProps = withSessionSsr(async (context) => {
+  const publicAddress = context.req.session.user?.address;
+  if (!publicAddress) {
+    return { props: {} };
+  }
+
+  let {
+    results: [user],
+  } = await swellNodeClient.get("/accounts", {
+    where: {
+      public_address: {
+        $eq: publicAddress,
+      },
+    },
+    limit: 1,
+  });
+
+  user = {
+    firstName: user.first_name,
+    lastName: user.last_name,
+    address1: user.shipping.address1,
+    address2: user.shipping.address2,
+    city: user.shipping.city,
+    zip: user.shipping.zip,
+    country: user.shipping.country,
+  };
+
+  return {
+    props: {
+      user,
+    },
+  };
+});
+
+export default function Checkout({ user }) {
   const { t } = useTranslation("Checkout");
   const [, setSnackbar] = useRecoilState(snackbarState);
 
@@ -73,7 +109,7 @@ export default function Checkout() {
             {t("Checkout")}
           </Typography>
 
-          <Form onSubmit={upsertCustomer} />
+          <Form initialFormState={user} onSubmit={upsertCustomer} />
         </Box>
       </Grid>
     </Grid>

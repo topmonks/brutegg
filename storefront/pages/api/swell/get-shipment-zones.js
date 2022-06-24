@@ -12,5 +12,5 @@ export default async function GetShipmentZones(req, res) {
     return;
   }
 
-  res.send(zone.rules?.map((r) => r.country)).end();
+  res.send(zone.rules?.map((r) => r.country));
 }
