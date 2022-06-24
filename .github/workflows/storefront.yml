@@ -69,6 +69,7 @@ jobs:
         run: |
           echo >> .env
           echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env.production
+          echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> .env.production
       - name: Copy Envs
         run: cp storefront/.env* firebase/functions/
       - name: Deploy Firebase Functions

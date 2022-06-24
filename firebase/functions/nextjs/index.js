@@ -10,6 +10,11 @@ const app = next({
 });
 const handle = app.getRequestHandler();
 
+const excludeCache = [
+  (req) => req.path.startsWith("/api"),
+  (req) => req.path.endsWith("/checkout"),
+];
+
 export const server = onRequest(
   {
     cors: ["brute-gg.web.app"],
@@ -32,6 +37,10 @@ export const server = onRequest(
         "Cache-Control",
         "public, max-age=31536000, s-maxage=31536000"
       ); //max-age=1year, s-maxage=1year
+    }
+
+    if (excludeCache.some((fn) => fn(request))) {
+      response.set("Cache-Control", "private, max-age=0");
     }
 
     return app.prepare().then(() => handle(request, response));
