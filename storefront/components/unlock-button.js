@@ -38,7 +38,10 @@ export default function UnlockButton(props) {
             setSession(await res.json());
           } else {
             setSnackbar({
-              message: t("Error response ") + (await res.text()),
+              message:
+                t("Error response", { ns: "Common" }) +
+                " " +
+                (await res.text()),
             });
           }
         });

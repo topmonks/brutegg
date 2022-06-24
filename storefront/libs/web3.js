@@ -11,3 +11,7 @@ export default function getWeb3() {
 export function composeNonce(message, dateISOString) {
   return [message, dateISOString].join(", ");
 }
+
+export function composeVirtualEmailFromAddress(address) {
+  return `${address}@address.eth`;
+}

@@ -3,7 +3,8 @@
     "Buy": "Koupit",
     "Close": "Zavřít",
     "Profile": "Profil",
-    "Disconnect": "Odpojit"
+    "Disconnect": "Odpojit",
+    "Error response": "Chyba"
   },
   "Navbar": {
     "Quests": "Questy",
@@ -32,5 +33,31 @@
   "Quests": {
     "Deadline": "Deadline",
     "Reward": "Výhra"
+  },
+  "Checkout": {
+    "First name": "Jméno",
+    "Last name": "Příjmení",
+    "Nickname": "Přezdívka",
+    "Contact info": "Kontaktní informace",
+    "Address": "Adresa",
+    "Account successfully updated": "Informace k účtu úspěšně aktualizovány",
+    "Choose a country": "Vyberte zemi",
+    "Continue to payment": "Pokračujte k platbě"
+  },
+  "Validations": {
+    "Input is not allowed to be empty": "Pole musí být vyplněno",
+    "Number must be less than {#limit}": "Číslo musí být menší než {#limit}",
+    "Number must be greater than {#limit}": "Číslo musí být větší než {#limit}",
+    "The string must be at least {#limit} characters long": "Řetězec musí mít alespoň {#limit} znaků",
+    "Number must be positive": "Číslo musí být kladné",
+    "Number must be integer": "Číslo musí být celé číslo",
+    "Invalid format of webpage link": "Neplatný formát odkazu",
+    "Invalid email": "Neplatný email",
+    "Invalid format": "Nesprávný formát",
+    "Save changes": "Uložit změny"
+  },
+  "Countries": {
+    "Czech Republic": "Česko",
+    "Slovakia": "Slovensko"
   }
 }
