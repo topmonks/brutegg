@@ -23,6 +23,7 @@ export const server = onRequest(
     memory: "2GiB",
     minInstances: 0,
     maxInstances: 100,
+    concurrency: 200,
   },
   (request, response) => {
     logger.info("File: " + request.originalUrl, {
