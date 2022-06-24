@@ -17,16 +17,18 @@ export function isCorrectChain(chainId) {
  * this request is not available on metamask mobile, threrefore try-catch
  * @returns {string}
  */
-export async function requestAccounts() {
+export async function requestAccounts(requestPermissions = false) {
   try {
-    await window.ethereum.request({
-      method: "wallet_requestPermissions",
-      params: [
-        {
-          eth_accounts: {},
-        },
-      ],
-    });
+    if (requestPermissions) {
+      await window.ethereum.request({
+        method: "wallet_requestPermissions",
+        params: [
+          {
+            eth_accounts: {},
+          },
+        ],
+      });
+    }
   } catch (e) {
     // Metamask mobile
   }
