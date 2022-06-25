@@ -84,8 +84,15 @@ export default function Navbar() {
         })
       );
     }
+
     router.push(withLocale(router.locale, newValue));
   };
+
+  useEffect(() => {
+    Object.values(LINKS).forEach((link) =>
+      router.prefetch(withLocale(router.locale, link))
+    );
+  }, [router]);
 
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
