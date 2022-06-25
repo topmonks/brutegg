@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import { useCallback } from "react";
+import { Button, CircularProgress } from "@mui/material";
+import { useCallback, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import window from "../libs/window";
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { sessionState } from "../state/session";
 import getWeb3, { composeNonce } from "../libs/web3";
 import useRefreshProps from "../hooks/use-refresh-props";
+import fetchThrowHttpError from "../libs/fetch-throw-http-error.mjs";
 
 export default function UnlockButton(props) {
   const { t } = useTranslation("UnlockButton");
@@ -16,9 +17,11 @@ export default function UnlockButton(props) {
   const [, setSnackbar] = useRecoilState(snackbarState);
   const [, setSession] = useRecoilState(sessionState);
   const refreshProps = useRefreshProps();
+  const [loading, setLoading] = useState(false);
 
   const login = useCallback(
     (signature, message, date) => {
+      setLoading(true);
       window
         ?.fetch("/api/login", {
           headers: {
@@ -32,23 +35,21 @@ export default function UnlockButton(props) {
             date,
           }),
         })
+        .then(fetchThrowHttpError)
         .then(async (res) => {
-          if (res.status === 200) {
-            await refreshProps();
-            setSnackbar({
-              message: t("Account successfully unlocked"),
-            });
-            const session = await res.json();
-            setSession({ address: session?.user?.address });
-          } else {
-            setSnackbar({
-              message:
-                t("Error response", { ns: "Common" }) +
-                " " +
-                (await res.text()),
-            });
-          }
-        });
+          await refreshProps();
+          setSnackbar({
+            message: t("Account successfully unlocked"),
+          });
+          const session = await res.json();
+          setSession({ address: session?.user?.address });
+        })
+        .catch((e) => {
+          setSnackbar({
+            message: t("Error response", { ns: "Common" }) + " " + e.message,
+          });
+        })
+        .finally(() => setLoading(false));
     },
     [t, setSnackbar, setSession, ethereum, refreshProps]
   );
@@ -66,13 +67,19 @@ export default function UnlockButton(props) {
   return (
     <Button
       disableElevation
-      disabled={!ethereum.web3Loaded}
+      disabled={!ethereum.web3Loaded || loading}
       onClick={sign}
-      startIcon={<LockOpenIcon />}
+      startIcon={
+        loading ? (
+          <CircularProgress color="primary" size={20} />
+        ) : (
+          <LockOpenIcon />
+        )
+      }
       variant="contained"
       {...props}
     >
-      {t("Unlock your account")}
+      {loading ? t("Connecting", { ns: "Common" }) : t("Unlock your account")}
     </Button>
   );
 }
