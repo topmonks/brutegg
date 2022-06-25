@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import { Skeleton } from "@mui/material";
 import { Fragment } from "react";
-import useDisplayAfterDelay from "../../hooks/useDisplayAfterDelay";
+import useDisplayAfterDelay from "../../hooks/use-display-after-delay";
 
 export function QuestDetailSkeleton() {
   const display = useDisplayAfterDelay(200);

@@ -3,7 +3,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import Navbar from "./navbar";
 import { Box, Container } from "@mui/material";
 import { NAVBAR_CHANGE } from "../state/event-target";
-import useEventTarget from "../hooks/useEventTarget";
+import useEventTarget from "../hooks/use-event-target";
 
 import Skeletons from "./page-skeleton";
 

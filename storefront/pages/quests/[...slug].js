@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import useEventTarget from "../../hooks/useEventTarget";
+import useEventTarget from "../../hooks/use-event-target";
 import { getProduct, getProducts } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";

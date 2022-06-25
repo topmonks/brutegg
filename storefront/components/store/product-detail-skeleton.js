@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import { Typography, Skeleton } from "@mui/material";
 import { Fragment } from "react";
-import useDisplayAfterDelay from "../../hooks/useDisplayAfterDelay";
+import useDisplayAfterDelay from "../../hooks/use-display-after-delay";
 
 export function ProductDetailSkeleton() {
   const display = useDisplayAfterDelay(200);

@@ -1,20 +1,30 @@
+import PropTypes from "prop-types";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import swell from "swell-js";
 import Form from "../../components/checkout/form";
 import { swellNodeClient } from "../../libs/swell-node";
 import window from "../../libs/window";
 import { withSessionSsr } from "../../libs/with-session";
 import { snackbarState } from "../../state/snackbar";
+import { ethereumState } from "../../state/ethereum";
+import useMetamaskUnlocked from "../../hooks/use-metamask-unlocked";
+import useUpdateSession from "../../hooks/use-update-session";
+import UnlockButton from "../../components/unlock-button";
+import MetamaskButton from "../../components/web3/metamask-button";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
+  const resultProps = {};
+
   if (!publicAddress) {
-    return { props: {} };
+    return { props: resultProps };
   }
+
+  resultProps.address = publicAddress;
 
   let {
     results: [user],
@@ -27,7 +37,11 @@ export const getServerSideProps = withSessionSsr(async (context) => {
     limit: 1,
   });
 
-  user = {
+  if (!user) {
+    return { props: resultProps };
+  }
+
+  resultProps.user = {
     firstName: user.first_name,
     lastName: user.last_name,
     address1: user.shipping.address1,
@@ -38,13 +52,11 @@ export const getServerSideProps = withSessionSsr(async (context) => {
   };
 
   return {
-    props: {
-      user,
-    },
+    props: resultProps,
   };
 });
 
-export default function Checkout({ user }) {
+export default function Checkout({ user, address }) {
   const { t } = useTranslation("Checkout");
   const [, setSnackbar] = useRecoilState(snackbarState);
 
@@ -74,7 +86,7 @@ export default function Checkout({ user }) {
               });
             } else {
               setSnackbar({
-                message: t("Account successfully updated"),
+                message: t("Account successfully updated", { ns: "Common" }),
               });
             }
           } else {
@@ -89,6 +101,29 @@ export default function Checkout({ user }) {
     },
     [t, setSnackbar]
   );
+
+  const [session] = useUpdateSession(address, "address");
+  const ethereum = useRecoilValue(ethereumState);
+
+  const isUnlocked = useMetamaskUnlocked(session?.address);
+
+  console.log({ isUnlocked, session });
+
+  let content;
+
+  if (ethereum.account) {
+    if (isUnlocked) {
+      content = <Form initialFormState={user} onSubmit={upsertCustomer} />;
+    } else {
+      content = (
+        <Box display="flex" justifyContent="center">
+          <UnlockButton size="large" sx={{ fontWeight: "bold" }} />
+        </Box>
+      );
+    }
+  } else {
+    content = <MetamaskButton />;
+  }
 
   return (
     <Grid container direction="row-reverse">
@@ -108,10 +143,14 @@ export default function Checkout({ user }) {
           <Typography component="h3" variant="h6">
             {t("Checkout")}
           </Typography>
-
-          <Form initialFormState={user} onSubmit={upsertCustomer} />
+          {content}
         </Box>
       </Grid>
     </Grid>
   );
 }
+
+Checkout.propTypes = {
+  address: PropTypes.string,
+  user: PropTypes.object,
+};

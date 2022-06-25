@@ -5,7 +5,7 @@ import { ethereumState } from "../../state/ethereum";
 import { productsState } from "../../state/products";
 import Head from "next/head";
 import StoreLayout from "../../components/store/store-layout";
-import useEventTarget from "../../hooks/useEventTarget";
+import useEventTarget from "../../hooks/use-event-target";
 import { ProductDetailSkeleton } from "../../components/store/product-detail-skeleton";
 import { STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";

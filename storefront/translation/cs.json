@@ -4,7 +4,8 @@
     "Close": "Zavřít",
     "Profile": "Profil",
     "Disconnect": "Odpojit",
-    "Error response": "Chyba"
+    "Error response": "Chyba",
+    "Account successfully updated": "Informace k účtu úspěšně aktualizovány"
   },
   "Navbar": {
     "Quests": "Questy",
@@ -13,7 +14,11 @@
     "Profile": "Profil"
   },
   "Profile": {
-    "Wallet": "Peněženka"
+    "Wallet": "Peněženka",
+    "General settings": "Obecné nastavení",
+    "User information": "Uživatelské údaje",
+    "Socials": "Sociální sítě",
+    "Save profile": "Uložit profil"
   },
   "Profile.Wallet": {
     "MetaMask wallet settings": "Nastavení peněženky MetaMask",
@@ -40,7 +45,6 @@
     "Nickname": "Přezdívka",
     "Contact info": "Kontaktní informace",
     "Address": "Adresa",
-    "Account successfully updated": "Informace k účtu úspěšně aktualizovány",
     "Choose a country": "Vyberte zemi",
     "Continue to payment": "Pokračujte k platbě",
     "Street, house number": "Ulice, číslo popisné",

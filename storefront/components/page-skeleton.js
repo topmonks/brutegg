@@ -7,7 +7,7 @@ import {
   STRETCHED_STORE_LIST_GRID,
 } from "./store/product-list";
 import { Fragment } from "react";
-import useDisplayAfterDelay from "../hooks/useDisplayAfterDelay";
+import useDisplayAfterDelay from "../hooks/use-display-after-delay";
 
 function QuestsSkeleton() {
   const display = useDisplayAfterDelay(300);

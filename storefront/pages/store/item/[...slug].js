@@ -7,7 +7,7 @@ import ProductList, {
 import { ProductDetail } from "../../../components/store/product-detail";
 import { ProductDetailSkeleton } from "../../../components/store/product-detail-skeleton";
 import { ProductDetailStickyWrapper } from "../../../components/store/product-detail-sticky-wrapper";
-import useEventTarget from "../../../hooks/useEventTarget";
+import useEventTarget from "../../../hooks/use-event-target";
 import { getProduct, getProducts } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { ProductPropTypes } from "../../../types/swell";

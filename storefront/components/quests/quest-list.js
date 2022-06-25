@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import useEventTarget from "../../hooks/useEventTarget";
+import useEventTarget from "../../hooks/use-event-target";
 import { Grid } from "@mui/material";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import pageSkeleton from "../page-skeleton";

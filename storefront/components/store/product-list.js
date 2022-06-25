@@ -3,7 +3,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import ProductListItem from "../../components/store/product-list-item";
 import { productsState } from "../../state/products";
-import useEventTarget from "../../hooks/useEventTarget";
+import useEventTarget from "../../hooks/use-event-target";
 import { Grid } from "@mui/material";
 import { STORE_ITEM_CHANGE } from "../../state/event-target";
 import pageSkeleton from "../../components/page-skeleton";

@@ -7,7 +7,7 @@ import QuestList from "../../components/quests/quest-list";
 import QuestsLayout from "../../components/quests/quests-layout";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
 import { scrollToProductId } from "../../components/store/product-list";
-import useEventTarget from "../../hooks/useEventTarget";
+import useEventTarget from "../../hooks/use-event-target";
 import { getProducts } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import { questsState } from "../../state/quests";
