@@ -12,7 +12,8 @@ const handle = app.getRequestHandler();
 
 const excludeCache = [
   (req) => req.path.startsWith("/api"),
-  (req) => req.path.endsWith("/checkout"),
+  (req) => /\/checkout(.json)?$/.test(req.path),
+  (req) => /\/profile(.json)?$/.test(req.path),
 ];
 
 export const server = onRequest(
