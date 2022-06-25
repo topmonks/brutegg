@@ -8,14 +8,14 @@ import { ProductDetail } from "../../../components/store/product-detail";
 import { ProductDetailSkeleton } from "../../../components/store/product-detail-skeleton";
 import { ProductDetailStickyWrapper } from "../../../components/store/product-detail-sticky-wrapper";
 import useEventTarget from "../../../hooks/use-event-target";
-import { getProduct, getProducts } from "../../../libs/swell";
+import { getProduct, getStoreProducts } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { ProductPropTypes } from "../../../types/swell";
 import { useMediaQuery } from "@mui/material";
 import window from "../../../libs/window";
 
 export async function getStaticPaths() {
-  const products = await getProducts({ category: "store" });
+  const products = await getStoreProducts({ category: "store" });
 
   const paths = products.results.map((p) => ({
     params: { slug: [p.id, p.slug] },
