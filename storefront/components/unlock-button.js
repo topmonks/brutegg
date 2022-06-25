@@ -1,19 +1,21 @@
 import { Button } from "@mui/material";
 import { useCallback } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import window from "../libs/window";
 import { ethereumState } from "../state/ethereum";
 import { snackbarState } from "../state/snackbar";
 import { useTranslation } from "react-i18next";
 import { sessionState } from "../state/session";
 import getWeb3, { composeNonce } from "../libs/web3";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
+import useRefreshProps from "../hooks/use-refresh-props";
 
 export default function UnlockButton(props) {
   const { t } = useTranslation("UnlockButton");
   const ethereum = useRecoilValue(ethereumState);
   const [, setSnackbar] = useRecoilState(snackbarState);
   const [, setSession] = useRecoilState(sessionState);
+  const refreshProps = useRefreshProps();
 
   const login = useCallback(
     (signature, message, date) => {
@@ -32,6 +34,7 @@ export default function UnlockButton(props) {
         })
         .then(async (res) => {
           if (res.status === 200) {
+            await refreshProps();
             setSnackbar({
               message: t("Account successfully unlocked"),
             });
@@ -47,7 +50,7 @@ export default function UnlockButton(props) {
           }
         });
     },
-    [t, setSnackbar, setSession, ethereum]
+    [t, setSnackbar, setSession, ethereum, refreshProps]
   );
 
   const sign = useCallback(async () => {
