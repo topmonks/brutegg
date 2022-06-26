@@ -27,7 +27,7 @@
     "next": "12.1.6",
     "next-sitemap": "3.1.6",
     "node-fetch": "3.2.6",
-    "react-i18next": "11.17.2",
+    "react-i18next": "11.17.3",
     "react-query": "3.39.1",
     "recoil": "0.7.4",
     "swell-js": "3.17.2",
