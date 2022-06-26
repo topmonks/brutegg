@@ -63,7 +63,7 @@ export default function Item({ product }) {
 
         setTimeout(() => {
           if (isXs) {
-            scrollToProductId(id);
+            scrollToProductId(id, { behavior: "auto", block: "start" });
           } else {
             window?.scrollTo({ top: 0, behavior: "smooth" });
           }

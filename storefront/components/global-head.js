@@ -35,7 +35,7 @@ export default function GlobalHead() {
         <link href="/site.webmanifest" rel="manifest" />
         <link color="#5bbad5" href="/safari-pinned-tab.svg" rel="mask-icon" />
         <meta content="#b91d47" name="msapplication-TileColor" />
-        <meta content="#333333" name="theme-color" />
+        <meta content="#000" name="theme-color" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossOrigin href="https://fonts.gstatic.com" rel="preconnect" />
         <link

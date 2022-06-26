@@ -28,7 +28,7 @@ export const FULL_STORE_LIST_GRID = {
 
 export const PRODUCT_ID_DATA_ATTR_NAME = "data-product-id";
 
-export function scrollToProductId(id) {
+export function scrollToProductId(id, attrs) {
   if (id && window.document) {
     const element = window.document.querySelector(
       `[${PRODUCT_ID_DATA_ATTR_NAME}="${id}"]`
@@ -38,7 +38,7 @@ export function scrollToProductId(id) {
       element.scrollIntoView({
         behavior: "smooth",
         block: "center",
-        inline: "nearest",
+        ...attrs,
       });
     }
   }

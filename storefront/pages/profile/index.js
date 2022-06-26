@@ -108,13 +108,17 @@ export default function Profile({ address, user }) {
       content = <Form initialFormState={user} onSubmit={upsertCustomer} />;
     } else {
       content = (
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" justifyContent="flex-start">
           <UnlockButton size="large" sx={{ fontWeight: "bold" }} />
         </Box>
       );
     }
   } else {
-    content = <MetamaskButton />;
+    content = (
+      <Box display="flex" justifyContent="flex-start">
+        <MetamaskButton />
+      </Box>
+    );
   }
 
   return <ProfileLayout>{content}</ProfileLayout>;

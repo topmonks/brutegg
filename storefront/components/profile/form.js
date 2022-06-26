@@ -57,7 +57,6 @@ export default function Form({ onSubmit, initialFormState }) {
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            mt: 2,
             width: { md: "60%" },
           }}
         >
