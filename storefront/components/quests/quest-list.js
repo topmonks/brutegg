@@ -65,9 +65,9 @@ export default function QuestList({
     : FULL_STORE_LIST_GRID;
 
   if (questsLoading && !quests.length) {
-    const StoreSkeleton = pageSkeleton[LINKS.STORE];
+    const QuestsSkeleton = pageSkeleton[LINKS.QUESTS];
 
-    return <StoreSkeleton stretched={stretched} />;
+    return <QuestsSkeleton stretched={stretched} />;
   }
 
   return (
