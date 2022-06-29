@@ -10,7 +10,8 @@ export async function getStoreProducts(opts) {
   const category = await getCategory("store");
   const storeCategories = category.children.results
     .sort((a, b) => a.sort - b.sort)
-    .map(({ id }) => id);
+    .map(({ id }) => id)
+    .concat([category.id]);
 
   const products = await getProducts({ ...opts, categories: storeCategories });
 
