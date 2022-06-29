@@ -18,7 +18,7 @@
     "@metamask/eth-sig-util": "4.0.1",
     "@mui/icons-material": "5.8.4",
     "@mui/material": "5.8.6",
-    "firebase-admin": "10.3.0",
+    "firebase-admin": "11.0.0",
     "firebase-functions": "3.22.0",
     "i18next": "21.8.11",
     "immutable": "4.1.0",
