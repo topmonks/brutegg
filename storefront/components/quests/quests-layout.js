@@ -3,10 +3,14 @@ import { Grid } from "@mui/material";
 import { Fragment } from "react";
 import { QuestHeadline } from "./quests-headline";
 
-export default function QuestsLayout({ children, rightExpanded }) {
+export default function QuestsLayout({
+  children,
+  rightExpanded,
+  displayHeadline = true,
+}) {
   return (
     <Fragment>
-      <QuestHeadline />
+      {displayHeadline && <QuestHeadline />}
 
       <Grid
         container
@@ -31,5 +35,6 @@ export default function QuestsLayout({ children, rightExpanded }) {
 
 QuestsLayout.propTypes = {
   children: PropTypes.node,
+  displayHeadline: PropTypes.bool,
   rightExpanded: PropTypes.bool,
 };

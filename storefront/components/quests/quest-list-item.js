@@ -63,7 +63,7 @@ export default function QuestListItem({ quest, selected }) {
     >
       <Grid alignItems="center" container gap={1}>
         {thumbnail && (
-          <Grid item>
+          <Grid item xs="auto">
             <Box
               sx={{
                 width: 60,
@@ -83,19 +83,29 @@ export default function QuestListItem({ quest, selected }) {
             </Box>
           </Grid>
         )}
-        <Grid flexGrow={1} item>
+        <Grid flexGrow={1} item sm xs={9}>
           <Typography component="h3" variant="h6">
             {quest.name}
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          sm="auto"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: { xs: "row", sm: "column" },
+          }}
+          xs={12}
+        >
           {validUntil && (
             <Typography variant="caption">
               {t("Deadline")}: {validUntil.toLocaleDateString(router.locale)}
             </Typography>
           )}
           {reward && (
-            <Typography variant="subtitle1">
+            <Typography sx={{ display: "inline" }} variant="subtitle1">
               {t("Reward")}:{" "}
               <PriceTag amount={reward} sx={{ fontWeight: "bold" }} />
             </Typography>
