@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, alpha } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
@@ -10,6 +10,7 @@ import { eventTargetState, QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
 import { useTranslation } from "react-i18next";
 import PriceTag from "../price-tag";
+import Image from "next/image";
 
 /**
  *
@@ -43,6 +44,8 @@ export default function QuestListItem({ quest, selected }) {
 
   let reward = quest.attributes.brute_reward?.value;
 
+  const thumbnail = quest.images[0]?.file;
+
   return (
     <Box
       onClick={goToQuest}
@@ -53,37 +56,51 @@ export default function QuestListItem({ quest, selected }) {
           mb: 1,
           border: (theme) => "1px solid " + theme.palette.primary.light,
         },
-        selected && {},
+        selected && {
+          background: (theme) => alpha(theme.palette.primary.light, 0.2),
+        },
       ]}
     >
-      <Grid container justifyContent="space-between">
-        <Grid item>
+      <Grid alignItems="center" container gap={1}>
+        {thumbnail && (
+          <Grid item>
+            <Box
+              sx={{
+                width: 60,
+                height: 60,
+                display: "flex",
+                alignItems: "center",
+                p: "10px",
+                // border: (theme) => "1px solid " + theme.palette.primary.light,
+                background: (theme) => alpha(theme.palette.primary.light, 0.2),
+              }}
+            >
+              <Image
+                height={thumbnail.height}
+                src={thumbnail.url}
+                width={thumbnail.width}
+              />
+            </Box>
+          </Grid>
+        )}
+        <Grid flexGrow={1} item>
           <Typography component="h3" variant="h6">
             {quest.name}
           </Typography>
         </Grid>
-        {validUntil && (
-          <Grid item>
+        <Grid item>
+          {validUntil && (
             <Typography variant="caption">
               {t("Deadline")}: {validUntil.toLocaleDateString(router.locale)}
             </Typography>
-          </Grid>
-        )}
-      </Grid>
-      <Grid container justifyContent="space-between">
-        <Grid item>
-          <Typography variant="subtitle1">
-            {quest.attributes.brute_quest_perex?.value}
-          </Typography>
-        </Grid>
-        {reward && (
-          <Grid item>
+          )}
+          {reward && (
             <Typography variant="subtitle1">
               {t("Reward")}:{" "}
               <PriceTag amount={reward} sx={{ fontWeight: "bold" }} />
             </Typography>
-          </Grid>
-        )}
+          )}
+        </Grid>
       </Grid>
     </Box>
   );

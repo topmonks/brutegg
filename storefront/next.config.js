@@ -14,6 +14,18 @@ const nextConfig = {
     locales: ["cs"],
     defaultLocale: "cs",
   },
+  images: {
+    domains: ["cdn.schema.io"],
+    // experimental
+    // remotePatterns: [
+    //   {
+    //     protocol: "https",
+    //     hostname: "cdn.schema.io",
+    //     port: "",
+    //     pathname: "/brute/**",
+    //   },
+    // ],
+  },
 };
 
 module.exports = nextConfig;

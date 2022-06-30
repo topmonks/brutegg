@@ -26,7 +26,7 @@ export default function Layout({ children }) {
 
   return (
     <Fragment>
-      <Container maxWidth="xxl">
+      <Container maxWidth="xl">
         <Navbar />
         <Box sx={{ mt: 2, mb: 2 }}>
           {SkeletonComponent ? <SkeletonComponent /> : children}

@@ -8,8 +8,9 @@ import {
 } from "./store/product-list";
 import { Fragment } from "react";
 import useDisplayAfterDelay from "../hooks/use-display-after-delay";
+import { QuestHeadline } from "./quests/quests-headline";
 
-function QuestsSkeleton() {
+function QuestsSkeleton({ stretched }) {
   const display = useDisplayAfterDelay(300);
 
   if (!display) {
@@ -18,11 +19,12 @@ function QuestsSkeleton() {
 
   return (
     <Fragment>
-      <Grid container justifyContent={"center"} spacing={1}>
+      <QuestHeadline />
+      <Grid container justifyContent={"center"} spacing={2} sx={{ mt: 1 }}>
         {new Array(20).fill().map((_, ix) => {
           return (
-            <Grid item key={ix} xs={8}>
-              <Skeleton animation="wave" height={80} variant="rectangular" />
+            <Grid item key={ix} xs={stretched ? 12 : 8}>
+              <Skeleton animation="wave" height={75} variant="rectangular" />
             </Grid>
           );
         })}
@@ -30,6 +32,10 @@ function QuestsSkeleton() {
     </Fragment>
   );
 }
+
+QuestsSkeleton.propTypes = {
+  stretched: PropTypes.bool,
+};
 function StoreSkeleton({ stretched }) {
   const display = useDisplayAfterDelay(300);
 
