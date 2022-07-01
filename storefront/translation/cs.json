@@ -78,5 +78,20 @@
     "Get rewards": "Získejte odměny",
     "For Brute Coins from completed quests, you can indulge in any of the rewards offered.": "Za Brute Coiny ze splněných úkolů si můžeš dopřát některou z nabízených odměn.",
     "How to?": "Jak na to?"
+  },
+  "Rarity": {
+    "common": "Běžné",
+    "uncommon": "Neobvyklé",
+    "rare": "Vzácné",
+    "epic": "Epické",
+    "legendary": "Legendární"
+  },
+  "StoreItem": {
+    "Remaining rewards": "Zbývá odměn"
+  },
+  "PaymentDialog": {
+    "Payment in Brute tokens": "Platba BRUTE tokeny",
+    "Pay": "Zaplatit",
+    "Back": "Zpět"
   }
 }

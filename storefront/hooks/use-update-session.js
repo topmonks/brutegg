@@ -10,7 +10,7 @@ export default function useUpdateSession(prop, propName) {
   }, [prop, propName, setSession]);
 
   useEffect(() => {
-    console.log(session);
+    // console.log(session);
   }, [session]);
 
   return [session, setSession];

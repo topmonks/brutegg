@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
 import swell from "swell-js";
@@ -15,6 +15,7 @@ import useMetamaskUnlocked from "../../hooks/use-metamask-unlocked";
 import useUpdateSession from "../../hooks/use-update-session";
 import UnlockButton from "../../components/unlock-button";
 import MetamaskButton from "../../components/web3/metamask-button";
+import PaymentDialog from "../../components/checkout/payment-dialog";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -88,6 +89,7 @@ export default function Checkout({ user, address }) {
               setSnackbar({
                 message: t("Account successfully updated", { ns: "Common" }),
               });
+              setPaymentDialogOpen(true);
             }
           } else {
             setSnackbar({
@@ -107,8 +109,6 @@ export default function Checkout({ user, address }) {
 
   const isUnlocked = useMetamaskUnlocked(session?.address);
 
-  console.log({ isUnlocked, session });
-
   let content;
 
   if (ethereum.account) {
@@ -125,8 +125,12 @@ export default function Checkout({ user, address }) {
     content = <MetamaskButton />;
   }
 
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(true);
+  const handleClose = useCallback(() => setPaymentDialogOpen(false), []);
+
   return (
     <Grid container direction="row-reverse">
+      <PaymentDialog handleClose={handleClose} open={paymentDialogOpen} />
       <Grid item md={3} sm={5} xs={12}>
         <Typography component="h3" variant="h6">
           {t("Items")}

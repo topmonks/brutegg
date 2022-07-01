@@ -74,11 +74,7 @@ export const bruteState = selector({
       return undefined;
     }
 
-    console.log(ethereum);
-
     const bruteContractAddress = BRUTE_ADDRESS[ethereum.chainId];
-
-    console.log(bruteContractAddress);
 
     if (!bruteContractAddress) {
       return undefined;

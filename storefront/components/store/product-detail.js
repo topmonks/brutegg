@@ -13,6 +13,7 @@ import { Box } from "@mui/system";
 import { productState } from "../../state/products";
 import { useTranslation } from "react-i18next";
 import StyledDescription from "../styled-description";
+import PriceTag from "../price-tag";
 
 /**
  *
@@ -20,7 +21,7 @@ import StyledDescription from "../styled-description";
  * @param {import("../../types/swell").Product} props.product
  */
 export function ProductDetail({ product: _product }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("StoreItem");
   const router = useRouter();
   const {
     slug: [id],
@@ -30,6 +31,9 @@ export function ProductDetail({ product: _product }) {
     productState(_product.id)
   );
 
+  /**
+   * @type {import("../../types/swell").Product}
+   */
   const product = refreshedProduct ?? _product;
 
   // refresh product in browsers DOM
@@ -40,11 +44,15 @@ export function ProductDetail({ product: _product }) {
   const eventTarget = useRecoilValue(eventTargetState);
 
   const addToCart = useCallback(async () => {
+    await swell.cart.setItems([]);
+
     await swell.cart.addItem({
       product_id: product.id,
       quantity: 1,
     });
-  }, [product]);
+
+    router.push(withLocale(router.locale, "/checkout"));
+  }, [product, router]);
 
   const close = useCallback(() => {
     eventTarget.dispatchEvent(
@@ -54,6 +62,8 @@ export function ProductDetail({ product: _product }) {
     );
     router.push(withLocale(router.locale, "/store"), null, { scroll: false });
   }, [router, eventTarget]);
+
+  const initialSupply = product.attributes.brute_initial_supply?.value;
 
   return (
     <Fragment>
@@ -71,16 +81,25 @@ export function ProductDetail({ product: _product }) {
           <Typography component="h1" variant="h3">
             {product.name}
           </Typography>
+
+          <Typography variant="subtitle1">
+            {t(product.attributes.brute_rarity?.value, { ns: "Rarity" })}
+          </Typography>
+          <Typography variant="subtitle1">
+            {t("Remaining rewards")}: {product.stock_level}
+            {initialSupply && "/" + initialSupply}
+          </Typography>
         </Box>
-        <Box sx={{ flexGrow: 2, overflowY: "auto" }}>
-          <StyledDescription
-            dangerouslySetInnerHTML={{ __html: product.description }}
-          ></StyledDescription>
-        </Box>
-        <Box sx={{ flexGrow: 1, mt: 3 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography
+            component="body1"
+            sx={{ fontWeight: "bold" }}
+            variant="h6"
+          >
+            <PriceTag amount={product.attributes.brute_price?.value} />
+          </Typography>
           <Button
             disableElevation
-            fullWidth
             onClick={addToCart}
             size="large"
             startIcon={<ShoppingCartCheckoutIcon />}
@@ -90,6 +109,12 @@ export function ProductDetail({ product: _product }) {
             {t("Buy", { ns: "Common" })}
           </Button>
         </Box>
+        <Box sx={{ flexGrow: 2, overflowY: "auto" }}>
+          <StyledDescription
+            dangerouslySetInnerHTML={{ __html: product.description }}
+          ></StyledDescription>
+        </Box>
+        <Box sx={{ flexGrow: 1, mt: 3 }}></Box>
       </Box>
     </Fragment>
   );

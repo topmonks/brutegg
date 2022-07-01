@@ -19,3 +19,11 @@ export const BRUTE_ADDRESS = {
   [POLYGON.chainId]: process.env.NEXT_PUBLIC_BRUTE_MAINNET,
   [POLYGON.testChainId]: process.env.NEXT_PUBLIC_BRUTE_TESTNET,
 };
+
+export const RARITY = {
+  COMMON: "common",
+  UNCOMMON: "uncommon",
+  RARE: "rare",
+  EPIC: "epic",
+  LEGENDARY: "legendary",
+};

@@ -29,10 +29,10 @@ export default function PriceTag({
       {displayLogo && (
         <Image
           alt="Brutecoin logo"
-          height={16}
+          height={30}
           layout="fixed"
-          src="/letter-b.svg"
-          width={13}
+          src="/b-price-tag.svg"
+          width={25}
         />
       )}
     </Box>
