@@ -1,6 +1,9 @@
 const ERC20PresetMinter = artifacts.require("ERC20PresetMinterPauser");
 
+// Kofola ledger address
 const MAIN_ADDRESS = "0x7C6fFD8065d3938726E23983f28d8175cb027Aec";
+
+// const MAIN_ADDRESS = "0x2004ECACf031bfd0043B555CE54dE1f8d8987bC1";
 // const MAIN_ADDRESS = "0x2004ECACf031bfd0043B555CE54dE1f8d8987bC1";
 
 module.exports = async function (deployer, network, accounts) {
