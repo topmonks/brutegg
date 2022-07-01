@@ -3,14 +3,16 @@ import { Grid, Skeleton } from "@mui/material";
 
 import { LINKS } from "./navbar";
 import {
+  COLUMNS_COUNT,
   FULL_STORE_LIST_GRID,
   STRETCHED_STORE_LIST_GRID,
 } from "./store/product-list";
 import { Fragment } from "react";
 import useDisplayAfterDelay from "../hooks/use-display-after-delay";
 import { QuestHeadline } from "./quests/quests-headline";
+import { ProductsHeadline } from "./store/products-headline";
 
-function QuestsSkeleton({ stretched }) {
+function QuestsSkeleton({ stretched, displayHeadline = true }) {
   const display = useDisplayAfterDelay(300);
 
   if (!display) {
@@ -19,8 +21,8 @@ function QuestsSkeleton({ stretched }) {
 
   return (
     <Fragment>
-      <QuestHeadline />
-      <Grid container justifyContent={"center"} spacing={2} sx={{ mt: 1 }}>
+      {displayHeadline && <QuestHeadline />}
+      <Grid container justifyContent={"center"} spacing={2} sx={{ mt: 0 }}>
         {new Array(20).fill().map((_, ix) => {
           return (
             <Grid item key={ix} xs={stretched ? 12 : 8}>
@@ -34,9 +36,10 @@ function QuestsSkeleton({ stretched }) {
 }
 
 QuestsSkeleton.propTypes = {
+  displayHeadline: PropTypes.bool,
   stretched: PropTypes.bool,
 };
-function StoreSkeleton({ stretched }) {
+function StoreSkeleton({ stretched, displayHeadline = true }) {
   const display = useDisplayAfterDelay(300);
 
   if (!display) {
@@ -48,19 +51,24 @@ function StoreSkeleton({ stretched }) {
     : FULL_STORE_LIST_GRID;
 
   return (
-    <Grid container spacing={2}>
-      {new Array(20).fill().map((_, ix) => {
-        return (
-          <Grid item key={ix} {...gridItemAttrs}>
-            <Skeleton animation="wave" height={250} variant="rectangular" />
-          </Grid>
-        );
-      })}
-    </Grid>
+    <Fragment>
+      {displayHeadline && <ProductsHeadline />}
+
+      <Grid columns={COLUMNS_COUNT} container spacing={2} sx={{ mt: 0 }}>
+        {new Array(20).fill().map((_, ix) => {
+          return (
+            <Grid item key={ix} {...gridItemAttrs}>
+              <Skeleton animation="wave" height={250} variant="rectangular" />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Fragment>
   );
 }
 
 StoreSkeleton.propTypes = {
+  displayHeadline: PropTypes.bool,
   stretched: PropTypes.bool,
 };
 

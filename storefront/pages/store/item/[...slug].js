@@ -83,7 +83,11 @@ export default function Item({ product }) {
 
   return (
     <StoreLayout rightExpanded={productDisplayed}>
-      <ProductList selectedProductId={id} stretched={productDisplayed} />
+      <ProductList
+        displayHeadline={false}
+        selectedProductId={id}
+        stretched={productDisplayed}
+      />
 
       <Fragment>
         <ProductDetailStickyWrapper>

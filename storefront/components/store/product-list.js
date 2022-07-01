@@ -26,6 +26,8 @@ export const FULL_STORE_LIST_GRID = {
   xs: 12,
 };
 
+export const COLUMNS_COUNT = 12;
+
 export const PRODUCT_ID_DATA_ATTR_NAME = "data-product-id";
 
 export function scrollToProductId(id, attrs) {
@@ -48,6 +50,7 @@ export default function ProductList({
   ssr = { products: [] },
   stretched,
   selectedProductId,
+  displayHeadline = true,
 }) {
   const [_products, setProducts] = useRecoilState(productsState);
 
@@ -82,12 +85,14 @@ export default function ProductList({
   if (productsLoading && !products.length) {
     const StoreSkeleton = pageSkeleton[LINKS.STORE];
 
-    return <StoreSkeleton stretched={stretched} />;
+    return (
+      <StoreSkeleton displayHeadline={displayHeadline} stretched={stretched} />
+    );
   }
 
   return (
     <Fragment>
-      <Grid columns={12} container spacing={1}>
+      <Grid columns={COLUMNS_COUNT} container spacing={1}>
         {products.map((p) => {
           const isSelectedProduct = p.id === _selectedProductId;
           return (
@@ -107,6 +112,7 @@ export default function ProductList({
 }
 
 ProductList.propTypes = {
+  displayHeadline: PropTypes.bool,
   selectedProductId: PropTypes.string,
   ssr: PropTypes.shape({
     products: PropTypes.array,

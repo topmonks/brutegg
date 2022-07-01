@@ -74,7 +74,11 @@ export default function Item({ quest }) {
 
   return (
     <QuestsLayout rightExpanded={questDisplayed}>
-      <QuestList selectedQuestId={id} stretched={questDisplayed} />
+      <QuestList
+        displayHeadline={false}
+        selectedQuestId={id}
+        stretched={questDisplayed}
+      />
 
       <Fragment>
         <ProductDetailStickyWrapper>

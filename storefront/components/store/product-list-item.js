@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
-import { Avatar, Grid, Typography } from "@mui/material";
+import { Grid, Typography, alpha } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
@@ -8,6 +8,7 @@ import { withLocale } from "../../libs/router";
 import window from "../../libs/window";
 import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
+import Image from "next/image";
 
 /**
  *
@@ -38,12 +39,14 @@ export default function ProductListItem({ product, selected }) {
     );
   }, [router, product, eventTarget]);
 
+  const thumbnail = product.images[0]?.file;
+
   return (
     <Box
       onClick={goToProduct}
       sx={[
         {
-          height: "250px",
+          height: "300px",
           cursor: "pointer",
           p: 1,
           mb: 1,
@@ -62,31 +65,40 @@ export default function ProductListItem({ product, selected }) {
         justifyContent="space-between"
         sx={{ height: "100%" }}
       >
-        <Grid item sx={{ height: "70%" }}>
-          <Avatar
-            sx={{
-              mx: "auto",
-              mt: 2,
-              width: 100,
-              height: 100,
-              fontWeight: "bold",
-              color: (theme) =>
-                selected ? theme.palette.primary.light : "black",
-              bgcolor: (theme) =>
-                selected ? "black" : theme.palette.primary.light,
-            }}
-          >
-            {product.name
-              .split(" ")
-              .map((w) => w.charAt(0))
-              .join("")}
-          </Avatar>
+        <Grid
+          item
+          sx={[
+            { height: "70%", position: "relative" },
+            selected && {
+              border: "2px solid " + alpha("#000", 0.3),
+            },
+          ]}
+        >
+          {thumbnail && (
+            <Image
+              height={thumbnail.height}
+              layout="fill"
+              objectFit="cover"
+              src={thumbnail.url}
+              width={thumbnail.width}
+            />
+          )}
         </Grid>
-        <Grid item sx={{ height: "30%" }}>
+        <Grid
+          item
+          sx={{
+            height: "30%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Typography
             component="h3"
             display="block"
-            sx={{ textAlign: "center" }}
+            sx={{
+              textAlign: "center",
+            }}
             variant="h6"
           >
             {product.name}

@@ -37,6 +37,7 @@ export default function QuestList({
   ssr = { quests: [] },
   stretched,
   selectedQuestId,
+  displayHeadline = true,
 }) {
   const [_quests, setQuests] = useRecoilState(questsState);
 
@@ -67,7 +68,9 @@ export default function QuestList({
   if (questsLoading && !quests.length) {
     const QuestsSkeleton = pageSkeleton[LINKS.QUESTS];
 
-    return <QuestsSkeleton stretched={stretched} />;
+    return (
+      <QuestsSkeleton displayHeadline={displayHeadline} stretched={stretched} />
+    );
   }
 
   return (
@@ -93,9 +96,10 @@ export default function QuestList({
 }
 
 QuestList.propTypes = {
+  displayHeadline: PropTypes.bool,
   selectedQuestId: PropTypes.string,
   ssr: PropTypes.shape({
-    products: PropTypes.array,
+    quests: PropTypes.array,
   }),
   stretched: PropTypes.bool,
 };

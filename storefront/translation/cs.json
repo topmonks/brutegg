@@ -73,5 +73,10 @@
   "Countries": {
     "Czech Republic": "Česko",
     "Slovakia": "Slovensko"
+  },
+  "Store": {
+    "Get rewards": "Získejte odměny",
+    "For Brute Coins from completed quests, you can indulge in any of the rewards offered.": "Za Brute Coiny ze splněných úkolů si můžeš dopřát některou z nabízených odměn.",
+    "How to?": "Jak na to?"
   }
 }
