@@ -2,10 +2,11 @@ import { GANACHE_ID, METAMASK, POLYGON } from "./constants";
 import window from "./window";
 
 export function isCorrectChain(chainId) {
+  const correctChainIds = [POLYGON.testChainId, POLYGON.chainId];
   if (process.env.NODE_ENV === "development") {
-    return [POLYGON.testChainId, POLYGON.chainId, GANACHE_ID].includes(chainId);
+    correctChainIds.push(GANACHE_ID);
   }
-  return chainId === POLYGON.chainId;
+  return correctChainIds.includes(chainId);
 }
 
 /**

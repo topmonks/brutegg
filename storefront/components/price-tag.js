@@ -3,7 +3,12 @@ import { Box } from "@mui/system";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function PriceTag({ amount, displayLogo = true, ...props }) {
+export default function PriceTag({
+  children,
+  amount,
+  displayLogo = true,
+  ...props
+}) {
   const router = useRouter();
 
   try {
@@ -20,7 +25,7 @@ export default function PriceTag({ amount, displayLogo = true, ...props }) {
       justifyContent="center"
       {...props}
     >
-      <span>{amount}</span>
+      {children || <span>{amount}</span>}
       {displayLogo && (
         <Image
           alt="Brutecoin logo"
@@ -36,5 +41,6 @@ export default function PriceTag({ amount, displayLogo = true, ...props }) {
 
 PriceTag.propTypes = {
   amount: PropTypes.string,
+  children: PropTypes.node,
   displayLogo: PropTypes.bool,
 };

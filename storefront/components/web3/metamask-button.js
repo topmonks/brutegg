@@ -3,6 +3,7 @@ import {
   Alert,
   alpha,
   Button,
+  CircularProgress,
   ListItemIcon,
   ListItemText,
   Menu,
@@ -13,7 +14,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { Fragment, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import {
   isCorrectChain,
   optionallySwitchToPolygonChain,
@@ -30,6 +31,7 @@ import PriceTag from "../price-tag";
 import { useRouter } from "next/router";
 import { withLocale } from "../../libs/router";
 import { sessionState } from "../../state/session";
+import { bruteState } from "../../state/brute-token";
 
 const buttonAnimation = (color) => keyframes`
   from {
@@ -159,6 +161,7 @@ function ConnectedButton() {
   const handleClose = () => setOpen(false);
   const [, setSnackbar] = useRecoilState(snackbarState);
   const [, setSession] = useRecoilState(sessionState);
+  const brute = useRecoilValueLoadable(bruteState);
 
   const disconnect = () => {
     handleClose();
@@ -239,7 +242,12 @@ function ConnectedButton() {
               borderRight: "1px solid white",
             }}
           >
-            <PriceTag amount="500" sx={{ fontWeight: "bold" }} />
+            <PriceTag
+              amount={brute.contents?.account?.balance || ""}
+              sx={{ fontWeight: "bold" }}
+            >
+              {brute.state === "loading" && <CircularProgress size={15} />}
+            </PriceTag>
           </Box>
           <span>
             {ethereum.account?.substring(0, 5)}...

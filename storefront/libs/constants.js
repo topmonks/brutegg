@@ -14,3 +14,8 @@ export const METAMASK = {
 };
 
 export const GANACHE_ID = "0x539"; //1337 decimal
+
+export const BRUTE_ADDRESS = {
+  [POLYGON.chainId]: process.env.NEXT_PUBLIC_BRUTE_MAINNET,
+  [POLYGON.testChainId]: process.env.NEXT_PUBLIC_BRUTE_TESTNET,
+};
