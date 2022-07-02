@@ -172,3 +172,170 @@ export const ProductPropTypes = PropTypes.shape({
   }),
   sale: PropTypes.bool,
 });
+
+/**
+ * @typedef {object} Cart
+ * @property {null} account_logged_in
+ * @property {string} currency
+ * @property {string} checkout_id
+ * @property {number} sub_total
+ * @property {number} item_discount
+ * @property {number} item_tax
+ * @property {number} item_quantity
+ * @property {number} item_shipment_weight
+ * @property {number} discount_total
+ * @property {number} shipment_price
+ * @property {number} shipment_total
+ * @property {number} tax_total
+ * @property {number} tax_included_total
+ * @property {number} grand_total
+ * @property {number} auth_total
+ * @property {number} giftcard_total
+ * @property {number} capture_total
+ * @property {boolean} guest
+ * @property {string} checkout_url
+ * @property {string} date_created
+ * @property {string} status
+ * @property {string} date_abandoned
+ * @property {null} discounts
+ * @property {object[]} items
+ * @property {string} items.product_id
+ * @property {number} items.quantity
+ * @property {string} items.id
+ * @property {number} items.price
+ * @property {number} items.shipment_weight
+ * @property {number} items.price_total
+ * @property {number} items.discount_total
+ * @property {number} items.discount_each
+ * @property {number} items.tax_total
+ * @property {number} items.tax_each
+ * @property {null} items.variant
+ * @property {object} items.product
+ * @property {string} items.product.name
+ * @property {null} items.product.sku
+ * @property {object[]} items.product.images
+ * @property {object} items.product.images.file
+ * @property {string} items.product.images.file.id
+ * @property {string} items.product.images.file.date_uploaded
+ * @property {number} items.product.images.file.length
+ * @property {string} items.product.images.file.md5
+ * @property {null} items.product.images.file.filename
+ * @property {string} items.product.images.file.content_type
+ * @property {null} items.product.images.file.metadata
+ * @property {string} items.product.images.file.url
+ * @property {number} items.product.images.file.width
+ * @property {number} items.product.images.file.height
+ * @property {string} items.product.images.id
+ * @property {string} items.product.description
+ * @property {string} items.product.slug
+ * @property {object} items.product.attributes
+ * @property {string} items.product.attributes.brute_quest_perex
+ * @property {string} items.product.attributes.brute_price
+ * @property {string} items.product.attributes.brute_initial_supply
+ * @property {string} items.product.attributes.brute_rarity
+ * @property {boolean} items.product.stock_tracking
+ * @property {} items.product.options
+ * @property {number} items.product.stock_level
+ * @property {boolean} items.product.stock_purchasable
+ * @property {string} items.product.id
+ * @property {} promotion_ids
+ * @property {number} shipment_discount
+ * @property {null} taxes
+ * @property {boolean} abandoned
+ * @property {null} shipment_rating
+ * @property {string} id
+ * @property {null} coupon
+ * @property {object} promotions
+ * @property {number} promotions.count
+ * @property {} promotions.results
+ * @property {number} promotions.page
+ */
+
+export const CartPropTypes = {
+  account_logged_in: PropTypes.any,
+  billing: PropTypes.shape({}),
+  shipping: PropTypes.shape({}),
+  currency: PropTypes.string,
+  checkout_id: PropTypes.string,
+  sub_total: PropTypes.number,
+  item_discount: PropTypes.number,
+  item_tax: PropTypes.number,
+  item_quantity: PropTypes.number,
+  item_shipment_weight: PropTypes.number,
+  discount_total: PropTypes.number,
+  shipment_price: PropTypes.number,
+  shipment_total: PropTypes.number,
+  tax_total: PropTypes.number,
+  tax_included_total: PropTypes.number,
+  grand_total: PropTypes.number,
+  auth_total: PropTypes.number,
+  giftcard_total: PropTypes.number,
+  capture_total: PropTypes.number,
+  guest: PropTypes.bool,
+  checkout_url: PropTypes.string,
+  date_created: PropTypes.string,
+  status: PropTypes.string,
+  date_abandoned: PropTypes.string,
+  discounts: PropTypes.any,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      product_id: PropTypes.string,
+      quantity: PropTypes.number,
+      id: PropTypes.string,
+      price: PropTypes.number,
+      shipment_weight: PropTypes.number,
+      price_total: PropTypes.number,
+      discount_total: PropTypes.number,
+      discount_each: PropTypes.number,
+      tax_total: PropTypes.number,
+      tax_each: PropTypes.number,
+      variant: PropTypes.any,
+      product: PropTypes.shape({
+        name: PropTypes.string,
+        sku: PropTypes.any,
+        images: PropTypes.arrayOf(
+          PropTypes.shape({
+            file: PropTypes.shape({
+              id: PropTypes.string,
+              date_uploaded: PropTypes.string,
+              length: PropTypes.number,
+              md5: PropTypes.string,
+              filename: PropTypes.any,
+              content_type: PropTypes.string,
+              metadata: PropTypes.any,
+              url: PropTypes.string,
+              width: PropTypes.number,
+              height: PropTypes.number,
+            }),
+            id: PropTypes.string,
+          })
+        ),
+        description: PropTypes.string,
+        slug: PropTypes.string,
+        attributes: PropTypes.shape({
+          brute_quest_perex: PropTypes.string,
+          brute_price: PropTypes.string,
+          brute_initial_supply: PropTypes.string,
+          brute_rarity: PropTypes.string,
+        }),
+        stock_tracking: PropTypes.bool,
+        options: PropTypes.array,
+        stock_level: PropTypes.number,
+        stock_purchasable: PropTypes.bool,
+        id: PropTypes.string,
+      }),
+    })
+  ),
+  promotion_ids: PropTypes.array,
+  shipment_discount: PropTypes.number,
+  taxes: PropTypes.any,
+  abandoned: PropTypes.bool,
+  shipment_rating: PropTypes.any,
+  id: PropTypes.string,
+  coupon: PropTypes.any,
+  promotions: PropTypes.shape({
+    count: PropTypes.number,
+    results: PropTypes.array,
+    page: PropTypes.number,
+  }),
+};

@@ -1,4 +1,5 @@
 import swell from "swell-js";
+import getWeb3 from "./web3";
 
 swell.init(
   process.env.NEXT_PUBLIC_SWELL_STORE_ID,
@@ -29,7 +30,7 @@ export async function getProducts(opts) {
 
 export async function getProduct(slugOrId) {
   /**
-   * @type {{results: import("../../types/swell").Product}}
+   * @type {{results: import("../types/swell").Product}}
    */
   const product = await swell.products.get(slugOrId);
 
@@ -38,9 +39,33 @@ export async function getProduct(slugOrId) {
 
 export async function getCategory(slugOrId) {
   /**
-   * @type {{results: import("../../types/swell").Product}}
+   * @type {{results: import("../types/swell").Product}}
    */
   const category = await swell.categories.get(slugOrId);
 
   return category;
+}
+
+/**
+ *
+ * @param {import("../types/swell").Cart} cart
+ */
+export function calculateCartPrice(cart) {
+  const web3 = getWeb3();
+  if (!web3) {
+    throw new Error("Web3 not loaded");
+  }
+
+  const BN = web3.utils.BN;
+
+  /**
+   * @type {import("bn.js")}
+   */
+  const total = cart.items.reduce((acc, item) => {
+    const p = new BN(item.product.attributes?.brute_price);
+
+    return acc.add(p);
+  }, new BN(0));
+
+  return total;
 }

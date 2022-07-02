@@ -8,21 +8,16 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useCallback } from "react";
 import useBruteContract from "../../hooks/use-brute-contract";
+import { ethereumState } from "../../state/ethereum";
+import { useRecoilValue } from "recoil";
+import PaymentButton from "./payment-button";
 
 export default function PaymentDialog({ handleClose, open }) {
   const { t } = useTranslation("PaymentDialog");
 
-  const bruteContract = useBruteContract();
-
-  const pay = useCallback(() => {
-    if (!bruteContract) {
-      return;
-    }
-
-    handleClose();
-  }, [handleClose, bruteContract]);
+  const [bruteContract, treasuryAddress] = useBruteContract();
+  const ethereum = useRecoilValue(ethereumState);
 
   return (
     <div>
@@ -38,9 +33,7 @@ export default function PaymentDialog({ handleClose, open }) {
           <Button onClick={handleClose} variant="text">
             {t("Back")}
           </Button>
-          <Button disableElevation onClick={pay} variant="contained">
-            {t("Pay")}
-          </Button>
+          <PaymentButton />
         </DialogActions>
       </Dialog>
     </div>
