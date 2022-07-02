@@ -2,6 +2,7 @@
   "Common": {
     "Buy": "Koupit",
     "Close": "Zavřít",
+    "Cancel": "Zrušit",
     "Profile": "Profil",
     "Disconnect": "Odpojit",
     "Error response": "Chyba",
@@ -56,7 +57,8 @@
     "City": "Město",
     "Zip": "PSČ",
     "Back to the store": "Zpět do obchodu",
-    "Checkout": "Dokončit objednávku"
+    "Checkout": "Dokončit objednávku",
+    "Payment is being prepared": "Platba se připravuje"
   },
   "Validations": {
     "Input is not allowed to be empty": "Pole musí být vyplněno",
@@ -90,7 +92,8 @@
     "Remaining rewards": "Zbývá odměn"
   },
   "PaymentDialog": {
-    "Payment in Brute tokens": "Platba BRUTE tokeny",
+    "Order summary": "Shrnutí objednávky",
+    "Items will be shipped to": "Zboží bude odesláno na adresu",
     "Pay": "Zaplatit",
     "Back": "Zpět"
   }

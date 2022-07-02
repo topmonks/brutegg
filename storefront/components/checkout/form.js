@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import { Box, Button, Typography } from "@mui/material";
-import { Fragment, useCallback, useEffect, useMemo } from "react";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useFormData from "../../hooks/use-form-data";
 import { checkoutValidator } from "../../validations/checkout";
@@ -12,21 +12,23 @@ import AddressTwo from "./form/address-2";
 import City from "./form/city";
 import Zip from "./form/zip";
 import { removeEmpty } from "../../libs/util";
+import { useRecoilState } from "recoil";
+import { checkoutFormState, defaultFormState } from "../../state/checkout";
 
-const defaultFormState = {
-  firstName: "",
-  lastName: "",
-  address1: "",
-  address2: "",
-  city: "",
-  zip: "",
-  country: "",
-};
-
-export default function Form({ onSubmit, initialFormState }) {
+export default function Form({
+  onSubmit,
+  initialFormState,
+  hideActions = false,
+}) {
   const { t } = useTranslation("Checkout");
   const [formData, setFormData, onChange, , resetForm] =
     useFormData(defaultFormState);
+
+  const [, setCheckoutForm] = useRecoilState(checkoutFormState);
+
+  useEffect(() => {
+    setCheckoutForm(formData.toJSON());
+  }, [formData, setCheckoutForm]);
 
   useEffect(() => {
     if (!initialFormState) {
@@ -36,10 +38,13 @@ export default function Form({ onSubmit, initialFormState }) {
     setFormData((f) => f.merge(removeEmpty(initialFormState)));
   }, [initialFormState, setFormData]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      onSubmit(formData.toJSON());
+      setIsLoading(true);
+      onSubmit(formData.toJSON()).finally(() => setIsLoading(false));
     },
     [onSubmit, formData]
   );
@@ -82,21 +87,37 @@ export default function Form({ onSubmit, initialFormState }) {
           </Box>
           <CountrySelect formData={formData} onChange={setFormData} />
           <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              flexWrap: { xs: "wrap", sm: "nowrap" },
-              mb: { xs: 2, sm: 10 },
-            }}
+            sx={[
+              {
+                display: "flex",
+                gap: 2,
+                flexWrap: { xs: "wrap", sm: "nowrap" },
+                mb: { xs: 2, sm: 10 },
+              },
+              hideActions && {
+                display: "none",
+              },
+            ]}
           >
-            <Button
-              disableElevation
-              size="large"
-              type="submit"
-              variant="contained"
-            >
-              {t("Continue to payment")}
-            </Button>
+            {isLoading ? (
+              <Button
+                disableElevation
+                disabled
+                startIcon={<CircularProgress size={20} />}
+                variant="contained"
+              >
+                {t("Payment is being prepared")}
+              </Button>
+            ) : (
+              <Button
+                disableElevation
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                {t("Continue to payment")}
+              </Button>
+            )}
             <Button size="large" variant="text">
               {t("Back to the store")}
             </Button>
@@ -108,6 +129,7 @@ export default function Form({ onSubmit, initialFormState }) {
 }
 
 Form.propTypes = {
+  hideActions: PropTypes.bool,
   initialFormState: PropTypes.object,
   onSubmit: PropTypes.func,
 };

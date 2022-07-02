@@ -1,5 +1,5 @@
 import { Button, CircularProgress } from "@mui/material";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -10,6 +10,7 @@ import { calculateCartPrice } from "../../libs/swell";
 import getWeb3 from "../../libs/web3";
 import { ethereumState } from "../../state/ethereum";
 import { pendingTxsState, TX_STATES } from "../../state/tx";
+import PriceTag from "../price-tag";
 
 export default function PaymentButton() {
   const { t } = useTranslation("PaymentDialog");
@@ -29,6 +30,13 @@ export default function PaymentButton() {
     { enabled: !!ethereum.account }
   );
 
+  const totalPrice = useMemo(() => {
+    if (!cart) {
+      return null;
+    }
+    return calculateCartPrice(cart);
+  }, [cart]);
+
   const pay = useCallback(async () => {
     const web3 = getWeb3();
     if (!web3) {
@@ -39,11 +47,17 @@ export default function PaymentButton() {
       return;
     }
 
-    const totalPrice = web3.utils.toWei(calculateCartPrice(cart), "ether");
+    if (!totalPrice) {
+      return;
+    }
+
+    const totalPriceInWei = web3.utils.toWei(totalPrice, "ether");
+
+    const gasPrice = await web3.eth.getGasPrice();
 
     bruteContract.methods
-      .transfer(treasuryAddress, totalPrice)
-      .send({ from: ethereum.account }, (error, transactionHash) => {
+      .transfer(treasuryAddress, totalPriceInWei)
+      .send({ from: ethereum.account, gasPrice }, (error, transactionHash) => {
         setPendingTxs((v) => v.concat([transactionHash]));
         setWatcherTxs(transactionHash);
       });
@@ -53,7 +67,7 @@ export default function PaymentButton() {
     setWatcherTxs,
     bruteContract,
     treasuryAddress,
-    cart,
+    totalPrice,
   ]);
 
   if (watchingTxs?.state === TX_STATES.PENDING) {
@@ -61,6 +75,7 @@ export default function PaymentButton() {
       <Button
         disableElevation
         disabled
+        size="large"
         startIcon={<CircularProgress size={20} />}
         variant="contained"
       >
@@ -74,9 +89,11 @@ export default function PaymentButton() {
       disableElevation
       disabled={cartIsLoading}
       onClick={pay}
+      size="large"
+      sx={{ fontWeight: "bold" }}
       variant="contained"
     >
-      {t("Pay")}
+      {t("Pay")} <PriceTag amount={totalPrice?.toString()} sx={{ ml: 1 }} />
     </Button>
   );
 }

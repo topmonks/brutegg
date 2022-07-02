@@ -67,7 +67,7 @@ export default function Checkout({ user, address }) {
 
   const upsertCustomer = useCallback(
     (body = {}) => {
-      window
+      return window
         ?.fetch("/api/swell/upsert-customer", {
           headers: {
             "Content-Type": "application/json",
@@ -109,11 +109,20 @@ export default function Checkout({ user, address }) {
 
   const isUnlocked = useMetamaskUnlocked(session?.address);
 
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(true);
+  const handleClose = useCallback(() => setPaymentDialogOpen(false), []);
+
   let content;
 
   if (ethereum.account) {
     if (isUnlocked) {
-      content = <Form initialFormState={user} onSubmit={upsertCustomer} />;
+      content = (
+        <Form
+          hideActions={paymentDialogOpen}
+          initialFormState={user}
+          onSubmit={upsertCustomer}
+        />
+      );
     } else {
       content = (
         <Box display="flex" justifyContent="center">
@@ -124,9 +133,6 @@ export default function Checkout({ user, address }) {
   } else {
     content = <MetamaskButton />;
   }
-
-  const [paymentDialogOpen, setPaymentDialogOpen] = useState(true);
-  const handleClose = useCallback(() => setPaymentDialogOpen(false), []);
 
   return (
     <Grid container direction="row-reverse">
