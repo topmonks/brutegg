@@ -1,4 +1,7 @@
 import window from "./window";
+/**
+ * @type {import("web3").default}
+ */
 let web3;
 export default function getWeb3() {
   if (!web3) {

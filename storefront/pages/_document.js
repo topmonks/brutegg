@@ -26,7 +26,11 @@ export default function Document() {
         <meta content="#b91d47" name="msapplication-TileColor" />
         <meta content="#000" name="theme-color" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
-        <link crossOrigin href="https://fonts.gstatic.com" rel="preconnect" />
+        <link
+          crossOrigin="true"
+          href="https://fonts.gstatic.com"
+          rel="preconnect"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
           rel="stylesheet"
