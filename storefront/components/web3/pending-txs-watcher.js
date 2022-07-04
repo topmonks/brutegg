@@ -2,11 +2,11 @@ import { Alert, AlertTitle, Button } from "@mui/material";
 import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil";
-import { POLYGON_EXPLORER } from "../libs/constants";
-import getWeb3 from "../libs/web3";
-import { ethereumState } from "../state/ethereum";
-import { snackbarState } from "../state/snackbar";
-import { TX_STATES, pendingTxsState, txLastState } from "../state/tx";
+import { POLYGON_EXPLORER } from "../../libs/constants";
+import getWeb3 from "../../libs/web3";
+import { ethereumState } from "../../state/ethereum";
+import { snackbarState } from "../../state/snackbar";
+import { TX_STATES, pendingTxsState, txLastState } from "../../state/tx";
 
 const EXPECTED_BLOCK_TIME = 3000;
 const delay = (t) => new Promise((resolve) => setTimeout(resolve, t));

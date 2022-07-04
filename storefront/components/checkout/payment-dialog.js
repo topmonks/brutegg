@@ -73,7 +73,7 @@ export default function PaymentDialog({ handleClose, open }) {
   );
 
   let content = (
-    <DialogContentText>
+    <Box>
       <Typography display="block" variant="subtitle1">
         {t("Items will be shipped to")}
       </Typography>
@@ -96,7 +96,7 @@ export default function PaymentDialog({ handleClose, open }) {
           {checkoutForm.country}
         </Typography>
       </Box>
-    </DialogContentText>
+    </Box>
   );
 
   return (

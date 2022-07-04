@@ -12,7 +12,8 @@ import Layout from "../components/layout";
 import GlobalHead from "../components/global-head";
 import MetamaskWatcher from "../components/web3/metamask-watcher";
 import Snackbar from "../components/snackbar";
-import PendingTxsWatcher from "../components/pending-txs-watcher";
+import PendingTxsWatcher from "../components/web3/pending-txs-watcher";
+import SessionWatcher from "../components/session-watcher";
 
 const queryClient = new QueryClient({
   defaultOptions: {},
@@ -39,6 +40,7 @@ function MyApp({ Component, pageProps }) {
               <Suspense>
                 <MetamaskWatcher />
                 <PendingTxsWatcher />
+                <SessionWatcher />
               </Suspense>
               <Snackbar />
               <Layout>
