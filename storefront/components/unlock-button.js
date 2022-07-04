@@ -37,12 +37,13 @@ export default function UnlockButton(props) {
         })
         .then(fetchThrowHttpError)
         .then(async (res) => {
-          await refreshProps();
           setSnackbar({
             message: t("Account successfully unlocked"),
           });
           const session = await res.json();
           setSession({ address: session?.user?.address });
+
+          await refreshProps();
         })
         .catch((e) => {
           setSnackbar({

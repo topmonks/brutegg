@@ -41,6 +41,7 @@ export const getServerSideProps = withSessionSsr(async (context) => {
   }
 
   resultProps.user = {
+    id: user.id,
     firstName: user.first_name,
     lastName: user.last_name,
     address1: user.shipping.address1,
@@ -58,6 +59,8 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 export default function Profile({ address, user }) {
   const { t } = useTranslation("Profile");
   const [session] = useUpdateSession(address, "address");
+  useUpdateSession(user, "user");
+
   const ethereum = useRecoilValue(ethereumState);
   const [, setSnackbar] = useRecoilState(snackbarState);
 
@@ -126,4 +129,5 @@ export default function Profile({ address, user }) {
 
 Profile.propTypes = {
   address: PropTypes.string,
+  user: PropTypes.object,
 };

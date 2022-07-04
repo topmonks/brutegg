@@ -123,6 +123,9 @@ async function createOrder(req, res) {
 
   const order = await swellNodeClient.post("/orders", {
     cart_id: cartId,
+    billing: {
+      method: "brute_token",
+    },
   });
 
   res.send(order);

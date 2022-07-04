@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import swell from "swell-js";
@@ -25,7 +26,7 @@ export default function SessionWatcher() {
     }
   );
 
-  useQuery(
+  const { refetch: reUpdateCardAccount } = useQuery(
     ["/swell.cart.update/", customer?.email],
     () =>
       swell.cart.update({
@@ -38,6 +39,14 @@ export default function SessionWatcher() {
       refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+
+    reUpdateCardAccount();
+  }, [session, reUpdateCardAccount]);
 
   return null;
 }

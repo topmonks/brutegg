@@ -44,6 +44,7 @@ export function ProductDetail({ product: _product }) {
   const eventTarget = useRecoilValue(eventTargetState);
 
   const addToCart = useCallback(async () => {
+    // clear cart, currently we don't support buying multiple items at once
     await swell.cart.setItems([]);
 
     await swell.cart.addItem({

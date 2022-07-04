@@ -73,27 +73,27 @@ export default function PaymentDialog({ handleClose, open }) {
     }
   );
 
-  // const { data: createdOrder } = useQuery(
-  //   ["/swell.cart.update/", cart?.id, watchingTxs],
-  //   () =>
-  //     window
-  //       ?.fetch("/api/swell/create-order", {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         method: "POST",
-  //         body: JSON.stringify({
-  //           transactionHash: watchingTxs.transactionHash,
-  //           cartId: cart.id,
-  //           test: ethereum.chainId === POLYGON.testChainId,
-  //         }),
-  //       })
-  //       .then(fetchThrowHttpError)
-  //       .then((res) => res.json()),
-  //   {
-  //     enabled: isTxSuccess && cartIsUpdated,
-  //   }
-  // );
+  const { data: createdOrder } = useQuery(
+    ["/swell.cart.update/", cart?.id, watchingTxs],
+    () =>
+      window
+        ?.fetch("/api/swell/create-order", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            cartId: cart.id,
+            chainId: ethereum.chainId,
+          }),
+        })
+        .then(fetchThrowHttpError)
+        .then((res) => res.json()),
+    {
+      enabled: isTxSuccess && cartIsUpdated,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const check = useCallback(() => {
     window

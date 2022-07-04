@@ -43,6 +43,7 @@ export const getServerSideProps = withSessionSsr(async (context) => {
   }
 
   resultProps.user = {
+    id: user.id,
     firstName: user.first_name,
     lastName: user.last_name,
     address1: user.shipping.address1,
@@ -105,6 +106,8 @@ export default function Checkout({ user, address }) {
   );
 
   const [session] = useUpdateSession(address, "address");
+  useUpdateSession(user, "user");
+
   const ethereum = useRecoilValue(ethereumState);
 
   const isUnlocked = useMetamaskUnlocked(session?.address);
