@@ -2,7 +2,7 @@ import { Alert, AlertTitle, Button } from "@mui/material";
 import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil";
-import { POLYGON, POLYGON_EXPLORER } from "../libs/constants";
+import { POLYGON_EXPLORER } from "../libs/constants";
 import getWeb3 from "../libs/web3";
 import { ethereumState } from "../state/ethereum";
 import { snackbarState } from "../state/snackbar";

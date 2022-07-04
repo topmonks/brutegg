@@ -16,7 +16,12 @@ const localStorageEffect =
     const savedValue = window.localStorage?.getItem(key);
 
     if (savedValue != null) {
-      setSelf(JSON.parse(savedValue));
+      try {
+        const value = JSON.parse(savedValue);
+        setSelf(value);
+      } catch (e) {
+        window.localStorage?.removeItem(key);
+      }
     }
 
     onSet((newValue, _, isReset) => {

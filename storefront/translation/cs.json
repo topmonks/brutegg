@@ -96,5 +96,8 @@
     "Items will be shipped to": "Zboží bude odesláno na adresu",
     "Pay": "Zaplatit",
     "Back": "Zpět"
+  },
+  "MetamaskErrors": {
+    "4001": "Transakce byla odmítnuta uživatelem"
   }
 }
