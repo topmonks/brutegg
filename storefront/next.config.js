@@ -16,6 +16,7 @@ const nextConfig = {
   },
   images: {
     domains: ["cdn.schema.io"],
+    formats: ["image/avif", "image/webp"],
     // experimental
     // remotePatterns: [
     //   {

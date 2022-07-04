@@ -1,20 +1,9 @@
-import Head from "next/head";
-import { Fragment } from "react";
-import { useRecoilState } from "recoil";
-import { ethereumState } from "../state/ethereum";
-import Script from "next/script";
+import { Html, Head, Main, NextScript } from "next/document";
 
-export default function GlobalHead() {
-  const [, setEthereum] = useRecoilState(ethereumState);
+export default function Document() {
   return (
-    <Fragment>
-      <Script
-        onLoad={() => setEthereum((e) => ({ ...e, web3Loaded: true }))}
-        src="https://unpkg.com/web3@latest/dist/web3.min.js"
-        strategy="lazyOnload"
-      />
+    <Html>
       <Head>
-        <title>Brute merch</title>
         <link
           href="/apple-touch-icon.png"
           rel="apple-touch-icon"
@@ -43,6 +32,10 @@ export default function GlobalHead() {
           rel="stylesheet"
         ></link>
       </Head>
-    </Fragment>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
   );
 }

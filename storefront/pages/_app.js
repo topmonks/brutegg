@@ -9,11 +9,12 @@ import { Fragment, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import theme from "../libs/theme";
 import Layout from "../components/layout";
-import GlobalHead from "../components/global-head";
 import MetamaskWatcher from "../components/web3/metamask-watcher";
 import Snackbar from "../components/snackbar";
 import PendingTxsWatcher from "../components/web3/pending-txs-watcher";
 import SessionWatcher from "../components/session-watcher";
+import Web3Loader from "../components/web3-loader";
+import Head from "next/head";
 
 const queryClient = new QueryClient({
   defaultOptions: {},
@@ -23,7 +24,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <RecoilRoot>
-        <GlobalHead />
+        <Head>
+          <title>Brute merch</title>
+        </Head>
+        <Web3Loader />
 
         <Suspense fallback="Loading">
           <QueryClientProvider client={queryClient}>
