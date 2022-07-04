@@ -5,11 +5,10 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import swell from "swell-js";
 
@@ -22,6 +21,8 @@ import { TX_STATES } from "../../state/tx";
 import { checkoutFormState } from "../../state/checkout";
 import { useQuery } from "react-query";
 import useGetCart from "../../hooks/use-get-cart";
+import window from "../../libs/window";
+import fetchThrowHttpError from "../../libs/fetch-throw-http-error.mjs";
 
 export default function PaymentDialog({ handleClose, open }) {
   const { t } = useTranslation("PaymentDialog");
@@ -30,7 +31,7 @@ export default function PaymentDialog({ handleClose, open }) {
   const ethereum = useRecoilValue(ethereumState);
   const checkoutForm = useRecoilValue(checkoutFormState);
 
-  const { data: cart, isLoading: cartIsLoading } = useGetCart({
+  const { data: cart } = useGetCart({
     staleTime: Infinity,
   });
 
@@ -72,6 +73,44 @@ export default function PaymentDialog({ handleClose, open }) {
     }
   );
 
+  // const { data: createdOrder } = useQuery(
+  //   ["/swell.cart.update/", cart?.id, watchingTxs],
+  //   () =>
+  //     window
+  //       ?.fetch("/api/swell/create-order", {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           transactionHash: watchingTxs.transactionHash,
+  //           cartId: cart.id,
+  //           test: ethereum.chainId === POLYGON.testChainId,
+  //         }),
+  //       })
+  //       .then(fetchThrowHttpError)
+  //       .then((res) => res.json()),
+  //   {
+  //     enabled: isTxSuccess && cartIsUpdated,
+  //   }
+  // );
+
+  const check = useCallback(() => {
+    window
+      ?.fetch("/api/swell/create-order", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          cartId: cart.id,
+          chainId: ethereum.chainId,
+        }),
+      })
+      .then(fetchThrowHttpError)
+      .then((res) => res.json());
+  });
+
   let content = (
     <Box>
       <Typography display="block" variant="subtitle1">
@@ -111,6 +150,9 @@ export default function PaymentDialog({ handleClose, open }) {
         <DialogTitle>{t("Order summary")}</DialogTitle>
         <DialogContent>{content}</DialogContent>
         <DialogActions>
+          <Button onClick={check} variant="text">
+            {t("Check", { ns: "Common" })}
+          </Button>
           <Button onClick={handleClose} variant="text">
             {t("Cancel", { ns: "Common" })}
           </Button>

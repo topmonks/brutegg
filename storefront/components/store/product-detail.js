@@ -91,11 +91,7 @@ export function ProductDetail({ product: _product }) {
           </Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography
-            component="body1"
-            sx={{ fontWeight: "bold" }}
-            variant="h6"
-          >
+          <Typography component="body" sx={{ fontWeight: "bold" }} variant="h6">
             <PriceTag amount={product.attributes.brute_price?.value} />
           </Typography>
           <Button

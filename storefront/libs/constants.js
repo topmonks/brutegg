@@ -26,6 +26,11 @@ export const BRUTE_TREASURY_ADDRESS = {
   [POLYGON.testChainId]: process.env.NEXT_PUBLIC_BRUTE_TREASURY_TESTNET,
 };
 
+export const INFURA_ENDPOINTS = {
+  [POLYGON.chainId]: process.env.INFURA_MAINNET,
+  [POLYGON.testChainId]: process.env.INFURA_TESTNET,
+};
+
 export const RARITY = {
   COMMON: "common",
   UNCOMMON: "uncommon",

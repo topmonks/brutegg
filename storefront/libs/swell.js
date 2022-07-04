@@ -50,8 +50,8 @@ export async function getCategory(slugOrId) {
  *
  * @param {import("../types/swell").Cart} cart
  */
-export function calculateCartPrice(cart) {
-  const web3 = getWeb3();
+export function calculateCartPrice(cart, providedWeb3) {
+  const web3 = providedWeb3 ?? getWeb3();
   if (!web3) {
     throw new Error("Web3 not loaded");
   }

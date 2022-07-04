@@ -64,21 +64,18 @@ export default function PaymentButton() {
 
     bruteContract.methods
       .transfer(treasuryAddress, totalPriceInWei)
-      .send(
-        { from: ethereum.account, gasPrice, data: web3.utils.toHex(cart.id) },
-        (error, transactionHash) => {
-          if (transactionHash) {
-            console.log({ transactionHash });
-            setPendingTxs((v) => v.concat([transactionHash]));
-            setWatcherTxs(transactionHash);
-          }
-          if (error) {
-            setSnackbar({
-              message: t(error.code || error.message, { ns: "MetamaskErrors" }),
-            });
-          }
+      .send({ from: ethereum.account, gasPrice }, (error, transactionHash) => {
+        if (transactionHash) {
+          console.log({ transactionHash });
+          setPendingTxs((v) => v.concat([transactionHash]));
+          setWatcherTxs(transactionHash);
         }
-      );
+        if (error) {
+          setSnackbar({
+            message: t(error.code || error.message, { ns: "MetamaskErrors" }),
+          });
+        }
+      });
   }, [
     ethereum.account,
     setPendingTxs,
