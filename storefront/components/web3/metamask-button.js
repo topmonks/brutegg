@@ -32,6 +32,7 @@ import { useRouter } from "next/router";
 import { withLocale } from "../../libs/router";
 import { sessionState } from "../../state/session";
 import { bruteState } from "../../state/brute-token";
+import { USER_LINKS } from "../navbar";
 
 const buttonAnimation = (color) => keyframes`
   from {
@@ -183,7 +184,7 @@ function ConnectedButton() {
 
   const goToProfile = () => {
     handleClose();
-    router.push(withLocale(router.locale, "/profile"));
+    router.push(withLocale(router.locale, USER_LINKS.PROFILE));
   };
 
   return (

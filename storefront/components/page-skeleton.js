@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Grid, Skeleton } from "@mui/material";
 
-import { LINKS } from "./navbar";
+import { LINKS, USER_LINKS } from "./navbar";
 import {
   COLUMNS_COUNT,
   FULL_STORE_LIST_GRID,
@@ -11,6 +11,7 @@ import { Fragment } from "react";
 import useDisplayAfterDelay from "../hooks/use-display-after-delay";
 import { QuestHeadline } from "./quests/quests-headline";
 import { ProductsHeadline } from "./store/products-headline";
+import ProfileLayout from "./profile/profile-layout";
 
 function QuestsSkeleton({ stretched, displayHeadline = true }) {
   const display = useDisplayAfterDelay(300);
@@ -87,8 +88,42 @@ function FaqSkeleton() {
   );
 }
 
+function ProfileSkeleton() {
+  const display = useDisplayAfterDelay(200);
+
+  if (!display) {
+    return <Fragment></Fragment>;
+  }
+
+  return (
+    <ProfileLayout>
+      <Fragment>
+        <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
+        <Skeleton height={500} variant="rectangular"></Skeleton>
+      </Fragment>
+    </ProfileLayout>
+  );
+}
+
+function CheckoutSkeleton() {
+  const display = useDisplayAfterDelay(400);
+
+  if (!display) {
+    return <Fragment></Fragment>;
+  }
+
+  return (
+    <Fragment>
+      <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
+      <Skeleton height={500} variant="rectangular"></Skeleton>
+    </Fragment>
+  );
+}
+
 export default {
   [LINKS.QUESTS]: QuestsSkeleton,
   [LINKS.STORE]: StoreSkeleton,
   [LINKS.FAQ]: FaqSkeleton,
+  [USER_LINKS.PROFILE]: ProfileSkeleton,
+  [USER_LINKS.CHECKOUT]: CheckoutSkeleton,
 };

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Box } from "@mui/system";
 import { Grid, Typography, alpha } from "@mui/material";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { withLocale } from "../../libs/router";
 import window from "../../libs/window";
@@ -39,7 +39,16 @@ export default function ProductListItem({ product, selected }) {
     );
   }, [router, product, eventTarget]);
 
-  const thumbnail = product.images[0]?.file;
+  useEffect(() => {
+    router.prefetch(
+      withLocale(
+        router.locale,
+        "/store/item/" + product.id + "/" + product.slug
+      )
+    );
+  }, [router, product]);
+
+  const thumbnail = product.images?.[0]?.file;
 
   return (
     <Box

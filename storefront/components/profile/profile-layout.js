@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { ethereumState } from "../../state/ethereum";
-import { withLocale } from "../../libs/router";
+import { USER_LINKS } from "../navbar";
 
 export default function ProfileLayout({ children }) {
   const { t } = useTranslation("Profile");
@@ -22,11 +22,11 @@ export default function ProfileLayout({ children }) {
   const links = [
     {
       textPrimary: t("Profile", { ns: "Navbar" }),
-      href: "/profile",
+      href: USER_LINKS.PROFILE,
     },
     {
       textPrimary: t("Wallet"),
-      href: "/profile/wallet",
+      href: USER_LINKS.WALLET,
     },
   ];
 

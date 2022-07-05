@@ -50,6 +50,8 @@ export const LINKS = {
 
 export const USER_LINKS = {
   PROFILE: "/profile",
+  WALLET: "/profile/wallet",
+  CHECKOUT: "/checkout",
 };
 
 export default function Navbar() {

@@ -44,7 +44,7 @@ export default function QuestListItem({ quest, selected }) {
 
   let reward = quest.attributes.brute_reward?.value;
 
-  const thumbnail = quest.images[0]?.file;
+  const thumbnail = quest.images?.[0]?.file;
 
   return (
     <Box

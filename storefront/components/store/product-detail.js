@@ -5,7 +5,11 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { withLocale } from "../../libs/router";
 import swell, { getProduct } from "../../libs/swell";
 import window from "../../libs/window";
-import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
+import {
+  eventTargetState,
+  NAVBAR_CHANGE,
+  STORE_ITEM_CHANGE,
+} from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
 import Close from "@mui/icons-material/Close";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
@@ -14,6 +18,7 @@ import { productState } from "../../state/products";
 import { useTranslation } from "react-i18next";
 import StyledDescription from "../styled-description";
 import PriceTag from "../price-tag";
+import { LINKS, USER_LINKS } from "../navbar";
 
 /**
  *
@@ -52,8 +57,18 @@ export function ProductDetail({ product: _product }) {
       quantity: 1,
     });
 
-    router.push(withLocale(router.locale, "/checkout"));
-  }, [product, router]);
+    if (eventTarget && window.CustomEvent) {
+      eventTarget.dispatchEvent(
+        new window.CustomEvent(NAVBAR_CHANGE, {
+          detail: {
+            target: USER_LINKS.CHECKOUT,
+          },
+        })
+      );
+    }
+
+    router.push(withLocale(router.locale, USER_LINKS.CHECKOUT));
+  }, [product, router, eventTarget]);
 
   const close = useCallback(() => {
     eventTarget.dispatchEvent(
@@ -61,7 +76,9 @@ export function ProductDetail({ product: _product }) {
         detail: {},
       })
     );
-    router.push(withLocale(router.locale, "/store"), null, { scroll: false });
+    router.push(withLocale(router.locale, LINKS.STORE), null, {
+      scroll: false,
+    });
   }, [router, eventTarget]);
 
   const initialSupply = product.attributes.brute_initial_supply?.value;
