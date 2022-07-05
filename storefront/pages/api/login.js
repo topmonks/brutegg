@@ -19,7 +19,7 @@ async function loginRoute(req, res) {
     signature
   );
 
-  if (recoveredAddress !== address) {
+  if (recoveredAddress.toLowerCase() !== address.toLowerCase()) {
     res.status(400).send({
       error: `signature check failed, address sent ${address}, recovered address ${recoveredAddress}`,
     });
