@@ -44,7 +44,9 @@ export default function Form({
     (event) => {
       event.preventDefault();
       setIsLoading(true);
-      onSubmit(formData.toJSON()).finally(() => setIsLoading(false));
+      Promise.resolve()
+        .then(() => onSubmit(formData.toJSON()))
+        .finally(() => setIsLoading(false));
     },
     [onSubmit, formData]
   );

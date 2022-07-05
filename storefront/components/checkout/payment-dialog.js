@@ -31,9 +31,7 @@ export default function PaymentDialog({ handleClose, open }) {
   const ethereum = useRecoilValue(ethereumState);
   const checkoutForm = useRecoilValue(checkoutFormState);
 
-  const { data: cart } = useGetCart({
-    staleTime: Infinity,
-  });
+  const { data: cart } = useGetCart();
 
   const [watchingTxs] = useWatchTx(
     ethereum.account,
@@ -109,7 +107,7 @@ export default function PaymentDialog({ handleClose, open }) {
       })
       .then(fetchThrowHttpError)
       .then((res) => res.json());
-  });
+  }, []);
 
   let content = (
     <Box>

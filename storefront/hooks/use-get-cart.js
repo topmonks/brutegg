@@ -13,6 +13,6 @@ export default function useGetCart(opts) {
      * @returns {Promise<import("../types/swell").Cart>}
      */
     () => swell.cart.get(),
-    { enabled: !!ethereum.account, ...opts }
+    { enabled: Boolean(ethereum.account), ...opts }
   );
 }

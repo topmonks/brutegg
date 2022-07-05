@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
 import swell from "swell-js";
@@ -16,6 +16,8 @@ import useUpdateSession from "../../hooks/use-update-session";
 import UnlockButton from "../../components/unlock-button";
 import MetamaskButton from "../../components/web3/metamask-button";
 import PaymentDialog from "../../components/checkout/payment-dialog";
+import { useQuery } from "react-query";
+import fetchThrowHttpError from "../../libs/fetch-throw-http-error.mjs";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -62,48 +64,73 @@ export default function Checkout({ user, address }) {
   const { t } = useTranslation("Checkout");
   const [, setSnackbar] = useRecoilState(snackbarState);
 
-  useEffect(() => {
-    swell.cart.get().then((c) => console.log(c));
-  }, []);
+  const [formData, setFormData] = useState();
 
-  const upsertCustomer = useCallback(
-    (body = {}) => {
-      return window
+  const { error } = useQuery(
+    ["/api/swell/upsert-customer", formData],
+    () =>
+      window
         ?.fetch("/api/swell/upsert-customer", {
           headers: {
             "Content-Type": "application/json",
           },
           method: "POST",
-          body: JSON.stringify(body),
+          body: JSON.stringify(formData),
         })
+        .then(fetchThrowHttpError)
         .then(async (res) => {
-          if (res.status === 200) {
-            const user = await res.json();
-            if (user.errors) {
-              setSnackbar({
-                message:
-                  t("Error response", { ns: "Common" }) +
-                  " " +
-                  Object.values(user.errors).map((e) => e.message),
-              });
-            } else {
-              setSnackbar({
-                message: t("Account successfully updated", { ns: "Common" }),
-              });
-              setPaymentDialogOpen(true);
-            }
+          const user = await res.json();
+          if (user.errors) {
+            throw Object.values(user.errors).map((e) => e.message);
           } else {
-            setSnackbar({
-              message:
-                t("Error response", { ns: "Common" }) +
-                " " +
-                (await res.text()),
-            });
+            return user;
           }
-        });
-    },
-    [t, setSnackbar]
+        }),
+    {
+      enabled: Boolean(formData),
+      refetchOnWindowFocus: false,
+    }
   );
+
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    setSnackbar({
+      message: t("Error response", { ns: "Common" }) + " " + error,
+    });
+  }, [error, setSnackbar, t]);
+
+  const { isSuccess: cartIsUpdated } = useQuery(
+    ["/swell.cart.update/", formData],
+    () =>
+      swell.cart.update({
+        shipping: {
+          name: formData.firstName + " " + formData.lastName,
+          address1: formData.address1,
+          address2: formData.address2,
+          city: formData.city,
+          zip: formData.zip,
+          country: formData.country,
+        },
+      }),
+    {
+      enabled: Boolean(formData),
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  useEffect(() => {
+    if (!cartIsUpdated) {
+      return;
+    }
+
+    setSnackbar({
+      message: t("Account successfully updated", { ns: "Common" }),
+    });
+    setPaymentDialogOpen(true);
+  }, [cartIsUpdated, setSnackbar, t]);
 
   const [session] = useUpdateSession(address, "address");
   useUpdateSession(user, "user");
@@ -112,7 +139,7 @@ export default function Checkout({ user, address }) {
 
   const isUnlocked = useMetamaskUnlocked(session?.address);
 
-  const [paymentDialogOpen, setPaymentDialogOpen] = useState(true);
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
   const handleClose = useCallback(() => setPaymentDialogOpen(false), []);
 
   let content;
@@ -123,7 +150,7 @@ export default function Checkout({ user, address }) {
         <Form
           hideActions={paymentDialogOpen}
           initialFormState={user}
-          onSubmit={upsertCustomer}
+          onSubmit={setFormData}
         />
       );
     } else {

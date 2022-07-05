@@ -55,7 +55,7 @@ export const TX_FINAL_STATES = [TX_STATES.SUCCESS, TX_STATES.FAILED];
  */
 export const txLastState = atomFamily({
   key: "txLastState",
-  default: undefined,
+  default: null,
 });
 
 const clearWatcherIfNotInPending =
@@ -84,7 +84,7 @@ const clearWatcherIfNotInPending =
  */
 export const watcherTxsState = atomFamily({
   key: "watcherTxsState",
-  default: null,
+  default: () => null,
   effects: ([account, contractAddress, method]) => {
     if (!account || !contractAddress || !method) {
       return [];
@@ -107,10 +107,10 @@ export const watcherTxsState = atomFamily({
  */
 export const watchingTxsState = selectorFamily({
   key: "watchingTxsState",
-  default: null,
+  default: () => null,
   get:
     ([account, contractAddress, method]) =>
-    async ({ get }) => {
+    ({ get }) => {
       const transactionHash = get(
         watcherTxsState([account, contractAddress, method])
       );

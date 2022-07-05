@@ -61,7 +61,7 @@ export function calculateCartPrice(cart, providedWeb3) {
   /**
    * @type {import("bn.js")}
    */
-  const total = cart.items.reduce((acc, item) => {
+  const total = cart.items?.reduce((acc, item) => {
     const p = new BN(item.product.attributes?.brute_price);
 
     return acc.add(p);

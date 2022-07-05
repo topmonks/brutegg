@@ -25,9 +25,7 @@ export default function PaymentButton() {
     "payment"
   );
 
-  const { data: cart, isLoading: cartIsLoading } = useGetCart({
-    staleTime: Infinity,
-  });
+  const { data: cart, isLoading: cartIsLoading } = useGetCart();
 
   const totalPrice = useMemo(() => {
     if (!cart) {

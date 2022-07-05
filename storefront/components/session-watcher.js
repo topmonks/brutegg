@@ -11,7 +11,7 @@ export default function SessionWatcher() {
   const session = useRecoilValue(sessionState);
 
   const { data: customer } = useQuery(
-    ["/api/swell/get-customer"],
+    ["/api/swell/get-customer", session?.address],
     /**
      * @returns {Promise<import("../types/swell")>}
      */
@@ -21,7 +21,7 @@ export default function SessionWatcher() {
         .then(fetchThrowHttpError)
         .then((res) => res.json()),
     {
-      enabled: !!session?.address,
+      enabled: Boolean(session?.address),
       refetchOnWindowFocus: false,
     }
   );
@@ -31,7 +31,7 @@ export default function SessionWatcher() {
     () =>
       swell.cart.update({
         account: {
-          email: customer?.email,
+          email: customer.email,
         },
       }),
     {
@@ -45,8 +45,12 @@ export default function SessionWatcher() {
       return;
     }
 
+    if (!customer) {
+      return;
+    }
+
     reUpdateCardAccount();
-  }, [session, reUpdateCardAccount]);
+  }, [session, reUpdateCardAccount, customer]);
 
   return null;
 }
