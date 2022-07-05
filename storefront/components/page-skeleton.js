@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Grid, Skeleton } from "@mui/material";
+import { Box, Grid, Skeleton } from "@mui/material";
 
 import { LINKS, USER_LINKS } from "./navbar";
 import {
@@ -97,10 +97,36 @@ function ProfileSkeleton() {
 
   return (
     <ProfileLayout>
-      <Fragment>
-        <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
-        <Skeleton height={500} variant="rectangular"></Skeleton>
-      </Fragment>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          width: { md: "60%" },
+        }}
+      >
+        <Skeleton
+          animation="pulse"
+          height={50}
+          variant="rectangular"
+          width={250}
+        ></Skeleton>
+        <Skeleton
+          animation="pulse"
+          height={30}
+          variant="rectangular"
+          width={250}
+        ></Skeleton>
+
+        {new Array(5).fill().map((a, ix) => (
+          <Skeleton
+            animation="pulse"
+            height={50}
+            key={ix}
+            variant="rectangular"
+          ></Skeleton>
+        ))}
+      </Box>
     </ProfileLayout>
   );
 }

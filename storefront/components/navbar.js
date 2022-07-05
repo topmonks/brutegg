@@ -1,7 +1,7 @@
 import { Tab, Tabs, alpha, Grid } from "@mui/material";
 import Image from "next/image";
 import { Box } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { withLocale } from "../libs/router";
@@ -55,16 +55,26 @@ export const USER_LINKS = {
 };
 
 export default function Navbar() {
+  const { t } = useTranslation("Navbar");
   const ethereum = useRecoilValue(ethereumState);
   const router = useRouter();
-  const findLink = useCallback(
+
+  const topMenu = useMemo(
     () =>
-      Object.values(LINKS).find((l) => router.asPath.startsWith(l)) ||
-      (ethereum.account &&
-        Object.values(USER_LINKS).find((l) => router.asPath.startsWith(l))) ||
-      false,
-    [router.asPath, ethereum]
+      [
+        [t("Quests"), LINKS.QUESTS],
+        [t("Store"), LINKS.STORE],
+        [t("FAQ"), LINKS.FAQ],
+        ethereum.account && [t("Profile"), USER_LINKS.PROFILE],
+      ].filter(Boolean),
+    [t, ethereum.account]
   );
+
+  const findLink = useCallback(
+    () => topMenu.find(([, l]) => router.asPath.startsWith(l))?.[1] || false,
+    [topMenu, router]
+  );
+
   const eventTarget = useRecoilValue(eventTargetState);
 
   const [value, setValue] = useState(findLink());
@@ -72,8 +82,6 @@ export default function Navbar() {
   useEffect(() => {
     setValue(findLink());
   }, [findLink]);
-
-  const { t } = useTranslation("Navbar");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -112,21 +120,14 @@ export default function Navbar() {
             value={value}
             variant="scrollable"
           >
-            {[
-              [t("Quests"), LINKS.QUESTS],
-              [t("Store"), LINKS.STORE],
-              [t("FAQ"), LINKS.FAQ],
-              ethereum.account && [t("Profile"), USER_LINKS.PROFILE],
-            ]
-              .filter(Boolean)
-              .map(([label, value]) => (
-                <CustomTab
-                  key={value}
-                  label={label}
-                  onClick={(e) => handleChange(e, value)}
-                  value={value}
-                />
-              ))}
+            {topMenu.map(([label, value]) => (
+              <CustomTab
+                key={value}
+                label={label}
+                onClick={(e) => handleChange(e, value)}
+                value={value}
+              />
+            ))}
           </Tabs>
         </Grid>
         <Grid item lg={1} sx={{ display: { xs: "none", lg: "block" }, my: 3 }}>
