@@ -133,7 +133,7 @@ function ProfileSkeleton() {
 }
 
 function CheckoutSkeleton() {
-  const display = useDisplayAfterDelay(400);
+  const display = useDisplayAfterDelay(200);
 
   if (!display) {
     return <Fragment></Fragment>;

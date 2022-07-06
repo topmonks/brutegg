@@ -1,6 +1,11 @@
-import { Button, IconButton, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { useRouter } from "next/router";
-import { Fragment, useCallback, useEffect } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { withLocale } from "../../libs/router";
 import swell, { getProduct } from "../../libs/swell";
@@ -19,6 +24,7 @@ import { useTranslation } from "react-i18next";
 import StyledDescription from "../styled-description";
 import PriceTag from "../price-tag";
 import { LINKS, USER_LINKS } from "../navbar";
+import { useQuery } from "react-query";
 
 /**
  *
@@ -48,14 +54,29 @@ export function ProductDetail({ product: _product }) {
 
   const eventTarget = useRecoilValue(eventTargetState);
 
-  const addToCart = useCallback(async () => {
-    // clear cart, currently we don't support buying multiple items at once
-    await swell.cart.setItems([]);
+  const [selectedProduct, setSelectedProduct] = useState();
 
-    await swell.cart.addItem({
-      product_id: product.id,
-      quantity: 1,
-    });
+  const { isSuccess: cartIsUpdated, isLoading: cartIsLoading } = useQuery(
+    ["/swell.cart.add/", selectedProduct?.id],
+    async () => {
+      // clear cart, currently we don't support buying multiple items at once
+      await swell.cart.setItems([]);
+
+      await swell.cart.addItem({
+        product_id: product.id,
+        quantity: 1,
+      });
+    },
+    {
+      enabled: Boolean(selectedProduct?.id),
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  useEffect(() => {
+    if (!cartIsUpdated) {
+      return;
+    }
 
     if (eventTarget && window.CustomEvent) {
       eventTarget.dispatchEvent(
@@ -68,7 +89,7 @@ export function ProductDetail({ product: _product }) {
     }
 
     router.push(withLocale(router.locale, USER_LINKS.CHECKOUT));
-  }, [product, router, eventTarget]);
+  }, [cartIsUpdated, router, eventTarget]);
 
   const close = useCallback(() => {
     eventTarget.dispatchEvent(
@@ -114,9 +135,16 @@ export function ProductDetail({ product: _product }) {
           </Typography>
           <Button
             disableElevation
-            onClick={addToCart}
+            disabled={cartIsLoading}
+            onClick={() => setSelectedProduct(product)}
             size="large"
-            startIcon={<ShoppingCartCheckoutIcon />}
+            startIcon={
+              cartIsLoading ? (
+                <CircularProgress size={20} />
+              ) : (
+                <ShoppingCartCheckoutIcon />
+              )
+            }
             sx={{ fontWeight: "bold" }}
             variant="contained"
           >
