@@ -6,53 +6,61 @@ import "../translation/i18n";
 import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import { RecoilRoot } from "recoil";
 import { Fragment, Suspense } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { ErrorBoundary } from "react-error-boundary";
 import theme from "../libs/theme";
 import Layout from "../components/layout";
+import QueryClientProvider from "../components/query-client-provider";
 import MetamaskWatcher from "../components/web3/metamask-watcher";
 import Snackbar from "../components/snackbar";
 import PendingTxsWatcher from "../components/web3/pending-txs-watcher";
 import SessionWatcher from "../components/session-watcher";
 import Web3Loader from "../components/web3-loader";
 import Head from "next/head";
+import ErrorFallback from "../components/error-fallback";
+import window from "../libs/window";
 
-const queryClient = new QueryClient({
-  defaultOptions: {},
-});
+const myErrorHandler = (error) => {
+  window.Rollbar?.error(error);
+};
 
 function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <RecoilRoot>
         <Head>
-          <title>Brute merch</title>
+          <title>Brute merch shop</title>
         </Head>
         <Web3Loader />
 
-        <Suspense fallback="Loading">
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <GlobalStyles
-                styles={{
-                  body: {
-                    backgroundColor: "black",
-                    overflowY: "scroll",
-                  },
-                }}
-              />
-              <Suspense>
-                <MetamaskWatcher />
-                <PendingTxsWatcher />
-                <SessionWatcher />
-              </Suspense>
-              <Snackbar />
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </ThemeProvider>
-          </QueryClientProvider>
-        </Suspense>
+        <ErrorBoundary
+          FallbackComponent={ErrorFallback}
+          onError={myErrorHandler}
+        >
+          <Suspense fallback="Loading">
+            <QueryClientProvider>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <GlobalStyles
+                  styles={{
+                    body: {
+                      backgroundColor: "black",
+                      overflowY: "scroll",
+                    },
+                  }}
+                />
+                <Suspense>
+                  <MetamaskWatcher />
+                  <PendingTxsWatcher />
+                  <SessionWatcher />
+                </Suspense>
+                <Snackbar />
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </ThemeProvider>
+            </QueryClientProvider>
+          </Suspense>
+        </ErrorBoundary>
       </RecoilRoot>
     </Fragment>
   );

@@ -56,7 +56,12 @@ export function ProductDetail({ product: _product }) {
 
   const [selectedProduct, setSelectedProduct] = useState();
 
-  const { isSuccess: cartIsUpdated, isLoading: cartIsLoading } = useQuery(
+  const {
+    isSuccess: cartIsUpdated,
+    isLoading: cartIsLoading,
+    isError,
+    refetch,
+  } = useQuery(
     ["/swell.cart.add/", selectedProduct?.id],
     async () => {
       // clear cart, currently we don't support buying multiple items at once
@@ -136,7 +141,7 @@ export function ProductDetail({ product: _product }) {
           <Button
             disableElevation
             disabled={cartIsLoading}
-            onClick={() => setSelectedProduct(product)}
+            onClick={isError ? refetch : () => setSelectedProduct(product)}
             size="large"
             startIcon={
               cartIsLoading ? (
