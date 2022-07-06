@@ -1,18 +1,25 @@
-import Head from "next/head";
-import { Fragment } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { ethereumState } from "../state/ethereum";
-import Script from "next/script";
+import window from "../libs/window";
 
 export default function Web3Loader() {
   const [, setEthereum] = useRecoilState(ethereumState);
-  return (
-    <Fragment>
-      <Script
-        onLoad={() => setEthereum((e) => ({ ...e, web3Loaded: true }))}
-        src="https://unpkg.com/web3@latest/dist/web3.min.js"
-        strategy="lazyOnload"
-      />
-    </Fragment>
-  );
+
+  useEffect(() => {
+    if (!window.document) {
+      return;
+    }
+    const script = window.document.createElement("script");
+
+    script.src = "https://unpkg.com/web3@1.7.4/dist/web3.min.js";
+    script.defer = true;
+    script.onload = () => {
+      setEthereum((e) => ({ ...e, web3Loaded: true }));
+    };
+
+    window.document.body.appendChild(script);
+  }, [setEthereum]);
+
+  return null;
 }
