@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -18,6 +18,7 @@ import MetamaskButton from "../../components/web3/metamask-button";
 import PaymentDialog from "../../components/checkout/payment-dialog";
 import { useQuery } from "react-query";
 import fetchThrowHttpError from "../../libs/fetch-throw-http-error.mjs";
+import CheckoutLayout from "../../components/checkout/checkout-layout";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -165,28 +166,21 @@ export default function Checkout({ user, address }) {
   }
 
   return (
-    <Grid container direction="row-reverse">
-      <PaymentDialog handleClose={handleClose} open={paymentDialogOpen} />
-      <Grid item md={3} sm={5} xs={12}>
+    <CheckoutLayout>
+      <Fragment>
+        <PaymentDialog handleClose={handleClose} open={paymentDialogOpen} />
+        <Typography component="h3" variant="h6">
+          {t("Checkout")}
+        </Typography>
+        {content}
+      </Fragment>
+
+      <Fragment>
         <Typography component="h3" variant="h6">
           {t("Items")}
         </Typography>
-      </Grid>
-      <Grid item md={9} sm={7} xs={12}>
-        <Box
-          sx={{
-            pl: {
-              md: 5,
-            },
-          }}
-        >
-          <Typography component="h3" variant="h6">
-            {t("Checkout")}
-          </Typography>
-          {content}
-        </Box>
-      </Grid>
-    </Grid>
+      </Fragment>
+    </CheckoutLayout>
   );
 }
 

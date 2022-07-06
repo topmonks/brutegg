@@ -12,6 +12,7 @@ import useDisplayAfterDelay from "../hooks/use-display-after-delay";
 import { QuestHeadline } from "./quests/quests-headline";
 import { ProductsHeadline } from "./store/products-headline";
 import ProfileLayout from "./profile/profile-layout";
+import CheckoutLayout from "./checkout/checkout-layout";
 
 function QuestsSkeleton({ stretched, displayHeadline = true }) {
   const display = useDisplayAfterDelay(300);
@@ -139,10 +140,62 @@ function CheckoutSkeleton() {
   }
 
   return (
-    <Fragment>
-      <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
-      <Skeleton height={500} variant="rectangular"></Skeleton>
-    </Fragment>
+    <CheckoutLayout>
+      <Fragment>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            width: { md: "60%" },
+          }}
+        >
+          <Skeleton
+            animation="pulse"
+            height={50}
+            variant="rectangular"
+            width={250}
+          ></Skeleton>
+          <Skeleton
+            animation="pulse"
+            height={30}
+            variant="rectangular"
+            width={250}
+          ></Skeleton>
+
+          {new Array(5).fill().map((a, ix) => (
+            <Skeleton
+              animation="pulse"
+              height={50}
+              key={ix}
+              variant="rectangular"
+            ></Skeleton>
+          ))}
+        </Box>
+      </Fragment>
+
+      <Fragment>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            width: { md: "60%" },
+          }}
+        >
+          <Skeleton
+            animation="pulse"
+            height={50}
+            variant="rectangular"
+          ></Skeleton>
+          <Skeleton
+            animation="pulse"
+            height={30}
+            variant="rectangular"
+          ></Skeleton>
+        </Box>
+      </Fragment>
+    </CheckoutLayout>
   );
 }
 
