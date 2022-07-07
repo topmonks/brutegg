@@ -27,7 +27,7 @@ export function QuestHeadline() {
             size="large"
             sx={{
               height: "100%",
-              width: { xs: "100%", sm: "250px" },
+              width: { xs: "100%", md: "250px" },
               fontWeight: "bold",
             }}
             type="submit"

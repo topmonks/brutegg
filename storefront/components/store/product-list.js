@@ -12,21 +12,21 @@ import { getStoreProducts } from "../../libs/swell";
 import window from "../../libs/window";
 
 export const STRETCHED_STORE_LIST_GRID = {
-  xxl: 4,
-  lg: 6,
-  md: 12,
-  sm: 12,
-  xs: 12,
+  xxl: 10,
+  lg: 15,
+  md: 30,
+  sm: 30,
+  xs: 30,
 };
 
 export const FULL_STORE_LIST_GRID = {
-  lg: 3,
-  md: 4,
-  sm: 6,
-  xs: 12,
+  lg: 6,
+  md: 10,
+  sm: 15,
+  xs: 30,
 };
 
-export const COLUMNS_COUNT = 12;
+export const COLUMNS_COUNT = 30;
 
 export const PRODUCT_ID_DATA_ATTR_NAME = "data-product-id";
 
