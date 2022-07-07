@@ -52,6 +52,8 @@ export default function ProductListItem({ product, selected }) {
     product?.attributes.brute_thumbnail?.value?.file ||
     product.images?.[0]?.file;
 
+  const rarity = product.attributes.brute_rarity?.value;
+
   return (
     <Box
       onClick={goToProduct}
@@ -61,11 +63,31 @@ export default function ProductListItem({ product, selected }) {
           cursor: "pointer",
           p: 1,
           mb: 1,
-          border: (theme) => "1px solid " + theme.palette.primary.light,
+          border: (theme) =>
+            "1px solid " + alpha(theme.palette[rarity]?.main, 0.0),
+          background: (theme) =>
+            `linear-gradient(-180deg, ${alpha(
+              theme.palette[rarity]?.main,
+              0.4
+            )} 0%, ${alpha(theme.palette[rarity]?.main, 0)} 55%), ${alpha(
+              "#fff",
+              0.1
+            )}`,
+          boxShadow: () => "inset 0 0 0 1px " + alpha("#fff", 0.2),
         },
         selected && {
-          background: (theme) => theme.palette.primary.light,
-          color: "black",
+          background: (theme) =>
+            `linear-gradient(-180deg, ${alpha(
+              theme.palette[rarity]?.main,
+              0.6
+            )} 0%, ${alpha(theme.palette[rarity]?.main, 0)} 40%), ${alpha(
+              "#fff",
+              0.1
+            )}`,
+          border: (theme) =>
+            "1px solid " + alpha(theme.palette[rarity]?.main, 1),
+          boxShadow: (theme) =>
+            "0 0 0 3px " + alpha(theme.palette[rarity]?.main, 0.8),
         },
       ]}
     >
@@ -109,6 +131,9 @@ export default function ProductListItem({ product, selected }) {
             display="block"
             sx={{
               textAlign: "center",
+              fontWeight: "bold",
+              textShadow: (theme) =>
+                "0 0 10px " + alpha(theme.palette[rarity]?.main, 0.8),
             }}
             variant="h6"
           >

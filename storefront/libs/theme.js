@@ -1,4 +1,5 @@
 import { createTheme, darkScrollbar, responsiveFontSizes } from "@mui/material";
+import { RARITY } from "./constants";
 
 const theme = responsiveFontSizes(
   createTheme({
@@ -37,6 +38,21 @@ const theme = responsiveFontSizes(
 export const darkTheme = createTheme(theme, {
   palette: {
     mode: "dark",
+    [RARITY.COMMON]: {
+      main: "#E5E5E5",
+    },
+    [RARITY.UNCOMMON]: {
+      main: "#57D22C",
+    },
+    [RARITY.RARE]: {
+      main: "#0D7BE1",
+    },
+    [RARITY.EPIC]: {
+      main: "#B70DE1",
+    },
+    [RARITY.LEGENDARY]: {
+      main: "#F6851B",
+    },
   },
   components: {
     MuiCssBaseline: {
