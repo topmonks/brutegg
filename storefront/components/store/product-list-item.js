@@ -48,7 +48,9 @@ export default function ProductListItem({ product, selected }) {
     );
   }, [router, product]);
 
-  const thumbnail = product.images?.[0]?.file;
+  const thumbnail =
+    product?.attributes.brute_thumbnail?.value?.file ||
+    product.images?.[0]?.file;
 
   return (
     <Box
@@ -79,7 +81,7 @@ export default function ProductListItem({ product, selected }) {
           sx={[
             { height: "70%", position: "relative" },
             selected && {
-              border: "2px solid " + alpha("#000", 0.3),
+              boxShadow: () => "0 0 0 2px " + alpha("#000", 0.3),
             },
           ]}
         >

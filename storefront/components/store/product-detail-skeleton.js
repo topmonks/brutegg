@@ -12,22 +12,37 @@ export function ProductDetailSkeleton() {
 
   return (
     <Fragment>
-      <Typography variant="button">
-        <Skeleton animation="wave" />
-      </Typography>
-      <Box>
-        <Typography variant="h1">
-          <Skeleton animation="wave" />
-        </Typography>
+      <Skeleton animation="wave" height={"20%"} variant="rectangular" />
+
+      <Box
+        sx={{
+          display: "flex",
+          my: 1,
+          height: "5%",
+          justifyContent: "space-between",
+        }}
+      >
         <Skeleton
           animation="wave"
-          height={350}
-          sx={{
-            mt: 1,
-          }}
+          height={"100%"}
           variant="rectangular"
+          width={200}
+        />
+        <Skeleton
+          animation="wave"
+          height={"100%"}
+          variant="rectangular"
+          width={150}
         />
       </Box>
+
+      <Skeleton animation="wave" height={"50%"} variant="rectangular" />
+      <Skeleton
+        animation="wave"
+        height={"20%"}
+        sx={{ mt: 1 }}
+        variant="rectangular"
+      />
     </Fragment>
   );
 }

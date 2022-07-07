@@ -25,6 +25,7 @@ import StyledDescription from "../styled-description";
 import PriceTag from "../price-tag";
 import { LINKS, USER_LINKS } from "../navbar";
 import { useQuery } from "react-query";
+import ProductDetailGallery from "./product-detail-gallery";
 
 /**
  *
@@ -134,7 +135,15 @@ export function ProductDetail({ product: _product }) {
             {initialSupply && "/" + initialSupply}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 1,
+          }}
+        >
           <Typography component="span" sx={{ fontWeight: "bold" }} variant="h6">
             <PriceTag amount={product.attributes.brute_price?.value} />
           </Typography>
@@ -156,12 +165,20 @@ export function ProductDetail({ product: _product }) {
             {t("Buy", { ns: "Common" })}
           </Button>
         </Box>
-        <Box sx={{ flexGrow: 2, overflowY: "auto" }}>
+        <Box
+          sx={{
+            flexGrow: 5,
+            overflowY: "auto",
+            "& iframe": { width: "100%" },
+          }}
+        >
           <StyledDescription
             dangerouslySetInnerHTML={{ __html: product.description }}
           ></StyledDescription>
         </Box>
-        <Box sx={{ flexGrow: 1, mt: 3 }}></Box>
+        <Box sx={{ flexGrow: 1, mt: 1 }}>
+          <ProductDetailGallery images={product.images} name={product.name} />
+        </Box>
       </Box>
     </Fragment>
   );
