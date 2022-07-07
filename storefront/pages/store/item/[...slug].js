@@ -63,7 +63,7 @@ export default function Item({ product }) {
 
         setTimeout(() => {
           if (isXs) {
-            scrollToProductId(id, { behavior: "auto", block: "start" });
+            scrollToProductId(id, { behavior: "auto", block: "center" });
           } else {
             window?.scrollTo({ top: 0, behavior: "smooth" });
           }
@@ -82,7 +82,10 @@ export default function Item({ product }) {
   useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
   return (
-    <StoreLayout rightExpanded={productDisplayed}>
+    <StoreLayout
+      displayHeadline={!isXs || !productDisplayed}
+      rightExpanded={productDisplayed}
+    >
       <ProductList
         displayHeadline={false}
         selectedProductId={id}

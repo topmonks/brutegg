@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  useMediaQuery,
 } from "@mui/material";
 import { alpha, Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
@@ -42,24 +43,65 @@ export default function ProductDetailGallery({ name, images = [] }) {
     setOpen(false);
   };
 
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
   return (
     <Fragment>
       <Dialog
         PaperProps={{
-          sx: {
-            height: "100vh",
-            maxHeight: "100vh",
-            background: alpha("#000", 0.7),
-            backdropFilter: "blur(10px)",
-            m: 0,
-          },
+          sx: [
+            {
+              height: "100vh",
+
+              maxHeight: "100vh",
+              background: alpha("#000", 0.7),
+              backdropFilter: "blur(10px)",
+              m: 0,
+            },
+            isXs && { width: "100%" },
+          ],
         }}
         fullWidth
         maxWidth="xxl"
         onClose={handleClose}
+        onKeyDown={(e) => {
+          let inc = 0;
+
+          if (e.key === "ArrowRight") {
+            inc += 1;
+          } else if (e.key === "ArrowLeft") {
+            inc -= 1;
+          } else {
+            return;
+          }
+
+          const ix = images.findIndex(
+            (i) => i.file.md5 === selectedImage?.file.md5
+          );
+          if (ix < 0) {
+            return;
+          }
+
+          let newIx = ix + inc;
+
+          if (newIx >= images.length) {
+            newIx = 0;
+          }
+          if (newIx < 0) {
+            newIx = images.length - 1;
+          }
+
+          setSelectedImage(images[newIx]);
+        }}
         open={open}
       >
-        <DialogTitle sx={{ justifyContent: "space-between", display: "flex" }}>
+        <DialogTitle
+          sx={{
+            justifyContent: "space-between",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           {name}
           <IconButton onClick={handleClose} size="large">
             <CloseIcon color="primary" />
@@ -83,6 +125,7 @@ export default function ProductDetailGallery({ name, images = [] }) {
             sx={{
               textAlign: "center",
               mb: 2,
+              p: "1px",
             }}
           >
             {images.map((item, ix) => (
@@ -93,8 +136,7 @@ export default function ProductDetailGallery({ name, images = [] }) {
                 sx={[
                   {
                     mr: 1,
-                    mt: "1px",
-                    width: "10%",
+                    width: { xs: "40%", md: "10%" },
                     height: "100px",
                     cursor: "pointer",
                   },
@@ -125,8 +167,8 @@ export default function ProductDetailGallery({ name, images = [] }) {
             sx={{
               mr: 1,
               mt: "3px",
-              width: "28%",
-              height: "130px",
+              width: { xs: "45%", sm: "28%" },
+              height: { xs: "100px", sm: "130px" },
             }}
             tabIndex={0}
           >

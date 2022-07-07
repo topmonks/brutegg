@@ -13,6 +13,7 @@ import { getStoreProducts } from "../../libs/swell";
 import ProductList, {
   scrollToProductId,
 } from "../../components/store/product-list";
+import { useMediaQuery } from "@mui/material";
 
 export async function getStaticProps(_context) {
   const products = await getStoreProducts({
@@ -44,12 +45,17 @@ export default function Store(props) {
     setProducts(props.products.results);
   }, [props.products, setProducts]);
 
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
   return (
     <Fragment>
       <Head>
         <title>Brute merch - Store</title>
       </Head>
-      <StoreLayout rightExpanded={productSkeletonDisplayed}>
+      <StoreLayout
+        displayHeadline={!isXs || !productSkeletonDisplayed}
+        rightExpanded={productSkeletonDisplayed}
+      >
         <ProductList
           ssr={{ products: props.products.results }}
           stretched={productSkeletonDisplayed}

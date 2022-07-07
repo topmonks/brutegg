@@ -12,7 +12,6 @@ import { getStoreProducts } from "../../libs/swell";
 import window from "../../libs/window";
 
 export const STRETCHED_STORE_LIST_GRID = {
-  xxl: 10,
   lg: 15,
   md: 30,
   sm: 30,
