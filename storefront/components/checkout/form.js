@@ -14,6 +14,9 @@ import Zip from "./form/zip";
 import { removeEmpty } from "../../libs/util";
 import { useRecoilState } from "recoil";
 import { checkoutFormState, defaultFormState } from "../../state/checkout";
+import { useRouter } from "next/router";
+import { withLocale } from "../../libs/router";
+import { LINKS } from "../navbar";
 
 export default function Form({
   onSubmit,
@@ -21,8 +24,7 @@ export default function Form({
   hideActions = false,
 }) {
   const { t } = useTranslation("Checkout");
-  const [formData, setFormData, onChange, , resetForm] =
-    useFormData(defaultFormState);
+  const [formData, setFormData, onChange] = useFormData(defaultFormState);
 
   const [, setCheckoutForm] = useRecoilState(checkoutFormState);
 
@@ -43,17 +45,20 @@ export default function Form({
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
+      setFormData((f) => f.set("__timestamp", new Date().toISOString()));
       setIsLoading(true);
       Promise.resolve()
         .then(() => onSubmit(formData.toJSON()))
         .finally(() => setIsLoading(false));
     },
-    [onSubmit, formData]
+    [onSubmit, formData, setFormData]
   );
 
   const checkoutEnabled = useMemo(() => {
     return checkoutValidator().validate(formData.toJSON()).error == null;
   }, [formData]);
+
+  const router = useRouter();
 
   return (
     <Fragment>
@@ -62,9 +67,10 @@ export default function Form({
           sx={{
             display: "flex",
             flexDirection: "column",
+            mx: "auto",
             gap: 2,
             mt: 2,
-            width: { md: "60%" },
+            width: { md: "80%" },
           }}
         >
           <Typography component="h3" variant="h6">
@@ -120,7 +126,13 @@ export default function Form({
                 {t("Continue to payment")}
               </Button>
             )}
-            <Button size="large" variant="text">
+            <Button
+              onClick={() =>
+                router.push(withLocale(router.locale, LINKS.STORE))
+              }
+              size="large"
+              variant="text"
+            >
               {t("Back to the store")}
             </Button>
           </Box>

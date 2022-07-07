@@ -19,6 +19,7 @@ import PaymentDialog from "../../components/checkout/payment-dialog";
 import { useQuery } from "react-query";
 import fetchThrowHttpError from "../../libs/fetch-throw-http-error.mjs";
 import CheckoutLayout from "../../components/checkout/checkout-layout";
+import CartSummary from "../../components/checkout/cart-summary";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -169,16 +170,19 @@ export default function Checkout({ user, address }) {
     <CheckoutLayout>
       <Fragment>
         <PaymentDialog handleClose={handleClose} open={paymentDialogOpen} />
-        <Typography component="h3" variant="h6">
+        <Typography component="h3" variant="h5">
           {t("Checkout")}
         </Typography>
         {content}
       </Fragment>
 
       <Fragment>
-        <Typography component="h3" variant="h6">
+        <Typography component="h3" sx={{ mb: 2 }} variant="h5">
           {t("Items")}
         </Typography>
+        <Box sx={{ pr: { md: 5 } }}>
+          <CartSummary />
+        </Box>
       </Fragment>
     </CheckoutLayout>
   );

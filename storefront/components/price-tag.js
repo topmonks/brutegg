@@ -7,6 +7,8 @@ export default function PriceTag({
   children,
   amount,
   displayLogo = true,
+  displayLetter = false,
+  negative = false,
   ...props
 }) {
   const router = useRouter();
@@ -25,7 +27,12 @@ export default function PriceTag({
       justifyContent="center"
       {...props}
     >
-      {children || <span>{amount}</span>}
+      {children || (
+        <span>
+          {negative && "- "}
+          {amount}
+        </span>
+      )}
       {displayLogo && (
         <Image
           alt="Brutecoin logo"
@@ -33,6 +40,15 @@ export default function PriceTag({
           layout="fixed"
           src="/b-price-tag.svg"
           width={25}
+        />
+      )}
+      {displayLetter && (
+        <Image
+          alt="Brutecoin logo"
+          height={20}
+          layout="fixed"
+          src="/letter-b.svg"
+          width={12}
         />
       )}
     </Box>
@@ -43,4 +59,6 @@ PriceTag.propTypes = {
   amount: PropTypes.string,
   children: PropTypes.node,
   displayLogo: PropTypes.bool,
+  displayLetter: PropTypes.bool,
+  negative: PropTypes.bool,
 };

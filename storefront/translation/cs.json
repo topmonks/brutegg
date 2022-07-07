@@ -58,7 +58,12 @@
     "Zip": "PSČ",
     "Back to the store": "Zpět do obchodu",
     "Checkout": "Dokončit objednávku",
-    "Payment is being prepared": "Platba se připravuje"
+    "Payment is being prepared": "Platba se připravuje",
+    "Items": "Položky",
+    "Wallet balance": "Stav peněženky",
+    "Purchase price": "Cena nákupu",
+    "Balance after purchase": "Zůstatek po nákupu",
+    "Total price": "Celková cena"
   },
   "Validations": {
     "Input is not allowed to be empty": "Pole musí být vyplněno",

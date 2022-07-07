@@ -38,3 +38,8 @@ export const RARITY = {
   EPIC: "epic",
   LEGENDARY: "legendary",
 };
+
+export const SWELL_PRODUCT_TYPES = {
+  PHYSICAL: "physical",
+  DIGITAL: "digital",
+};
