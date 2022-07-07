@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function PriceTag({
@@ -34,22 +33,15 @@ export default function PriceTag({
         </span>
       )}
       {displayLogo && (
-        <Image
+        <img
           alt="Brutecoin logo"
           height={30}
-          layout="fixed"
           src="/b-price-tag.svg"
           width={25}
         />
       )}
       {displayLetter && (
-        <Image
-          alt="Brutecoin logo"
-          height={20}
-          layout="fixed"
-          src="/letter-b.svg"
-          width={12}
-        />
+        <img alt="Brutecoin logo" height={20} src="/letter-b.svg" width={12} />
       )}
     </Box>
   );

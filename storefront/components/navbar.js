@@ -131,7 +131,7 @@ export default function Navbar() {
           </Tabs>
         </Grid>
         <Grid item lg={1} sx={{ display: { xs: "none", lg: "block" }, my: 3 }}>
-          <Image
+          <img
             alt="Brute gg logo"
             height={47}
             src="/brute-logo.svg"

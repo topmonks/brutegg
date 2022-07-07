@@ -15,6 +15,8 @@ const nextConfig = {
     defaultLocale: "cs",
   },
   images: {
+    loader: "cloudinary",
+    path: "https://res.cloudinary.com/brutegg/image/fetch/",
     domains: ["cdn.schema.io"],
     formats: ["image/avif", "image/webp"],
     // experimental

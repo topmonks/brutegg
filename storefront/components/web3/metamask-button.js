@@ -15,6 +15,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { Fragment, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { keyframes } from "@emotion/react";
 import {
   isCorrectChain,
   optionallySwitchToPolygonChain,
@@ -23,9 +24,7 @@ import {
 import { ethereumState } from "../../state/ethereum";
 import { snackbarState } from "../../state/snackbar";
 import window from "../../libs/window";
-import Image from "next/image";
 import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
 import { Box } from "@mui/system";
 import PriceTag from "../price-tag";
 import { useRouter } from "next/router";
@@ -64,7 +63,7 @@ function InstallButton({ children }) {
       href="https://metamask.io/"
       rel="noreferrer"
       startIcon={
-        <Image
+        <img
           alt="Metamask logo"
           height={40}
           src="/metamask-logo.svg"
@@ -125,7 +124,7 @@ function ConnectButton({ children }) {
     <BaseButton
       onClick={connectWallet}
       startIcon={
-        <Image
+        <img
           alt="Metamask logo"
           height={40}
           src="/metamask-logo.svg"
