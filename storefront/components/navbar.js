@@ -1,5 +1,4 @@
 import { Tab, Tabs, alpha, Grid } from "@mui/material";
-import Image from "next/image";
 import { Box } from "@mui/system";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -134,7 +133,7 @@ export default function Navbar() {
           <img
             alt="Brute gg logo"
             height={47}
-            src="/brute-logo.svg"
+            src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/brute-logo_qwbsfz.svg"
             width={143}
           />
         </Grid>

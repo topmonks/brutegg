@@ -36,12 +36,17 @@ export default function PriceTag({
         <img
           alt="Brutecoin logo"
           height={30}
-          src="/b-price-tag.svg"
+          src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/b-price-tag_kq4zrd.svg"
           width={25}
         />
       )}
       {displayLetter && (
-        <img alt="Brutecoin logo" height={20} src="/letter-b.svg" width={12} />
+        <img
+          alt="Brutecoin logo"
+          height={20}
+          src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/letter-b_meohfs.svg"
+          width={12}
+        />
       )}
     </Box>
   );

@@ -66,7 +66,7 @@ function InstallButton({ children }) {
         <img
           alt="Metamask logo"
           height={40}
-          src="/metamask-logo.svg"
+          src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/metamask-logo_xok53j.svg"
           width={40}
         />
       }
@@ -127,7 +127,7 @@ function ConnectButton({ children }) {
         <img
           alt="Metamask logo"
           height={40}
-          src="/metamask-logo.svg"
+          src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/metamask-logo_xok53j.svg"
           width={40}
         />
       }
