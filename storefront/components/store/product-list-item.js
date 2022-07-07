@@ -52,7 +52,7 @@ export default function ProductListItem({ product, selected }) {
     product?.attributes.brute_thumbnail?.value?.file ||
     product.images?.[0]?.file;
 
-  const rarity = product.attributes.brute_rarity?.value;
+  const rarity = product.attributes.brute_rarity?.value || "primary";
 
   return (
     <Box
