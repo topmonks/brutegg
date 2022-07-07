@@ -29,7 +29,7 @@ const ImageListItem = styled(Box)({
   cursor: "zoom-in",
 });
 
-export default function ProductDetailGallery({ name, images }) {
+export default function ProductDetailGallery({ name, images = [] }) {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState();
 
