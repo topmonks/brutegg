@@ -56,11 +56,16 @@ function StoreSkeleton({ stretched, displayHeadline = true }) {
     <Fragment>
       {displayHeadline && <ProductsHeadline />}
 
-      <Grid columns={COLUMNS_COUNT} container spacing={2} sx={{ mt: 0 }}>
+      <Grid
+        columns={COLUMNS_COUNT}
+        container
+        spacing={1}
+        sx={[!stretched && { mt: 1 }]}
+      >
         {new Array(20).fill().map((_, ix) => {
           return (
             <Grid item key={ix} {...gridItemAttrs}>
-              <Skeleton animation="wave" height={250} variant="rectangular" />
+              <Skeleton animation="wave" height={300} variant="rectangular" />
             </Grid>
           );
         })}

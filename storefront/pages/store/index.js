@@ -57,6 +57,7 @@ export default function Store(props) {
         rightExpanded={productSkeletonDisplayed}
       >
         <ProductList
+          displayHeadline={false}
           ssr={{ products: props.products.results }}
           stretched={productSkeletonDisplayed}
         />
