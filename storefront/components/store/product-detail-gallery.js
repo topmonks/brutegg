@@ -11,7 +11,7 @@ import { alpha, Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 
 const ImageList = styled(Box)({
   width: "100%",
@@ -45,6 +45,54 @@ export default function ProductDetailGallery({ name, images = [] }) {
 
   const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
+  const arrowKeysNavigate = (e) => {
+    let inc = 0;
+
+    if (e.key === "ArrowRight") {
+      inc += 1;
+    } else if (e.key === "ArrowLeft") {
+      inc -= 1;
+    } else {
+      return;
+    }
+
+    const ix = images.findIndex((i) => i.file.md5 === selectedImage?.file.md5);
+    if (ix < 0) {
+      return;
+    }
+
+    let newIx = ix + inc;
+
+    if (newIx >= images.length) {
+      newIx = 0;
+    }
+    if (newIx < 0) {
+      newIx = images.length - 1;
+    }
+
+    setSelectedImage(images[newIx]);
+  };
+
+  const touchendX = useRef();
+  const touchstartX = useRef();
+  const swipeNavigation = (inc) => {
+    const ix = images.findIndex((i) => i.file.md5 === selectedImage?.file.md5);
+    if (ix < 0) {
+      return;
+    }
+
+    let newIx = ix + inc;
+
+    if (newIx >= images.length) {
+      return;
+    }
+    if (newIx < 0) {
+      return;
+    }
+
+    setSelectedImage(images[newIx]);
+  };
+
   return (
     <Fragment>
       <Dialog
@@ -64,35 +112,7 @@ export default function ProductDetailGallery({ name, images = [] }) {
         fullWidth
         maxWidth="xxl"
         onClose={handleClose}
-        onKeyDown={(e) => {
-          let inc = 0;
-
-          if (e.key === "ArrowRight") {
-            inc += 1;
-          } else if (e.key === "ArrowLeft") {
-            inc -= 1;
-          } else {
-            return;
-          }
-
-          const ix = images.findIndex(
-            (i) => i.file.md5 === selectedImage?.file.md5
-          );
-          if (ix < 0) {
-            return;
-          }
-
-          let newIx = ix + inc;
-
-          if (newIx >= images.length) {
-            newIx = 0;
-          }
-          if (newIx < 0) {
-            newIx = images.length - 1;
-          }
-
-          setSelectedImage(images[newIx]);
-        }}
+        onKeyDown={arrowKeysNavigate}
         open={open}
       >
         <DialogTitle
@@ -109,6 +129,14 @@ export default function ProductDetailGallery({ name, images = [] }) {
         </DialogTitle>
         <DialogContent
           onClick={handleClose}
+          onTouchEnd={(e) => {
+            touchendX.current = e.changedTouches[0].screenX;
+            const inc = touchendX.current < touchstartX.current ? 1 : -1;
+            swipeNavigation(inc);
+          }}
+          onTouchStart={(e) => {
+            touchstartX.current = e.changedTouches[0].screenX;
+          }}
           sx={{ position: "relative", cursor: "crosshair" }}
         >
           {selectedImage && (
