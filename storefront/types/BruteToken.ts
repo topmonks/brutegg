@@ -54,23 +54,33 @@ export interface MethodConstantReturnContext<TCallReturn> {
 export interface MethodReturnContext extends MethodPayableReturnContext {}
 
 export type ContractContext = Web3ContractContext<
-  ERC20PresetMinterPauser,
-  ERC20PresetMinterPauserMethodNames,
-  ERC20PresetMinterPauserEventsContext,
-  ERC20PresetMinterPauserEvents
+  BruteToken,
+  BruteTokenMethodNames,
+  BruteTokenEventsContext,
+  BruteTokenEvents
 >;
-export type ERC20PresetMinterPauserEvents =
+export type BruteTokenEvents =
   | 'Approval'
+  | 'Nonce'
   | 'Paused'
   | 'RoleAdminChanged'
   | 'RoleGranted'
   | 'RoleRevoked'
   | 'Transfer'
   | 'Unpaused';
-export interface ERC20PresetMinterPauserEventsContext {
+export interface BruteTokenEventsContext {
   Approval(
     parameters: {
       filter?: { owner?: string | string[]; spender?: string | string[] };
+      fromBlock?: number;
+      toBlock?: 'latest' | number;
+      topics?: string[];
+    },
+    callback?: (error: Error, event: EventData) => void
+  ): EventResponse;
+  Nonce(
+    parameters: {
+      filter?: { nonce?: string | number[] | string | number[][] };
       fromBlock?: number;
       toBlock?: 'latest' | number;
       topics?: string[];
@@ -144,8 +154,7 @@ export interface ERC20PresetMinterPauserEventsContext {
     callback?: (error: Error, event: EventData) => void
   ): EventResponse;
 }
-export type ERC20PresetMinterPauserMethodNames =
-  | 'new'
+export type BruteTokenMethodNames =
   | 'DEFAULT_ADMIN_ROLE'
   | 'MINTER_ROLE'
   | 'PAUSER_ROLE'
@@ -162,7 +171,9 @@ export type ERC20PresetMinterPauserMethodNames =
   | 'grantRole'
   | 'hasRole'
   | 'increaseAllowance'
+  | 'mint'
   | 'name'
+  | 'pause'
   | 'paused'
   | 'renounceRole'
   | 'revokeRole'
@@ -171,13 +182,15 @@ export type ERC20PresetMinterPauserMethodNames =
   | 'totalSupply'
   | 'transfer'
   | 'transferFrom'
-  | 'mint'
-  | 'pause'
-  | 'unpause';
+  | 'unpause'
+  | 'transferWithNonce';
 export interface ApprovalEventEmittedResponse {
   owner: string;
   spender: string;
   value: string;
+}
+export interface NonceEventEmittedResponse {
+  nonce: string | number[];
 }
 export interface PausedEventEmittedResponse {
   account: string;
@@ -205,16 +218,7 @@ export interface TransferEventEmittedResponse {
 export interface UnpausedEventEmittedResponse {
   account: string;
 }
-export interface ERC20PresetMinterPauser {
-  /**
-   * Payable: false
-   * Constant: false
-   * StateMutability: nonpayable
-   * Type: constructor
-   * @param name Type: string, Indexed: false
-   * @param symbol Type: string, Indexed: false
-   */
-  'new'(name: string, symbol: string): MethodReturnContext;
+export interface BruteToken {
   /**
    * Payable: false
    * Constant: true
@@ -363,11 +367,27 @@ export interface ERC20PresetMinterPauser {
   increaseAllowance(spender: string, addedValue: string): MethodReturnContext;
   /**
    * Payable: false
+   * Constant: false
+   * StateMutability: nonpayable
+   * Type: function
+   * @param to Type: address, Indexed: false
+   * @param amount Type: uint256, Indexed: false
+   */
+  mint(to: string, amount: string): MethodReturnContext;
+  /**
+   * Payable: false
    * Constant: true
    * StateMutability: view
    * Type: function
    */
   name(): MethodConstantReturnContext<string>;
+  /**
+   * Payable: false
+   * Constant: false
+   * StateMutability: nonpayable
+   * Type: function
+   */
+  pause(): MethodReturnContext;
   /**
    * Payable: false
    * Constant: true
@@ -441,22 +461,20 @@ export interface ERC20PresetMinterPauser {
    * Constant: false
    * StateMutability: nonpayable
    * Type: function
-   * @param to Type: address, Indexed: false
-   * @param amount Type: uint256, Indexed: false
-   */
-  mint(to: string, amount: string): MethodReturnContext;
-  /**
-   * Payable: false
-   * Constant: false
-   * StateMutability: nonpayable
-   * Type: function
-   */
-  pause(): MethodReturnContext;
-  /**
-   * Payable: false
-   * Constant: false
-   * StateMutability: nonpayable
-   * Type: function
    */
   unpause(): MethodReturnContext;
+  /**
+   * Payable: false
+   * Constant: false
+   * StateMutability: nonpayable
+   * Type: function
+   * @param to Type: address, Indexed: false
+   * @param amount Type: uint256, Indexed: false
+   * @param nonce Type: bytes32, Indexed: false
+   */
+  transferWithNonce(
+    to: string,
+    amount: string,
+    nonce: string | number[]
+  ): MethodReturnContext;
 }

@@ -72,7 +72,7 @@ export default function PaymentDialog({ handleClose, open }) {
   );
 
   const { data: createdOrder } = useQuery(
-    ["/swell.cart.update/", cart?.id, watchingTxs],
+    ["/api/swell/create-order", cart?.id, watchingTxs],
     () =>
       window
         ?.fetch("/api/swell/create-order", {

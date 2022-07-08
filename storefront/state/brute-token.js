@@ -1,6 +1,6 @@
 import { selector, selectorFamily } from "recoil";
 import { ethereumState } from "./ethereum";
-import ERC20 from "../abi/ERC20PresetMinterPauser.json";
+import BruteTokenABI from "../abi/BruteToken.json";
 
 import getWeb3 from "../libs/web3";
 import { BRUTE_ADDRESS } from "../libs/constants";
@@ -8,9 +8,12 @@ import { BRUTE_ADDRESS } from "../libs/constants";
 export function getBruteContract(contractAddress) {
   const web3 = getWeb3();
   /**
-   * @type {{methods: import("../types/ERC20PresetMinterPauser").ERC20PresetMinterPauser}}
+   * @type {{methods: import("../types/BruteToken").BruteToken}}
    */
-  const bruteContract = new web3.eth.Contract(ERC20.abi, contractAddress);
+  const bruteContract = new web3.eth.Contract(
+    BruteTokenABI.abi,
+    contractAddress
+  );
 
   return bruteContract;
 }

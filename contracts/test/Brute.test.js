@@ -1,7 +1,7 @@
-const BrutteToken = artifacts.require("ERC20PresetMinterPauser");
+const BrutteToken = artifacts.require("BruteToken");
 contract("BruteToken", (accounts) => {
   /**
-   * @type { import("../build/polygon-contracts/ERC20PresetMinterPauser").ERC20PresetMinterPauser }
+   * @type { import("../build/polygon-contracts/BruteToken").BruteToken }
    */
   let bruteToken;
 
@@ -20,17 +20,29 @@ contract("BruteToken", (accounts) => {
     const totalSuply = await bruteToken.totalSupply.call();
 
     assert.equal(lpTokenBalance, totalSuply.toNumber());
+  });
 
-    // const totalSuply = await lpMioWETHToken.totalSupply.call();
+  it("mint and transfer with nonce", async () => {
+    const lpTokenBalance = 1e3;
+    await bruteToken.mint(holderOne, lpTokenBalance, { from: owner });
 
-    // await lpMioWETHToken.approve(stakingPool.address, totalSuply, {
-    //   from: holderOne,
-    // });
+    await bruteToken.transferWithNonce(
+      holderTwo,
+      lpTokenBalance,
+      web3.utils.fromUtf8("nonce"),
+      {
+        from: holderOne,
+      }
+    );
 
-    // await stakingPool.stake(lpTokenBalance, { from: holderOne });
+    const balanceHolderOne = await bruteToken.balanceOf(holderOne);
+    const balanceHolderTwo = await bruteToken.balanceOf(holderTwo);
 
-    // const staked = await stakingPool.balanceOf.call(holderOne);
+    assert.equal(0, balanceHolderOne.toNumber());
+    assert.equal(lpTokenBalance, balanceHolderTwo.toNumber());
 
-    // assert.equal(staked.toNumber(), lpTokenBalance);
+    const totalSuply = await bruteToken.totalSupply.call();
+
+    assert.equal(lpTokenBalance, totalSuply.toNumber());
   });
 });
