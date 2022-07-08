@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import swell from "swell-js";
 
 import fetchThrowHttpError from "../libs/fetch-throw-http-error.mjs";
+import _window from "../libs/window";
 import window from "../libs/window";
 import { sessionState } from "../state/session";
 
@@ -51,6 +52,21 @@ export default function SessionWatcher() {
 
     reUpdateCardAccount();
   }, [session, reUpdateCardAccount, customer]);
+
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+
+    _window.Rollbar?.configure({
+      payload: {
+        person: {
+          id: session.address,
+          username: session.user?.id,
+        },
+      },
+    });
+  }, [session]);
 
   return null;
 }
