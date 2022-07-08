@@ -46,6 +46,7 @@ export default function Quests(props) {
       </Head>
       <QuestsLayout rightExpanded={questSkeletonDisplayed}>
         <QuestList
+          displayHeadline={false}
           ssr={{ quests: props.quests.results }}
           stretched={questSkeletonDisplayed}
         />

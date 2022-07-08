@@ -100,7 +100,8 @@
     "Order summary": "Shrnutí objednávky",
     "Items will be shipped to": "Zboží bude odesláno na adresu",
     "Pay": "Zaplatit",
-    "Back": "Zpět"
+    "Back": "Zpět",
+    "Payment is being processed": "Platba se zpracovává"
   },
   "MetamaskErrors": {
     "4001": "Transakce byla odmítnuta uživatelem"

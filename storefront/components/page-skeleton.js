@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Box, Grid, Skeleton } from "@mui/material";
+import { Box, Grid, Skeleton, useMediaQuery } from "@mui/material";
 
 import { LINKS, USER_LINKS } from "./navbar";
 import {
@@ -14,8 +14,13 @@ import { ProductsHeadline } from "./store/products-headline";
 import ProfileLayout from "./profile/profile-layout";
 import CheckoutLayout from "./checkout/checkout-layout";
 
-function QuestsSkeleton({ stretched, displayHeadline = true }) {
+function QuestsSkeleton({
+  stretched: _stretched,
+  fromMainNavigation = false,
+  displayHeadline = true,
+}) {
   const display = useDisplayAfterDelay(300);
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   if (!display) {
     return <Fragment></Fragment>;
@@ -24,11 +29,21 @@ function QuestsSkeleton({ stretched, displayHeadline = true }) {
   return (
     <Fragment>
       {displayHeadline && <QuestHeadline />}
-      <Grid container justifyContent={"center"} spacing={2} sx={{ mt: 0 }}>
+      <Grid
+        container
+        justifyContent={"center"}
+        spacing={1}
+        sx={[fromMainNavigation && { mt: 1 }]}
+      >
         {new Array(20).fill().map((_, ix) => {
           return (
-            <Grid item key={ix} xs={stretched ? 12 : 8}>
-              <Skeleton animation="wave" height={75} variant="rectangular" />
+            <Grid item key={ix} sm={fromMainNavigation ? 8 : 12} xs={12}>
+              <Skeleton
+                animation="wave"
+                height={isXs ? 120 : 75}
+                sx={{ mb: 1 }}
+                variant="rectangular"
+              />
             </Grid>
           );
         })}
@@ -39,8 +54,10 @@ function QuestsSkeleton({ stretched, displayHeadline = true }) {
 
 QuestsSkeleton.propTypes = {
   displayHeadline: PropTypes.bool,
+  fromMainNavigation: PropTypes.bool,
   stretched: PropTypes.bool,
 };
+
 function StoreSkeleton({ stretched, displayHeadline = true }) {
   const display = useDisplayAfterDelay(300);
 
