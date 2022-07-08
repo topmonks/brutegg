@@ -7,7 +7,8 @@
     "Disconnect": "Odpojit",
     "Error response": "Chyba",
     "Account successfully updated": "Informace k účtu úspěšně aktualizovány",
-    "Connecting": "Připojuji"
+    "Connecting": "Připojuji",
+    "Change to Polygon": "Přepnout na síť Polygon"
   },
   "Navbar": {
     "Quests": "Questy",
@@ -30,7 +31,8 @@
     "Install MetaMask": "Nainstalujte Metamask",
     "Connect wallet": "Propojte Metamask",
     "Wallet successfully connected": "Peněženka úspěšně propojena",
-    "Wallet successfully disconnected": "Peněženka úspěšně odpojena"
+    "Wallet successfully disconnected": "Peněženka úspěšně odpojena",
+    "Add Brute token to Metamask": "Zobrazit Brute token v MetaMask"
   },
   "UnlockButton": {
     "Account successfully unlocked": "Metamask účet úspěšně odemknut",

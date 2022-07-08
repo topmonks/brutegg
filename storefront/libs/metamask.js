@@ -82,3 +82,18 @@ export function addPolygonChain() {
     ],
   });
 }
+
+export function addToken(tokenAddress, tokenSymbol, tokenDecimals, tokenImage) {
+  return window.ethereum.request({
+    method: "metamask_watchAsset",
+    params: {
+      type: "ERC20",
+      options: {
+        address: tokenAddress,
+        symbol: tokenSymbol,
+        decimals: tokenDecimals,
+        image: tokenImage,
+      },
+    },
+  });
+}

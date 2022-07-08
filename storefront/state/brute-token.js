@@ -54,10 +54,10 @@ const _brutePublicState = selectorFamily({
       const bruteContract = getBruteContract(bruteContractAddress);
 
       const symbol = await bruteContract.methods.symbol().call();
-
       const totalSupply = await bruteContract.methods.totalSupply().call();
+      const decimals = await bruteContract.methods.decimals().call();
 
-      return { symbol, totalSupply };
+      return { address: bruteContractAddress, symbol, totalSupply, decimals };
     },
 });
 

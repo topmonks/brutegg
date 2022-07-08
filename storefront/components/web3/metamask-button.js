@@ -12,11 +12,13 @@ import {
 import LogoutIcon from "@mui/icons-material/Logout";
 import LinkIcon from "@mui/icons-material/Link";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 import { Fragment, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { keyframes } from "@emotion/react";
 import {
+  addToken,
   isCorrectChain,
   optionallySwitchToPolygonChain,
   requestAccounts,
@@ -186,6 +188,18 @@ function ConnectedButton() {
     router.push(withLocale(router.locale, USER_LINKS.PROFILE));
   };
 
+  const addBruteTokenToMetamask = () => {
+    if (!brute.contents?.public) {
+      return;
+    }
+
+    const tokenImage =
+      "https://res.cloudinary.com/brutegg/image/upload/v1657270801/brutegg-swell/brute-tag-logo_rkqso9.png";
+
+    const { address, decimals, symbol } = brute.contents.public;
+    addToken(address, symbol, parseInt(decimals), tokenImage);
+  };
+
   return (
     <Fragment>
       <Menu
@@ -200,7 +214,7 @@ function ConnectedButton() {
         open={open}
       >
         {!isCorrectChain(ethereum.chainId) && (
-          <MenuItem onClick={changeToPolygon}>
+          <MenuItem onClick={changeToPolygon} sx={{ whiteSpace: "normal" }}>
             <ListItemIcon>
               <LinkIcon fontSize="small" />
             </ListItemIcon>
@@ -214,6 +228,16 @@ function ConnectedButton() {
             <AccountBoxIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>{t("Profile", { ns: "Common" })}</ListItemText>
+        </MenuItem>
+        <MenuItem
+          disabled={brute.state === "loading"}
+          onClick={addBruteTokenToMetamask}
+          sx={{ whiteSpace: "normal" }}
+        >
+          <ListItemIcon>
+            <AddToQueueIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>{t("Add Brute token to Metamask")}</ListItemText>
         </MenuItem>
         <MenuItem onClick={disconnect}>
           <ListItemIcon>
