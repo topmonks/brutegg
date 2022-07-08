@@ -10,7 +10,7 @@ export default function Custom500() {
       sx={{ height: "80vh" }}
     >
       <Grid item>
-        <Typography component="h1" variant="h3">
+        <Typography component="h1" variant="h3Outglow">
           500 - Server-side error occurred
         </Typography>
       </Grid>

@@ -10,7 +10,7 @@ export default function Custom404() {
       sx={{ height: "80vh" }}
     >
       <Grid item>
-        <Typography component="h1" variant="h3">
+        <Typography component="h1" variant="h3Outglow">
           404 - Page Not Found
         </Typography>
       </Grid>

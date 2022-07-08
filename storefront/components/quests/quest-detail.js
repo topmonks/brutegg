@@ -60,7 +60,7 @@ export function QuestDetail({ product: _product }) {
           >
             <Close />
           </IconButton>
-          <Typography component="h1" variant="h3">
+          <Typography component="h1" variant="h3Outglow">
             {product.name}
           </Typography>
           <Typography sx={{ mt: 2 }} variant="subtitle1">

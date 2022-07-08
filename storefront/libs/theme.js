@@ -1,17 +1,24 @@
 import { createTheme, darkScrollbar, responsiveFontSizes } from "@mui/material";
 import { RARITY } from "./constants";
 
-const theme = responsiveFontSizes(
-  createTheme({
-    palette: {
-      mode: "dark",
-      primary: {
-        main: "#EA2122",
-      },
-      secondary: {
-        main: "#EA2122",
-      },
+// to extend from
+const abstractTheme = createTheme({
+  typography: {
+    fontFamily: ["Montserrat", "sans-serif"].join(","),
+  },
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#EA2122",
     },
+    secondary: {
+      main: "#EA2122",
+    },
+  },
+});
+
+const theme = responsiveFontSizes(
+  createTheme(abstractTheme, {
     breakpoints: {
       values: {
         xs: 0,
@@ -23,9 +30,23 @@ const theme = responsiveFontSizes(
       },
     },
     typography: {
-      fontFamily: ["Montserrat", "sans-serif"].join(","),
-      h3: {
+      h3Outglow: {
+        ...abstractTheme.typography.h3,
         textShadow: "0px 0px 12px #EA2122",
+        fontWeight: "bold",
+      },
+      h4Outglow: {
+        ...abstractTheme.typography.h4,
+        textShadow: "0px 0px 12px #EA2122",
+        fontWeight: "bold",
+      },
+      h5Outglow: {
+        ...abstractTheme.typography.h5,
+        textShadow: "0px 0px 12px #EA2122",
+        fontWeight: "bold",
+      },
+      link: {
+        color: abstractTheme.palette.primary.main,
         fontWeight: "bold",
       },
     },

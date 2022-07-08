@@ -123,7 +123,7 @@ export function ProductDetail({ product: _product }) {
           >
             <Close />
           </IconButton>
-          <Typography component="h1" variant="h3">
+          <Typography component="h1" variant="h3Outglow">
             {product.name}
           </Typography>
 
