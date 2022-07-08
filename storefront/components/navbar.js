@@ -21,25 +21,69 @@ const backgroundAnimation = keyframes`
   }
 `;
 
-const CustomTab = styled((props) => <Tab {...props} />)(({ theme }) => ({
-  "&:hover": {
-    animation: `${backgroundAnimation} 1s ease-out infinite alternate-reverse`,
-    background: `radial-gradient(ellipse at 50% 300%, ${
-      theme.palette.primary.main
-    }, ${alpha(theme.palette.primary.main, 0)} 65%) center no-repeat`,
-  },
-  "&.Mui-selected": {
-    background: `radial-gradient(ellipse at 50% 300%, ${
-      theme.palette.primary.main
-    }, ${alpha(theme.palette.primary.main, 0)} 80%) center no-repeat`,
-    animation: `${backgroundAnimation} 1s ease-out`,
+const CustomTab = styled((props) => <Tab {...props} />)(({ theme }) => {
+  const commonGradient = `linear-gradient(
+    0deg,
+    ${alpha(theme.palette.primary.main, 0.2)} 0%,
+    rgba(0, 0, 0, 0) 100%
+  ) center no-repeat`;
+
+  return {
+    "&:hover": {
+      animation: `${backgroundAnimation} 1s ease-out infinite alternate-reverse`,
+      background: `radial-gradient(ellipse at 50% 300%, ${
+        theme.palette.primary.main
+      }, ${alpha(
+        theme.palette.primary.main,
+        0
+      )} 65%) center no-repeat, ${commonGradient}`,
+    },
+    "&.Mui-selected": {
+      background: `radial-gradient(ellipse at 50% 200%, ${
+        theme.palette.primary.main
+      }, ${alpha(
+        theme.palette.primary.main,
+        0
+      )} 70%) center no-repeat,  linear-gradient(
+      0deg,
+      ${alpha(theme.palette.primary.main, 0.5)} 0%,
+      rgba(0, 0, 0, 0) 30%
+    ) center no-repeat, ${commonGradient}`,
+      animation: `${backgroundAnimation} 1s ease-out`,
+      color: "white",
+      borderImage: `linear-gradient(
+      to top, 
+      ${theme.palette.primary.main}, 
+      rgba(0, 0, 0, 0)
+    ) 1 100%`,
+    },
+    background: commonGradient,
+    fontSize: "18px",
+    fontWeight: "bold",
+    letterSpacing: 1,
     color: "white",
-  },
-  fontSize: "20px",
-  fontWeight: "bold",
-  color: "white",
-  textShadow: `0px 0px 12px ${theme.palette.primary.main}`,
-}));
+    padding: "0 30px 0",
+    height: "80px",
+    [theme.breakpoints.down("sm")]: {
+      height: "60px",
+    },
+    textShadow: `0px 5px 15px ${
+      theme.palette.primary.main
+    }, 0px 0px 4px ${alpha("#000", 0.2)}`,
+    boxShadow: `inset 0 -1px 0 0 ${alpha(theme.palette.primary.main, 0.5)}`,
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderImage: `linear-gradient(
+    to top, 
+    ${alpha(theme.palette.primary.main, 0.5)}, 
+    rgba(0, 0, 0, 0)
+    ) 1 100%`,
+    borderBottomWidth: "0",
+    "&& .MuiTouchRipple-child": {
+      backgroundColor: alpha(theme.palette.primary.main, 1),
+    },
+  };
+});
 
 export const LINKS = {
   QUESTS: "/quests",
@@ -106,12 +150,19 @@ export default function Navbar() {
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
       <Grid
-        alignItems="flex-end"
+        alignItems="center"
         container
         direction="row"
         justifyContent="space-between"
       >
-        <Grid item lg={5} sm={10} xs={12}>
+        <Grid item lg={1} sx={{ display: { xs: "none", lg: "block" }, pl: 2 }}>
+          <img
+            alt="Brute gg logo"
+            height={32}
+            src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/brute-logo_qwbsfz.svg"
+          />
+        </Grid>
+        <Grid item lg={7} md={9} xs={12}>
           <Tabs
             aria-label="basic tabs example"
             indicatorColor="secondary"
@@ -129,21 +180,14 @@ export default function Navbar() {
             ))}
           </Tabs>
         </Grid>
-        <Grid item lg={1} sx={{ display: { xs: "none", lg: "block" }, my: 3 }}>
-          <img
-            alt="Brute gg logo"
-            height={47}
-            src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/brute-logo_qwbsfz.svg"
-            width={143}
-          />
-        </Grid>
+
         <Grid
           item
-          lg={5}
-          sm={2}
-          sx={{ display: { xs: "none", sm: "block" }, textAlign: "right" }}
+          lg={3}
+          md={3}
+          sx={{ display: { xs: "none", md: "block" }, textAlign: "right" }}
         >
-          <Box sx={{ mb: 1 }}>
+          <Box sx={{ my: 1 }}>
             <MetamaskButton />
           </Box>
         </Grid>
