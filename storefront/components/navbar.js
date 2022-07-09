@@ -1,14 +1,18 @@
-import { Tab, Tabs, alpha, Grid } from "@mui/material";
+import { Tab, Tabs, alpha, Grid, useMediaQuery } from "@mui/material";
 import { Box } from "@mui/system";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
-import { withLocale } from "../libs/router";
 import { useRecoilValue } from "recoil";
-import { eventTargetState, NAVBAR_CHANGE } from "../state/event-target";
 import { keyframes } from "@emotion/react";
-import window from "../libs/window";
 import styled from "@emotion/styled";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
+import screenfull from "screenfull";
+
+import { eventTargetState, NAVBAR_CHANGE } from "../state/event-target";
+import { withLocale } from "../libs/router";
+import window from "../libs/window";
 import MetamaskButton from "./web3/metamask-button";
 import { ethereumState } from "../state/ethereum";
 
@@ -21,7 +25,7 @@ const backgroundAnimation = keyframes`
   }
 `;
 
-const CustomTab = styled((props) => <Tab {...props} />)(({ theme }) => {
+const CustomTab = styled(Tab)(({ theme }) => {
   const commonGradient = `linear-gradient(
     0deg,
     ${alpha(theme.palette.primary.main, 0.2)} 0%,
@@ -85,6 +89,38 @@ const CustomTab = styled((props) => <Tab {...props} />)(({ theme }) => {
   };
 });
 
+const FullscreenTab = () => {
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const [isFullscreen, setIsFullScreen] = useState(false);
+
+  useEffect(() => {
+    function onChange() {
+      setIsFullScreen((v) => !v);
+    }
+
+    screenfull.onchange(onChange);
+
+    return () => screenfull.off("change", onChange);
+  }, []);
+
+  if (!isXs) {
+    return null;
+  }
+
+  if (!screenfull.isEnabled) {
+    return null;
+  }
+
+  return (
+    <CustomTab
+      label={isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+      onClick={() => screenfull.toggle()}
+      sx={{ p: "0 !important", minWidth: "50px" }}
+      value={null}
+    />
+  );
+};
+
 export const LINKS = {
   QUESTS: "/quests",
   STORE: "/store",
@@ -127,6 +163,10 @@ export default function Navbar() {
   }, [findLink]);
 
   const handleChange = (event, newValue) => {
+    if (!newValue) {
+      return;
+    }
+
     setValue(newValue);
     if (eventTarget && window.CustomEvent) {
       eventTarget.dispatchEvent(
@@ -170,13 +210,9 @@ export default function Navbar() {
             value={value}
             variant="scrollable"
           >
+            <FullscreenTab />
             {topMenu.map(([label, value]) => (
-              <CustomTab
-                key={value}
-                label={label}
-                onClick={(e) => handleChange(e, value)}
-                value={value}
-              />
+              <CustomTab key={value} label={label} value={value} />
             ))}
           </Tabs>
         </Grid>
