@@ -1,29 +1,19 @@
-import {
-  Button,
-  CircularProgress,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { withLocale } from "../../libs/router";
 import swell, { getProduct } from "../../libs/swell";
 import window from "../../libs/window";
-import {
-  eventTargetState,
-  NAVBAR_CHANGE,
-  STORE_ITEM_CHANGE,
-} from "../../state/event-target";
+import { eventTargetState, NAVBAR_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
-import Close from "@mui/icons-material/Close";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import { Box } from "@mui/system";
 import { productState } from "../../state/products";
 import { useTranslation } from "react-i18next";
 import StyledDescription from "../styled-description";
 import PriceTag from "../price-tag";
-import { LINKS, USER_LINKS } from "../navbar";
+import { USER_LINKS } from "../navbar";
 import { useQuery } from "react-query";
 import ProductDetailGallery from "./product-detail-gallery";
 
@@ -97,32 +87,12 @@ export function ProductDetail({ product: _product }) {
     router.push(withLocale(router.locale, USER_LINKS.CHECKOUT));
   }, [cartIsUpdated, router, eventTarget]);
 
-  const close = useCallback(() => {
-    eventTarget.dispatchEvent(
-      new window.CustomEvent(STORE_ITEM_CHANGE, {
-        detail: {},
-      })
-    );
-    router.push(withLocale(router.locale, LINKS.STORE), null, {
-      scroll: false,
-    });
-  }, [router, eventTarget]);
-
   const initialSupply = product.attributes.brute_initial_supply?.value;
 
   return (
     <Fragment>
       <Box sx={{ display: "flex", flexDirection: "column", maxHeight: "100%" }}>
         <Box sx={{ flexGrow: 1, pb: 2 }}>
-          <IconButton
-            aria-label={t("Close", { ns: "Common" })}
-            color="primary"
-            onClick={close}
-            size="large"
-            sx={{ float: "right" }}
-          >
-            <Close />
-          </IconButton>
           <Typography component="h1" variant="h3Outglow">
             {product.name}
           </Typography>
