@@ -49,10 +49,12 @@ function Balances({ cartPrice }) {
         <Typography>{t("Wallet balance")}</Typography>
         <PriceTag
           amount={brute.contents?.account?.balance || ""}
-          displayLetter
+          displayLetter={ethereum.account}
           displayLogo={false}
           sx={{ fontWeight: "bold" }}
-        />
+        >
+          {!ethereum.account && "---"}
+        </PriceTag>
       </BalanceItem>
       <BalanceItem sx={{ mb: { sx: 0.5, sm: 2 } }}>
         <Typography>{t("Purchase price")}</Typography>
@@ -68,10 +70,12 @@ function Balances({ cartPrice }) {
         <Typography>{t("Balance after purchase")}</Typography>
         <PriceTag
           amount={balanceAfterPurchase?.toString()}
-          displayLetter
+          displayLetter={ethereum.account}
           displayLogo={false}
           sx={{ fontWeight: "bold" }}
-        />
+        >
+          {!ethereum.account && "---"}
+        </PriceTag>
       </BalanceItem>
       <BalanceItem>
         <Typography sx={{ fontWeight: "bold" }}>{t("Total price")}</Typography>
