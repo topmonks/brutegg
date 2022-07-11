@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import {
+  alpha,
   Box,
   Button,
   Dialog,
@@ -111,48 +112,63 @@ export default function PaymentDialog({ handleClose, open }) {
 
   let content = (
     <Box>
-      <Typography display="block" variant="subtitle1">
-        {t("Items will be shipped to")}
-      </Typography>
-      <Box
-        sx={{ my: 1, p: 3, border: "1px solid gray", display: "inline-block" }}
-      >
-        <Typography fontWeight="bold" variant="body1">
-          {checkoutForm.firstName} {checkoutForm.lastName}
-        </Typography>
-        <Typography fontWeight="bold" variant="body1">
-          {checkoutForm.address1}
-        </Typography>
-        <Typography fontWeight="bold" variant="body1">
-          {checkoutForm.address2}
-        </Typography>
-        <Typography fontWeight="bold" variant="body1">
-          {checkoutForm.city}, {checkoutForm.zip}
-        </Typography>
-        <Typography fontWeight="bold" variant="body1">
-          {checkoutForm.country}
-        </Typography>
-      </Box>
+      <img
+        alt="Metamask logo"
+        height={40}
+        src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/metamask-logo_xok53j.svg"
+        width={40}
+      />
     </Box>
   );
 
   return (
     <div>
       <Dialog
+        PaperProps={{
+          sx: {
+            borderRadius: 0,
+            border: "3px solid #101112",
+            boxShadow: `inset 0 0 20px 0 ${alpha(
+              "#000",
+              0.8
+            )}, inset 0 0 0 1px ${alpha("#fff", 0.3)}, 0 0 0 1px ${alpha(
+              "#fff",
+              0.3
+            )}`,
+            background: `linear-gradient(0deg, ${alpha(
+              "#101112",
+              1
+            )} 0%, ${alpha("#111214", 1)} 100%)`,
+          },
+        }}
         fullWidth
         maxWidth="md"
         onClose={handleClose}
         open={open}
         scroll="paper"
       >
-        <DialogTitle>{t("Order summary")}</DialogTitle>
-        <DialogContent>{content}</DialogContent>
+        <DialogContent>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              height: {
+                xs: "300px",
+                sm: "300px",
+              },
+            }}
+          >
+            {content}
+          </Box>
+        </DialogContent>
         <DialogActions>
-          <Button onClick={check} variant="text">
+          {/* <Button onClick={check} variant="text">
             {t("Check", { ns: "Common" })}
-          </Button>
+          </Button> */}
           <Button onClick={handleClose} variant="text">
-            {t("Cancel", { ns: "Common" })}
+            {t("Back", { ns: "Common" })}
           </Button>
           <PaymentButton />
         </DialogActions>

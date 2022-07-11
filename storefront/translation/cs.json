@@ -8,7 +8,8 @@
     "Error response": "Chyba",
     "Account successfully updated": "Informace k účtu úspěšně aktualizovány",
     "Connecting": "Připojuji",
-    "Change to Polygon": "Přepnout na síť Polygon"
+    "Change to Polygon": "Přepnout na síť Polygon",
+    "Back": "Zpět"
   },
   "Navbar": {
     "Quests": "Questy",

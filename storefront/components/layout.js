@@ -27,7 +27,7 @@ export default function Layout({ children, displayNavbar = true }) {
   return (
     <Fragment>
       <Container maxWidth="xl">
-        {displayNavbar && <Navbar />}
+        {displayNavbar && !SkeletonComponent?.hideNavbar && <Navbar />}
         <Box sx={{ mt: 2, mb: 2 }}>
           {SkeletonComponent ? (
             <SkeletonComponent fromMainNavigation />
