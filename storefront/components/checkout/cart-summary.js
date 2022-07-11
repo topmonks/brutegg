@@ -45,18 +45,18 @@ function Balances({ cartPrice }) {
 
   return (
     <Fragment>
-      <BalanceItem sx={{ mb: { sx: 0.5, sm: 2 } }}>
+      <BalanceItem sx={{ mb: { xs: 0.5, sm: 2 } }}>
         <Typography>{t("Wallet balance")}</Typography>
         <PriceTag
           amount={brute.contents?.account?.balance || ""}
-          displayLetter={ethereum.account}
+          displayLetter={Boolean(ethereum.account)}
           displayLogo={false}
           sx={{ fontWeight: "bold" }}
         >
           {!ethereum.account && "---"}
         </PriceTag>
       </BalanceItem>
-      <BalanceItem sx={{ mb: { sx: 0.5, sm: 2 } }}>
+      <BalanceItem sx={{ mb: { xs: 0.5, sm: 2 } }}>
         <Typography>{t("Purchase price")}</Typography>
         <PriceTag
           amount={cartPrice?.toString()}
@@ -66,11 +66,11 @@ function Balances({ cartPrice }) {
           sx={{ fontWeight: "bold" }}
         />
       </BalanceItem>
-      <BalanceItem sx={{ mb: { sx: 0.5, sm: 10 } }}>
+      <BalanceItem sx={{ mb: { xs: 0.5, sm: 10 } }}>
         <Typography>{t("Balance after purchase")}</Typography>
         <PriceTag
           amount={balanceAfterPurchase?.toString()}
-          displayLetter={ethereum.account}
+          displayLetter={Boolean(ethereum.account)}
           displayLogo={false}
           sx={{ fontWeight: "bold" }}
         >

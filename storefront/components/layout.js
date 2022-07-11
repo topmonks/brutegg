@@ -7,7 +7,7 @@ import useEventTarget from "../hooks/use-event-target";
 
 import Skeletons from "./page-skeleton";
 
-export default function Layout({ children }) {
+export default function Layout({ children, displayNavbar = true }) {
   const [SkeletonComponent, setSkeletonComponent] = useState();
 
   const onNavbarChange = useCallback((event) => {
@@ -27,7 +27,7 @@ export default function Layout({ children }) {
   return (
     <Fragment>
       <Container maxWidth="xl">
-        <Navbar />
+        {displayNavbar && <Navbar />}
         <Box sx={{ mt: 2, mb: 2 }}>
           {SkeletonComponent ? (
             <SkeletonComponent fromMainNavigation />
@@ -42,4 +42,5 @@ export default function Layout({ children }) {
 
 Layout.propTypes = {
   children: PropTypes.node,
+  displayNavbar: PropTypes.bool,
 };

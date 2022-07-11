@@ -14,9 +14,7 @@ import Zip from "./form/zip";
 import { removeEmpty } from "../../libs/util";
 import { useRecoilState } from "recoil";
 import { checkoutFormState, defaultFormState } from "../../state/checkout";
-import { useRouter } from "next/router";
-import { withLocale } from "../../libs/router";
-import { LINKS } from "../navbar";
+import BackToStoreButton from "./back-to-store-button";
 
 export default function Form({
   onSubmit,
@@ -57,8 +55,6 @@ export default function Form({
   const checkoutEnabled = useMemo(() => {
     return checkoutValidator().validate(formData.toJSON()).error == null;
   }, [formData]);
-
-  const router = useRouter();
 
   return (
     <Fragment>
@@ -126,15 +122,7 @@ export default function Form({
                 {t("Continue to payment")}
               </Button>
             )}
-            <Button
-              onClick={() =>
-                router.push(withLocale(router.locale, LINKS.STORE))
-              }
-              size="large"
-              variant="text"
-            >
-              {t("Back to the store")}
-            </Button>
+            <BackToStoreButton />
           </Box>
         </Box>
       </form>

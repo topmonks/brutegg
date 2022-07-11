@@ -65,7 +65,9 @@
     "Wallet balance": "Stav peněženky",
     "Purchase price": "Cena nákupu",
     "Balance after purchase": "Zůstatek po nákupu",
-    "Total price": "Celková cena"
+    "Total price": "Celková cena",
+    "Let us know who you are so we can send you your reward safely": "Dej vědět, kdo jsi, abychom ti mohli odměnu bezpečně poslat",
+    "You need to choose any item from the store firstly": "Nejprve si musíte vybrat libovolnou položku z obchodu."
   },
   "Validations": {
     "Input is not allowed to be empty": "Pole musí být vyplněno",

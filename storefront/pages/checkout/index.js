@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,6 +20,15 @@ import { useQuery } from "react-query";
 import fetchThrowHttpError from "../../libs/fetch-throw-http-error.mjs";
 import CheckoutLayout from "../../components/checkout/checkout-layout";
 import CartSummary from "../../components/checkout/cart-summary";
+import styled from "@emotion/styled";
+import { CheckoutHeadline } from "../../components/checkout/checkout-headline";
+import Layout from "../../components/layout";
+import BruteDivider from "../../components/divider";
+import BackToStoreButton from "../../components/checkout/back-to-store-button";
+import useGetCart from "../../hooks/use-get-cart";
+import { useRouter } from "next/router";
+import { withLocale } from "../../libs/router";
+import { LINKS } from "../../components/navbar";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -61,6 +70,16 @@ export const getServerSideProps = withSessionSsr(async (context) => {
     props: resultProps,
   };
 });
+
+const VerticalAlign = styled(Box)(({ theme }) => ({
+  height: "60vh",
+  [theme.breakpoints.down("sm")]: {
+    height: "auto",
+  },
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+}));
 
 export default function Checkout({ user, address }) {
   const { t } = useTranslation("Checkout");
@@ -157,36 +176,68 @@ export default function Checkout({ user, address }) {
       );
     } else {
       content = (
-        <Box display="flex" justifyContent="center">
-          <UnlockButton size="large" sx={{ fontWeight: "bold" }} />
-        </Box>
+        <VerticalAlign>
+          <Box sx={{ textAlign: "center" }}>
+            <UnlockButton size="large" sx={{ fontWeight: "bold" }} />
+            <Box sx={{ width: "100%", my: 2 }}>
+              <BruteDivider />
+            </Box>
+            <BackToStoreButton />
+          </Box>
+        </VerticalAlign>
       );
     }
   } else {
-    content = <MetamaskButton />;
+    content = (
+      <VerticalAlign>
+        <MetamaskButton />
+      </VerticalAlign>
+    );
   }
 
   return (
-    <CheckoutLayout>
-      <Fragment>
-        <PaymentDialog handleClose={handleClose} open={paymentDialogOpen} />
-        <Typography component="h3" variant="h5">
-          {t("Checkout")}
-        </Typography>
-        {content}
-      </Fragment>
-
-      <Fragment>
-        <Typography component="h3" sx={{ mb: 2 }} variant="h5">
-          {t("Items")}
-        </Typography>
-        <Box sx={{ pr: { md: 5 } }}>
-          <CartSummary />
-        </Box>
-      </Fragment>
-    </CheckoutLayout>
+    <Fragment>
+      <Box sx={{ mb: 2 }}>
+        <CheckoutHeadline />
+      </Box>
+      <CheckoutLayout>
+        <Fragment>
+          <PaymentDialog handleClose={handleClose} open={paymentDialogOpen} />
+          {content}
+        </Fragment>
+        <Fragment>
+          <Box sx={{ pr: { md: 5 } }}>
+            <CartSummary />
+          </Box>
+        </Fragment>
+      </CheckoutLayout>
+    </Fragment>
   );
 }
+
+function AppLayout({ children }) {
+  const { t } = useTranslation("Checkout");
+  const { data: cart, isFetched } = useGetCart();
+  const [, setSnackbar] = useRecoilState(snackbarState);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isFetched && cart?.items?.length === 0) {
+      setSnackbar({
+        message: t("You need to choose any item from the store firstly"),
+      });
+      router.replace(withLocale(router.locale, LINKS.STORE));
+    }
+  }, [cart, isFetched, setSnackbar, t, router]);
+
+  return <Layout displayNavbar={false}>{children}</Layout>;
+}
+
+AppLayout.propTypes = {
+  children: PropTypes.node,
+};
+
+Checkout.AppLayout = AppLayout;
 
 Checkout.propTypes = {
   address: PropTypes.string,

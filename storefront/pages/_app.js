@@ -8,7 +8,7 @@ import { RecoilRoot } from "recoil";
 import { Fragment, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import theme from "../libs/theme";
-import Layout from "../components/layout";
+import DefaultAppLayout from "../components/layout";
 import QueryClientProvider from "../components/query-client-provider";
 import MetamaskWatcher from "../components/web3/metamask-watcher";
 import Snackbar from "../components/snackbar";
@@ -24,6 +24,8 @@ const myErrorHandler = (error) => {
 };
 
 function MyApp({ Component, pageProps }) {
+  const Layout = Component.AppLayout ?? DefaultAppLayout;
+
   return (
     <Fragment>
       <RecoilRoot>
