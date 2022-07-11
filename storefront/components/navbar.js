@@ -90,7 +90,6 @@ const CustomTab = styled(Tab)(({ theme }) => {
 });
 
 const FullscreenTab = () => {
-  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [isFullscreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
@@ -102,10 +101,6 @@ const FullscreenTab = () => {
 
     return () => screenfull.off("change", onChange);
   }, []);
-
-  if (!isXs) {
-    return null;
-  }
 
   if (!screenfull.isEnabled) {
     return null;
@@ -187,6 +182,8 @@ export default function Navbar() {
     );
   }, [router]);
 
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
       <Grid
@@ -210,7 +207,7 @@ export default function Navbar() {
             value={value}
             variant="scrollable"
           >
-            <FullscreenTab />
+            {isXs && <FullscreenTab />}
             {topMenu.map(([label, value]) => (
               <CustomTab key={value} label={label} value={value} />
             ))}
