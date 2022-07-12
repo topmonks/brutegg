@@ -106,9 +106,17 @@
     "Items will be shipped to": "Zboží bude odesláno na adresu",
     "Pay": "Zaplatit",
     "Back": "Zpět",
-    "Payment is being processed": "Platba se zpracovává"
+    "Payment is being processed": "Platba se zpracovává",
+    "Continue by clicking on Pay": "Pokračujte kliknutím na Zaplatit",
+    "We are in the process of extracting your bounty, it may take some time.": "Právě těžíme vaši odměnu, může to chvíli trvat.",
+    "Done! Check your email for further instructions.": "Hotovo! Mrkni do e-mailu pro další instrukce.",
+    "Check the transaction on polygonscan.com": "Zkontrolujte transakci na polygonscan.com"
   },
   "MetamaskErrors": {
     "4001": "Transakce byla odmítnuta uživatelem"
+  },
+  "PendingTxs": {
+    "Transaction confirmed": "Transakce potvrzena",
+    "Check the polygonscan": "Otevřít v Polygonscan"
   }
 }

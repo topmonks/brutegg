@@ -74,6 +74,9 @@ export const darkTheme = createTheme(theme, {
     [RARITY.LEGENDARY]: {
       main: "#F6851B",
     },
+    confirmGreen: {
+      main: "#08C375",
+    },
   },
   components: {
     MuiCssBaseline: {

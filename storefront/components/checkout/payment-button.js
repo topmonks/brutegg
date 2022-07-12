@@ -1,4 +1,4 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -61,12 +61,18 @@ export default function PaymentButton() {
     const gasPrice = await web3.eth.getGasPrice();
 
     bruteContract.methods
-      .transfer(treasuryAddress, totalPriceInWei)
+      .transferWithNonce(
+        treasuryAddress,
+        totalPriceInWei,
+        web3.utils.fromUtf8(cart.id)
+      )
       .send({ from: ethereum.account, gasPrice }, (error, transactionHash) => {
         if (transactionHash) {
           console.log({ transactionHash });
           setPendingTxs((v) => v.concat([transactionHash]));
-          setWatcherTxs(transactionHash);
+          setWatcherTxs(transactionHash, {
+            createdAt: new Date().toISOString(),
+          });
         }
         if (error) {
           setSnackbar({
@@ -88,13 +94,7 @@ export default function PaymentButton() {
 
   if (watchingTxs?.state === TX_STATES.PENDING) {
     return (
-      <Button
-        disableElevation
-        disabled
-        size="large"
-        startIcon={<CircularProgress size={20} />}
-        variant="contained"
-      >
+      <Button disableElevation disabled size="large" variant="contained">
         {t("Payment is being processed")}
       </Button>
     );

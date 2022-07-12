@@ -1,5 +1,16 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { watcherTxsState, watchingTxsState } from "../state/tx";
+import { useCallback } from "react";
+import {
+  useRecoilCallback,
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+} from "recoil";
+import {
+  metadataTxState,
+  txLastState,
+  watcherTxsState,
+  watchingTxsState,
+} from "../state/tx";
 
 /**
  *
@@ -8,6 +19,10 @@ import { watcherTxsState, watchingTxsState } from "../state/tx";
  * @param {string} method
  */
 export default function useWatchTx(account, contractAddress, method) {
+  const removeWatcherTxs = useResetRecoilState(
+    watcherTxsState([account, contractAddress, method])
+  );
+
   const [, setWatcherTxs] = useRecoilState(
     watcherTxsState([account, contractAddress, method])
   );
@@ -16,5 +31,38 @@ export default function useWatchTx(account, contractAddress, method) {
     watchingTxsState([account, contractAddress, method])
   );
 
-  return [watchingTxs, setWatcherTxs];
+  const setMetadata = useRecoilCallback(
+    ({ set }) =>
+      (tx, newMetadata) => {
+        set(metadataTxState(tx), (currentMetadata) => ({
+          ...currentMetadata,
+          ...newMetadata,
+        }));
+      },
+    []
+  );
+
+  const removeTx = useRecoilCallback(
+    ({ reset }) =>
+      () => {
+        const tx = watchingTxs.transactionHash;
+        reset(metadataTxState(tx));
+        reset(txLastState(tx));
+        removeWatcherTxs();
+      },
+    [watchingTxs, removeWatcherTxs]
+  );
+
+  const setWatcherAndMetadata = useCallback(
+    (account, metadata) => {
+      setWatcherTxs(account);
+
+      if (metadata) {
+        setMetadata(account, metadata);
+      }
+    },
+    [setWatcherTxs, setMetadata]
+  );
+
+  return [watchingTxs, setWatcherAndMetadata, removeTx];
 }

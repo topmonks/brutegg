@@ -23,6 +23,7 @@ const config = {
   ],
   env: {
     es6: true,
+    browser: true,
   },
   globals: {
     process: true,
