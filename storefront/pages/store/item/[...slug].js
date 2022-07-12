@@ -83,6 +83,7 @@ export default function Item({ product }) {
 
   return (
     <StoreLayout
+      centerHeadline={false}
       displayHeadline={!isXs || !productDisplayed}
       rightExpanded={productDisplayed}
     >

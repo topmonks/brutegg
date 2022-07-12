@@ -72,7 +72,7 @@ function StoreSkeleton({ stretched, displayHeadline = true }) {
 
   return (
     <Fragment>
-      {displayHeadline && <ProductsHeadline />}
+      {displayHeadline && <ProductsHeadline center />}
 
       <Grid
         columns={COLUMNS_COUNT}

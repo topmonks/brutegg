@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { ethereumState } from "../../state/ethereum";
+import { useRecoilState } from "recoil";
 import { productsState } from "../../state/products";
 import Head from "next/head";
 import StoreLayout from "../../components/store/store-layout";
@@ -26,8 +25,6 @@ export async function getStaticProps(_context) {
 }
 
 export default function Store(props) {
-  const ethereum = useRecoilValue(ethereumState);
-
   const [, setProducts] = useRecoilState(productsState);
   const [productSkeletonDisplayed, setProductSkeletonDisplayed] =
     useState(false);
@@ -53,6 +50,7 @@ export default function Store(props) {
         <title>Brute merch - Store</title>
       </Head>
       <StoreLayout
+        centerHeadline={!productSkeletonDisplayed}
         displayHeadline={!isXs || !productSkeletonDisplayed}
         rightExpanded={productSkeletonDisplayed}
       >

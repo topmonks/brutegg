@@ -7,10 +7,11 @@ export default function StoreLayout({
   children,
   rightExpanded,
   displayHeadline = true,
+  centerHeadline = false,
 }) {
   return (
     <Fragment>
-      {displayHeadline && <ProductsHeadline />}
+      {displayHeadline && <ProductsHeadline center={centerHeadline} />}
       <Grid container sx={{ mt: 2 }}>
         <Grid
           item
@@ -28,6 +29,7 @@ export default function StoreLayout({
 }
 
 StoreLayout.propTypes = {
+  centerHeadline: PropTypes.bool,
   children: PropTypes.node,
   displayHeadline: PropTypes.bool,
   rightExpanded: PropTypes.bool,

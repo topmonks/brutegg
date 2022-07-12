@@ -6,7 +6,7 @@ import Link from "next/link";
 import { withLocale } from "../libs/router";
 import { LINKS } from "./navbar";
 
-export function Headline({ headlineText, paragraph, faqText }) {
+export function Headline({ headlineText, paragraph, faqText, center = false }) {
   const router = useRouter();
 
   return (
@@ -15,9 +15,9 @@ export function Headline({ headlineText, paragraph, faqText }) {
         alignItems="center"
         container
         justifyContent="space-between"
-        sx={{ my: { sm: 3, md: 5 } }}
+        sx={[{ my: { sm: 3, md: 5 } }, center && { textAlign: "center" }]}
       >
-        <Grid item md="auto" sm={9}>
+        <Grid item md={center ? 12 : "auto"} sm={center ? 12 : 9}>
           <Typography display="block" variant="h5Outglow">
             {headlineText}
           </Typography>
@@ -33,7 +33,12 @@ export function Headline({ headlineText, paragraph, faqText }) {
             </Typography>
           )}
         </Grid>
-        <Grid item md="auto" sm={3} xs={12}></Grid>
+        <Grid
+          item
+          md={center ? 12 : "auto"}
+          sm={center ? 12 : 3}
+          xs={12}
+        ></Grid>
       </Grid>
       <Divider />
     </Fragment>
@@ -41,7 +46,8 @@ export function Headline({ headlineText, paragraph, faqText }) {
 }
 
 Headline.propTypes = {
+  center: PropTypes.bool,
+  faqText: PropTypes.node,
   headlineText: PropTypes.node,
   paragraph: PropTypes.node,
-  faqText: PropTypes.node,
 };
