@@ -9,6 +9,8 @@ import window from "../../libs/window";
 import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
 import Image from "next/image";
+import BruteDivider from "../divider";
+import PriceTag from "../price-tag";
 
 /**
  *
@@ -53,6 +55,9 @@ export default function ProductListItem({ product, selected }) {
     product.images?.[0]?.file;
 
   const rarity = product.attributes.brute_rarity?.value || "primary";
+  const price = product.attributes.brute_price?.value;
+
+  const initialSupply = product.attributes.brute_initial_supply?.value;
 
   return (
     <Box
@@ -101,20 +106,80 @@ export default function ProductListItem({ product, selected }) {
         <Grid
           item
           sx={[
-            { height: "70%", position: "relative" },
+            {
+              height: "70%",
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+            },
             selected && {
-              boxShadow: () => "0 0 0 2px " + alpha("#000", 0.3),
+              "& img": {
+                filter: (theme) =>
+                  `drop-shadow(0 0 20px ${alpha(
+                    theme.palette[rarity]?.main,
+                    0.7
+                  )}) drop-shadow(0 0 10px ${alpha(
+                    theme.palette[rarity]?.main,
+                    0.9
+                  )})`,
+              },
             },
           ]}
         >
           {thumbnail && (
-            <Image
-              height={thumbnail.height}
-              layout="fill"
-              objectFit="cover"
-              src={thumbnail.url}
-              width={thumbnail.width}
-            />
+            <Box
+              sx={{
+                height: "100%",
+                width: "100%",
+                position: "relative",
+                "& img": {
+                  p: "10% !important",
+                  transition: "0.5s filter ease",
+                  filter: (theme) =>
+                    `drop-shadow(0 0 20px ${alpha(
+                      theme.palette[rarity]?.main,
+                      0.5
+                    )}) drop-shadow(0 0 5px ${alpha(
+                      theme.palette[rarity]?.main,
+                      0.9
+                    )})`,
+                },
+                "&:hover img": {
+                  p: "10% !important",
+                  filter: (theme) =>
+                    `drop-shadow(0 0 20px ${alpha(
+                      theme.palette[rarity]?.main,
+                      0.7
+                    )}) drop-shadow(0 0 10px ${alpha(
+                      theme.palette[rarity]?.main,
+                      0.9
+                    )})`,
+                },
+              }}
+            >
+              <Image
+                height={thumbnail.height}
+                layout="fill"
+                objectFit="contain"
+                src={thumbnail.url}
+                width={thumbnail.width}
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  width: "50%",
+                  left: "25%",
+                  top: "15%",
+                  aspectRatio: "1/1",
+                  borderRadius: "50%",
+                  zIndex: -1,
+                  border: (theme) =>
+                    "2px solid " + alpha(theme.palette[rarity]?.main, 0.4),
+                  boxShadow: (theme) =>
+                    "0 0 20px 2px " + alpha(theme.palette[rarity]?.main, 0.3),
+                }}
+              />
+            </Box>
           )}
         </Grid>
         <Grid
@@ -124,6 +189,7 @@ export default function ProductListItem({ product, selected }) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            flexWrap: "wrap",
           }}
         >
           <Typography
@@ -135,10 +201,36 @@ export default function ProductListItem({ product, selected }) {
               textShadow: (theme) =>
                 "0 0 10px " + alpha(theme.palette[rarity]?.main, 0.8),
             }}
-            variant="h6"
+            variant="body1"
           >
             {product.name}
           </Typography>
+          <BruteDivider rarity={rarity} />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+              px: 1,
+            }}
+          >
+            <Typography
+              sx={{
+                textShadow: (theme) =>
+                  `0 0 10px ${alpha(
+                    theme.palette[rarity]?.main,
+                    0.8
+                  )}, 0 0 2px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
+              }}
+            >
+              {product.stock_level}
+              {initialSupply && "/" + initialSupply}
+            </Typography>
+            <Typography sx={{ fontWeight: "bold" }}>
+              {price && <PriceTag amount={price} />}
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
     </Box>
