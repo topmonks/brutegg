@@ -208,8 +208,18 @@ export default function Navbar() {
             variant="scrollable"
           >
             {isXs && <FullscreenTab />}
-            {topMenu.map(([label, value]) => (
-              <CustomTab key={value} label={label} value={value} />
+            {topMenu.map(([label, tabValue]) => (
+              <CustomTab
+                key={tabValue}
+                label={label}
+                onClick={(e) => {
+                  // reload page
+                  if (value === tabValue) {
+                    handleChange(e, tabValue);
+                  }
+                }}
+                value={tabValue}
+              />
             ))}
           </Tabs>
         </Grid>

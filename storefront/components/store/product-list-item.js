@@ -133,7 +133,7 @@ export default function ProductListItem({ product, selected }) {
                 width: "100%",
                 position: "relative",
                 "& img": {
-                  p: "10% !important",
+                  p: "25px !important",
                   transition: "0.5s filter ease",
                   filter: (theme) =>
                     `drop-shadow(0 0 20px ${alpha(
@@ -167,8 +167,10 @@ export default function ProductListItem({ product, selected }) {
               <Box
                 sx={{
                   position: "absolute",
-                  width: "50%",
-                  left: "25%",
+                  height: "60%",
+                  left: 0,
+                  right: 0,
+                  margin: "auto",
                   top: "15%",
                   aspectRatio: "1/1",
                   borderRadius: "50%",
