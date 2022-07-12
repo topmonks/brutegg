@@ -15,7 +15,15 @@ export default function ContextMenu({ links = [] }) {
         return (
           <ListItem disablePadding key={ix}>
             <Link as={localeHref} href={localeHref} passHref>
-              <ListItemButton component="a" selected={router.asPath === l.href}>
+              <ListItemButton
+                component="a"
+                selected={router.asPath === l.href}
+                sx={{
+                  "&& .MuiTouchRipple-child": (theme) => ({
+                    backgroundColor: theme.palette.primary.main,
+                  }),
+                }}
+              >
                 <ListItemText
                   primary={l.textPrimary}
                   secondary={l.textSecondary}

@@ -228,7 +228,7 @@ export default function ProductListItem({ product, selected }) {
               {product.stock_level}
               {initialSupply && "/" + initialSupply}
             </Typography>
-            <Typography sx={{ fontWeight: "bold" }}>
+            <Typography component="div" sx={{ fontWeight: "bold" }}>
               {price && <PriceTag amount={price} />}
             </Typography>
           </Box>
