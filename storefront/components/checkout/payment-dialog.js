@@ -176,7 +176,7 @@ function PaymentSuccess({ open }) {
   }, [router, removeWatcherTxs]);
 
   return (
-    <DialogLayout handleClose={onClose} open={open}>
+    <DialogLayout handleClose={() => false} open={open}>
       <Box>
         <Box
           sx={{

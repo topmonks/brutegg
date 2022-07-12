@@ -15,8 +15,6 @@ export default function PaymentWatcher() {
 
   const { data: cart } = useGetCart();
 
-  console.log("cart id: " + cart?.id);
-
   const { data: _cartUpdatedData, isFetched: cartIsUpdated } = useQuery(
     ["/swell.cart.update/", cart?.id, paymentTx],
     () =>
