@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { useRecoilValue } from "recoil";
+import { useRecoilRefresher_UNSTABLE, useRecoilValue } from "recoil";
 import swell from "swell-js";
 
 import useGetCart from "../../hooks/use-get-cart";
 import useWatchPayment from "../../hooks/use-watch-payment";
 import fetchThrowHttpError from "../../libs/fetch-throw-http-error.mjs";
+import { bruteState } from "../../state/brute-token";
 import { ethereumState } from "../../state/ethereum";
 
 export default function PaymentWatcher() {
@@ -63,4 +64,14 @@ export default function PaymentWatcher() {
 
     queryClient.invalidateQueries(["/swell.cart.get/"]);
   }, [orderIsCreated, queryClient]);
+
+  const refreshBrute = useRecoilRefresher_UNSTABLE(bruteState);
+
+  useEffect(() => {
+    if (!isTxSuccess) {
+      return;
+    }
+
+    refreshBrute();
+  }, [isTxSuccess, refreshBrute]);
 }
