@@ -145,7 +145,6 @@ export default function ProductListItem({ product, selected }) {
                     )})`,
                 },
                 "&:hover img": {
-                  p: "10% !important",
                   filter: (theme) =>
                     `drop-shadow(0 0 20px ${alpha(
                       theme.palette[rarity]?.main,
