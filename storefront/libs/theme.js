@@ -1,4 +1,10 @@
-import { createTheme, darkScrollbar, responsiveFontSizes } from "@mui/material";
+import {
+  alpha,
+  createTheme,
+  darkScrollbar,
+  experimental_sx,
+  responsiveFontSizes,
+} from "@mui/material";
 import { RARITY } from "./constants";
 
 // to extend from
@@ -16,6 +22,9 @@ const abstractTheme = createTheme({
     },
   },
 });
+
+const createColor = (mainColor) =>
+  abstractTheme.palette.augmentColor({ color: { main: mainColor } });
 
 const theme = responsiveFontSizes(
   createTheme(abstractTheme, {
@@ -50,6 +59,51 @@ const theme = responsiveFontSizes(
         fontWeight: "bold",
       },
     },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          containedPrimary: experimental_sx(
+            (() => {
+              const sharedButtonAttrs = {
+                borderRadius: 0,
+                border: (theme) => `2px solid ${theme.palette.primary.main}`,
+                boxShadow: (theme) =>
+                  `0 0 10px ${alpha(theme.palette.primary.main, 1)}`,
+                background: (theme) =>
+                  `linear-gradient(0deg, ${alpha(
+                    theme.palette.primary.main,
+                    1
+                  )} 0%, ${alpha(theme.palette.primary.main, 0.7)} 50%, ${alpha(
+                    theme.palette.primary.main,
+                    1
+                  )} 100%) no-repeat, ${alpha("#000", 1)}`,
+                backgroundPosition: "center bottom",
+                backgroundSize: "auto 200%",
+                transition: "background-position 0.3s ease",
+                fontWeight: "bold",
+                textTransform: "none",
+              };
+
+              return {
+                ...sharedButtonAttrs,
+                "&:hover": {
+                  ...sharedButtonAttrs,
+                  backgroundPosition: "center 50%",
+                  boxShadow: (theme) =>
+                    `0 0 20px ${alpha(theme.palette.primary.main, 1)}`,
+                },
+                "&.Mui-disabled": {
+                  background: (theme) =>
+                    theme.palette.action.disabledBackground,
+                  border: (theme) =>
+                    `2px solid ${theme.palette.action.disabled}`,
+                },
+              };
+            })()
+          ),
+        },
+      },
+    },
   }),
   {
     factor: 10,
@@ -59,24 +113,12 @@ const theme = responsiveFontSizes(
 export const darkTheme = createTheme(theme, {
   palette: {
     mode: "dark",
-    [RARITY.COMMON]: {
-      main: "#E5E5E5",
-    },
-    [RARITY.UNCOMMON]: {
-      main: "#57D22C",
-    },
-    [RARITY.RARE]: {
-      main: "#0D7BE1",
-    },
-    [RARITY.EPIC]: {
-      main: "#B70DE1",
-    },
-    [RARITY.LEGENDARY]: {
-      main: "#F6851B",
-    },
-    confirmGreen: {
-      main: "#08C375",
-    },
+    [RARITY.COMMON]: createColor("#E5E5E5"),
+    [RARITY.UNCOMMON]: createColor("#57D22C"),
+    [RARITY.RARE]: createColor("#0D7BE1"),
+    [RARITY.EPIC]: createColor("#B70DE1"),
+    [RARITY.LEGENDARY]: createColor("#F6851B"),
+    confirmGreen: createColor("#08C375"),
   },
   components: {
     MuiCssBaseline: {

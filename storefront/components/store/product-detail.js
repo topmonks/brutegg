@@ -7,7 +7,6 @@ import swell, { getProduct } from "../../libs/swell";
 import window from "../../libs/window";
 import { eventTargetState, NAVBAR_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
-import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import { Box } from "@mui/system";
 import { productState } from "../../state/products";
 import { useTranslation } from "react-i18next";
@@ -122,17 +121,11 @@ export function ProductDetail({ product: _product }) {
             disabled={cartIsLoading}
             onClick={isError ? refetch : () => setSelectedProduct(product)}
             size="large"
-            startIcon={
-              cartIsLoading ? (
-                <CircularProgress size={20} />
-              ) : (
-                <ShoppingCartCheckoutIcon />
-              )
-            }
-            sx={{ fontWeight: "bold" }}
+            startIcon={cartIsLoading && <CircularProgress size={20} />}
+            sx={{ width: "250px" }}
             variant="contained"
           >
-            {t("Buy", { ns: "Common" })}
+            {t("Get", { ns: "Common" })}
           </Button>
         </Box>
         <Box
