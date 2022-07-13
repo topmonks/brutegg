@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>{{ subject }}</title>
+
+  <!--[if mso]>
+  <style>
+    * {
+      font-family: sans-serif !important;
+    }
+  </style>
+  <![endif]-->
+
+  <!-- CSS reset -->
+  <style>
+
+    html,
+    body {
+      margin: 0 auto !important;
+      padding: 0 !important;
+      height: 100% !important;
+      width: 100% !important;
+    }
+
+    * {
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    div[style*="margin: 16px 0"] {
+      margin: 0 !important;
+    }
+
+    table,
+    td {
+      mso-table-lspace: 0pt !important;
+      mso-table-rspace: 0pt !important;
+    }
+
+    table {
+      border-spacing: 0 !important;
+      border-collapse: collapse !important;
+      table-layout: fixed !important;
+      margin: 0 auto !important;
+    }
+
+    table table table {
+      table-layout: auto;
+    }
+
+    img {
+      -ms-interpolation-mode: bicubic;
+    }
+
+    *[x-apple-data-detectors] {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+
+    .x-gmail-data-detectors,
+    .x-gmail-data-detectors *,
+    .aBn {
+      border-bottom: 0 !important;
+      cursor: default !important;
+    }
+
+    .a6S {
+      display: none !important;
+      opacity: 0.01 !important;
+    }
+
+    img.g-img + div {
+      display: none !important;
+    }
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+      /* iPhone 6 and 6+ */
+      .email-container {
+        min-width: 375px !important;
+      }
+    }
+
+  </style>
+
+  <!--[if gte mso 9]>
+  <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+  </xml>
+  <![endif]-->
+
+  <!-- Progressive enhancements -->
+  <style>
+
+    body, h1, h2, h3, h4, h5, h6, p, a {
+      font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+    }
+
+    @media screen and (max-width: 480px) {
+      .stack-column,
+      .stack-column-center {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        direction: ltr !important;
+      }
+
+      .stack-column-center {
+        text-align: center !important;
+      }
+
+      .center-on-narrow {
+        text-align: center !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        float: none !important;
+      }
+
+      table.center-on-narrow {
+        display: inline-block !important;
+      }
+    }
+
+    @media screen and (max-width: 680px) {
+      .table-border-radius {
+        border-radius: 0 !important;
+      }
+    }
+
+  </style>
+
+</head>
+<body width="100%" bgcolor="#f3f3f3" style="margin: 0; mso-line-height-rule: exactly;">
+<div style="background-color: #f3f3f3">
+
+  <!-- Visually hidden preheader text -->
+  <div style="display: none; font-size:1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">
+    {{ content.prep_note }}
+  </div>
+
+  <table role="presentation" aria-hidden="true" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 680px;" class="email-container">
+    <tbody>
+    <tr>
+      <td style="padding: 25px;"></td>
+    </tr>
+    <tr>
+      <td bgcolor="#ffffff" class="table-border-radius" style="border-radius: 8px;">
+
+        <table role="presentation" aria-hidden="true" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="width: 88%; max-width: 680px;">
+          <tr>
+            <td style="padding: 30px 0; text-align: center">
+              {% if store.logo.file.url %}
+                {% if store.logo_width > 0 %}
+                  {% assign logo_width = store.logo_width %}
+                {% else %}
+                  {% assign logo_width = 200 %}
+                {% endif %}
+                {% assign logo_width_img = logo_width | times: 2 %}
+                <img src="{{ store.logo | img_url: 'padded=true&width=' | append: logo_width_img }}" aria-hidden="true" width="{{ logo_width }}"
+                   alt="{{ store.name }}"
+                   border="0"
+                   style="height: auto; background: #ffffff; font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size: 15px; line-height: 20px;">
+              {% else %}
+                <div style="font-size: 30px; color: #2f3235;">{{ store.name }}</div>
+              {% endif %}
+            </td>
+          </tr>
+        </table>
+
+        <table role="presentation" aria-hidden="true" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 680px;" class="email-container">
+          <tbody>
+          <tr>
+            <td>
+              <table role="presentation" aria-hidden="true" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                  <td style="text-align: left; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; line-height: 1.8">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0"
+                      style="font-size:0px; width: 88% !important; min-width: 88%; max-width: 88%;">
+                      <tbody>
+                      <tr>
+                        <td style="padding: 0 0 10px; color: #2f3235;">
+                          <div style="font-size: 14px; color: #9ea1a3; line-height: 1.8">
+                            {{ content.order_label }}
+                          </div>
+                          <h2 style="font-size: 22px; font-weight: normal; margin: 0; line-height: 1.8">
+                            {{ content.thank_you_note }}
+                          </h2>
+                          <p style="font-size:16px; color: #8e9193; margin: 0; line-height: 1.8">
+                            {{ content.prep_note }}
+                          </p>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px; width: 88% !important; min-width: 88%; max-width: 88%;" align="center" border="0">
+                      <tbody>
+                      <tr>
+                        <td style="text-align: center; vertical-align: top; direction:ltr; font-size: 0px; padding:20px 0px;">
+                          <div class="mj-column-per-100 outlook-group-fix"
+                            style="vertical-align: top; display: inline-block; direction:ltr; font-size:13px; text-align:left; width:100%;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%"
+                                 border="0">
+                              <tbody>
+                              <tr>
+                                <td style="word-break: break-word; font-size:0px;">
+                                  <table border="0" width="100%">
+                                    <thead>
+                                    <tr style="border-bottom:1px solid #d9dcdf;">
+                                      <th width="80" style="padding:15px 0; text-align:left; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:16px; line-height:22px;">
+                                        <span style="font-weight: normal">{{ content.items_label }}</span>
+                                      </th>
+                                      <th>
+                                        &nbsp;
+                                      </th>
+                                      <th style="padding:15px 0; text-align:right; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:16px; line-height:22px;">
+                                        <span style="font-weight: normal">{{ content.quantity_label }}</span>
+                                      </th>
+                                      <th style="padding:15px 0; text-align:right; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:16px; line-height:22px;">
+                                        <span style="font-weight: normal">{{ content.price_label }}</span>
+                                      </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in items %}
+                                      {% if item.quantity_total > 0 %}
+                                        <tr>
+                                          <td width="64" style="vertical-align: top; padding: {% if forloop.first %}30px{% else %}10px{% endif %} 10px {% if forloop.last %}30px{% else %}10px{% endif %} 0; width: 64px;">
+                                            <div style="border: 1px solid #d9dcdf; border-radius: 3px; width: 64px; height: 64px;">
+                                              <img width="64" height="64" style="display: block;"
+                                                src="{% if item.variant %}{{ item.variant | img_url: 'width=128&height=128' | default: item.product | img_url: 'width=128&height=128' }}{% else %}{{ item.product | img_url: 'width=128&height=128' }}{% endif %}" />
+                                            </div>
+                                          </td>
+                                          <td style="padding: {% if forloop.first %}20px{% else %}10px{% endif %} 0 {% if forloop.last %}20px{% else %}10px{% endif %} 0; line-height:1.5; color: #2f3235; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:16px; text-align:left;">
+                                            {{ item.product.name | default: item.description }}
+                                            {% if item.variant %}
+                                              <div style="color: #8e9193">
+                                                {{ item.variant.name }}
+                                              </div>
+                                            {% endif %}
+                                            {% if item.options %}
+                                              <ul style="margin: 0; padding-left: 25px; color: #8e9193; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:16px; text-align:left;">
+                                                {% for option in item.options %}
+                                                  {% if option.variant != true %}
+                                                    <li>{{ option.name }}: {{ option.value }}</li>
+                                                  {% endif %}
+                                                {% endfor %}
+                                              </ul>
+                                            {% endif %}
+                                          </td>
+                                          <td style="padding: {% if forloop.first %}20px{% else %}10px{% endif %} 0 {% if forloop.last %}20px{% else %}10px{% endif %} 0; line-height: 1.5; color: #2f3235; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:16px; text-align:right;">
+                                            {{ item.quantity_total }}
+                                          </td>
+                                          <td style="padding: {% if forloop.first %}20px{% else %}10px{% endif %} 0 {% if forloop.last %}20px{% else %}10px{% endif %} 0; line-height: 1.5; color: #2f3235; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:16px; text-align:right;">
+                                            {% if item.discount_each > 0 %}
+                                              <div>{{ item.price | currency }}</div>
+                                            {% else %}
+                                              {{ item.price | currency }}
+                                            {% endif %}
+                                            {% if item.trial %}
+                                              <div style="color:#0fa98e; font-size:14px;">{{ item.purchase_option.trial_days }}-day trial period</div>
+                                            {% endif %}
+                                          </td>
+                                        </tr>
+                                      {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr style="border-top:1px solid #d9dcdf;">
+                                      <td colspan="3" style="padding: 30px 0 10px 0; text-align:right; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;color:#3d4246;">
+                                        {{ content.subtotal_label }}
+                                      </td>
+                                      <td style="padding: 30px 0 10px 0;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;text-align:right; color:#3d4246;">
+                                        {{ sub_total | currency }}
+                                      </td>
+                                    </tr>
+                                    {% if discount_total > 0 %}
+                                      <tr>
+                                        <td colspan="3" style="padding: 10px 0 10px 0;text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px; color:#3d4246;">
+                                          {{ content.discount_label }} {% if coupon_code %}({{ coupon_code }}){% endif %}
+                                        </td>
+                                        <td width="200" style="padding: 10px 0 10px 0;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;text-align:right; color:#3d4246;">
+                                          ({{ discount_total | currency }})
+                                        </td>
+                                      </tr>
+                                    {% endif %}
+                                    <tr>
+                                      <td colspan="3" style="padding: 10px 0 10px 0;text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px; color:#3d4246;">
+                                        {{ content.shipping_label }}
+                                      </td>
+                                      <td style="padding: 10px 0 10px 0;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;text-align:right; color:#3d4246;">
+                                        {% if shipment_total > 0 %}
+                                          {{ shipment_total | currency }}
+                                        {% else %}
+                                          {{ content.free_label }}
+                                        {% endif %}
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3" style="padding: 10px 0 30px 0;text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px; color:#3d4246;">
+                                        {{ content.taxes_label }}
+                                      </td>
+                                      <td style="padding: 10px 0 30px 0;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;text-align:right; color:#3d4246;">
+                                        {% if tax_total > 0 %}
+                                          {{ tax_total | currency }}
+                                        {% else %}
+                                          &mdash;
+                                        {% endif %}
+                                      </td>
+                                    </tr>
+                                    <tr style="border-top:1px solid #d9dcdf;">
+                                      <td colspan="3" style="padding: 30px 0 10px 0;text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px; color:#3d4246;">
+                                        <strong>{{ content.total_label }}</strong>
+                                      </td>
+                                      <td style="padding: 30px 0 10px 15px; font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:16px; line-height:22px; text-align:right; color:#3d4246;">
+                                        <strong style="font-size: 18px; white-space: nowrap;">{{ currency }} {{ grand_total | currency }}</strong>
+                                      </td>
+                                    </tr>
+                                    {% if trial_total %}
+                                      {% if trial_total.standard %}
+                                        <tr>
+                                          <td colspan="3" style="padding-top: 15px;text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:14px;line-height:22px; color:#78777e;">
+                                            At checkout
+                                          </td>
+                                        </tr>
+                                        {% for item in trial_total.standard %}
+                                          <tr>
+                                            <td colspan="3" style="text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:14px;line-height:22px; color:#3d4246;">
+                                              {{ item.product.name | default: item.description }}
+                                            </td>
+                                            <td style="font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:14px; line-height:22px; text-align:right; color:#3d4246;">
+                                              {{ item.price_total | currency }}
+                                            </td>
+                                          </tr>
+                                        {% endfor %}
+                                        <tr>
+                                          <td colspan="3" style="text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:14px;line-height:22px; color:#3d4246;">
+                                            {{ content.shipping_label }}
+                                          </td>
+                                          <td style="font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:14px;line-height:22px;text-align:right; color:#3d4246;">
+                                            {% if shipment_total > 0 %}
+                                              {{ shipment_total | currency }}
+                                            {% else %}
+                                              {{ content.free_label }}
+                                            {% endif %}
+                                          </td>
+                                        </tr>
+                                      {% endif %}
+                                      {% for trial_group in trial_total.trial %}
+                                        <tr>
+                                          <td colspan="3" style="padding-top: 15px;text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:14px;line-height:22px; color:#78777e;">
+                                            {{ trial_group.trial_days }}
+                                            {% if trial_group.trial_days > 1 %}
+                                              days
+                                            {% else %}
+                                              day
+                                            {% endif %}
+                                              after fulfillment
+                                          </td>
+                                        </tr>
+                                        {% for item in trial_group.items %}
+                                          <tr>
+                                            <td colspan="3" style="text-align:right;font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;font-size:14px;line-height:22px; color:#3d4246;">
+                                              {{ item.product.name | default: item.description }}
+                                            </td>
+                                            <td style="font-family:-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size:14px; line-height:22px; text-align:right; color:#3d4246;">
+                                              {{ item.price_total | currency }}
+                                            </td>
+                                          </tr>
+                                        {% endfor %}
+                                      {% endfor %}
+                                    {% endif %}
+                                    </tfoot>
+                                  </table>
+                                </td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" height="100%" valign="top" width="100%" style="padding: 30px 0 0 0;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" width="100%" style="max-width:660px; width: 88%; padding-top: 80px;">
+                      <tbody>
+                      <tr>
+                        <td valign="top" style="font-size:0;">
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tbody>
+                            <tr>
+                              <td style="font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #8e9193; padding: 20px 0 20px 0; vertical-align: top;" width="50%" class="stack-column">
+                                <div>
+                                  <strong style="font-weight: 600; color: #2f3235;">
+                                    {{ content.shipping_address_label }}
+                                  </strong>
+                                </div>
+                                {% if shipping.address1 %}
+                                  <div>{{ shipping.name }}</div>
+                                  <div>{{ shipping.address1 }}</div>
+                                  <div>{{ shipping.address2 }}</div>
+                                  <div>{{ shipping.city }} {{ shipping.state }} {{ shipping.zip }}</div>
+                                  <div>{{ shipping.country }}</div>
+                                  <div>{{ shipping.phone }}</div>
+                                {% else %}
+                                  <div>{{ content.none_label }}</div>
+                                {% endif %}
+                              </td>
+                              <td style="font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #8e9193; padding: 20px 0 20px 0; vertical-align: top;" width="50%" class="stack-column">
+                                <div>
+                                  <strong style="font-weight: 600; color: #2f3235;">
+                                    {{ content.billing_address_label }}
+                                  </strong>
+                                </div>
+                                {% if billing.address1 %}
+                                  <div>{{ billing.name }}</div>
+                                  <div>{{ billing.address1 }}</div>
+                                  <div>{{ billing.address2 }}</div>
+                                  <div>{{ billing.city }} {{ billing.state }} {{ billing.zip }}</div>
+                                  <div>{{ billing.country }}</div>
+                                  <div>{{ billing.phone }}</div>
+                                  {% if billing.vat_number or account.vat_number %}
+                                    <div>{{ content.billing_vat }}</div>
+                                  {% endif %}
+                                {% else %}
+                                  <div>{{ content.none_label }}</div>
+                                {% endif %}
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" height="100%" valign="top" width="100%" style="padding: 0 0 30px 0;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" width="100%" style="max-width:660px; width: 88%;">
+                      <tbody>
+                      <tr>
+                        <td valign="top" style="font-size:0;">
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tbody>
+                            <tr>
+                              <td style="font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #8e9193; padding: 20px 0 20px 0; vertical-align: top;" width="50%" class="stack-column">
+                                <div>
+                                  <strong style="font-weight: 600; color: #2f3235;">
+                                    {{ content.shipping_method_label }}
+                                  </strong>
+                                </div>
+                                <div>{{ shipping.service_name | default: content.none_label }}</div>
+                              </td>
+                              <td style="font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #8e9193; padding: 20px 0 20px 0; vertical-align: top;" width="50%" class="stack-column">
+                                <div>
+                                  <strong style="font-weight: 600; color: #2f3235;">
+                                    {{ content.payment_method_label }}
+                                  </strong>
+                                </div>
+                                <div>
+                                  {% if billing.method == 'card' %}
+                                    {% if billing.card.brand %}
+                                      {{ content.billing_card }}
+                                    {% else %}
+                                      {{ content.none_label }}
+                                    {% endif %}
+                                  {% elsif billing.method == 'giftcard' %}
+                                    Gift card
+                                  {% elsif billing.method == 'cash' %}
+                                    Cash
+                                  {% elsif billing.method == 'cash_on_delivery' %}
+                                    Cash on delivery
+                                  {% elsif billing.method == 'paypal' %}
+                                    PayPal Checkout
+                                  {% elsif billing.method == 'amazon' %}
+                                    Amazon Pay
+                                  {% else %}
+                                    {{ billing.method | default: content.none_label }}
+                                  {% endif %}
+                                </div>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" height="100%" valign="top" width="100%" style="padding: 0 0 30px 0;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" width="100%" style="max-width:660px; width: 88%;">
+                      <tbody>
+                      <tr>
+                        <td align="left" valign="top" style="font-size:0;">
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="40%" style="margin: 0 !important; padding: 0 0 30px 0;">
+                            <tbody>
+                            <tr>
+                              <td style="font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #8e9193; padding: 20px 0 20px 0; vertical-align: top;" width="50%" class="stack-column">
+                                <div>
+                                  <strong style="font-weight: 600; color: #2f3235;">
+                                    {{ content.payment_instructions }}
+                                  </strong>
+                                </div>
+                                <div style="white-space: pre-wrap">{{ billing.instructions }}</div>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table width="100%" style="max-width: 558px;">
+    <tr>
+      <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; line-height: 1.5; color: #8f99ae; text-align: center; padding: 40px;" class="x-gmail-data-detectors">
+        {{ content.questions_note }}<br />
+        <br />
+        {% if store.footer %}
+          {{ store.footer }}
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+</div>
+</body>
+</html>
