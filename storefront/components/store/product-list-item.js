@@ -74,10 +74,10 @@ export default function ProductListItem({ product, selected }) {
             `linear-gradient(-180deg, ${alpha(
               theme.palette[rarity]?.main,
               0.4
-            )} 0%, ${alpha(theme.palette[rarity]?.main, 0)} 55%), ${alpha(
-              "#fff",
-              0.1
-            )}`,
+            )} 0%, ${alpha(
+              theme.palette[rarity]?.main,
+              0
+            )} 55%) center no-repeat, ${alpha("#fff", 0.1)}`,
           boxShadow: () => "inset 0 0 0 1px " + alpha("#fff", 0.2),
         },
         selected && {
@@ -85,10 +85,10 @@ export default function ProductListItem({ product, selected }) {
             `linear-gradient(-180deg, ${alpha(
               theme.palette[rarity]?.main,
               0.6
-            )} 0%, ${alpha(theme.palette[rarity]?.main, 0)} 40%), ${alpha(
-              "#fff",
-              0.1
-            )}`,
+            )} 0%, ${alpha(
+              theme.palette[rarity]?.main,
+              0
+            )} 40%) center no-repeat, ${alpha("#fff", 0.1)}`,
           border: (theme) =>
             "1px solid " + alpha(theme.palette[rarity]?.main, 1),
           boxShadow: (theme) =>
@@ -112,49 +112,52 @@ export default function ProductListItem({ product, selected }) {
               display: "flex",
               alignItems: "center",
             },
-            selected && {
-              "& img": {
-                filter: (theme) =>
-                  `drop-shadow(0 0 20px ${alpha(
-                    theme.palette[rarity]?.main,
-                    0.7
-                  )}) drop-shadow(0 0 10px ${alpha(
-                    theme.palette[rarity]?.main,
-                    0.9
-                  )})`,
-              },
-            },
+            selected && {},
           ]}
         >
           {thumbnail && (
             <Box
-              sx={{
-                height: "100%",
-                width: "100%",
-                position: "relative",
-                "& img": {
-                  p: "25px !important",
-                  transition: "0.5s filter ease",
-                  filter: (theme) =>
-                    `drop-shadow(0 0 20px ${alpha(
-                      theme.palette[rarity]?.main,
-                      0.5
-                    )}) drop-shadow(0 0 5px ${alpha(
-                      theme.palette[rarity]?.main,
-                      0.9
-                    )})`,
+              sx={[
+                {
+                  height: "100%",
+                  width: "100%",
+                  position: "relative",
+                  "& img": {
+                    p: "25px !important",
+                    transition: "0.5s filter ease",
+                    filter: (theme) =>
+                      `drop-shadow(0 0 20px ${alpha(
+                        theme.palette[rarity]?.main,
+                        0.5
+                      )}) drop-shadow(0 0 5px ${alpha(
+                        theme.palette[rarity]?.main,
+                        0.9
+                      )})`,
+                  },
+                  "&:hover img": {
+                    filter: (theme) =>
+                      `drop-shadow(0 0 20px ${alpha(
+                        theme.palette[rarity]?.main,
+                        0.7
+                      )}) drop-shadow(0 0 10px ${alpha(
+                        theme.palette[rarity]?.main,
+                        0.9
+                      )})`,
+                  },
                 },
-                "&:hover img": {
-                  filter: (theme) =>
-                    `drop-shadow(0 0 20px ${alpha(
-                      theme.palette[rarity]?.main,
-                      0.7
-                    )}) drop-shadow(0 0 10px ${alpha(
-                      theme.palette[rarity]?.main,
-                      0.9
-                    )})`,
+                selected && {
+                  "& img": {
+                    filter: (theme) =>
+                      `drop-shadow(0 0 20px ${alpha(
+                        theme.palette[rarity]?.main,
+                        0.7
+                      )}) drop-shadow(0 0 10px ${alpha(
+                        theme.palette[rarity]?.main,
+                        0.9
+                      )})`,
+                  },
                 },
-              }}
+              ]}
             >
               <Image
                 height={thumbnail.height}
