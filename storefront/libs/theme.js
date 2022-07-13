@@ -41,17 +41,17 @@ const theme = responsiveFontSizes(
     typography: {
       h3Outglow: {
         ...abstractTheme.typography.h3,
-        textShadow: "0px 0px 12px #EA2122",
+        textShadow: `0px 0px 12px ${abstractTheme.palette.primary.main}`,
         fontWeight: "bold",
       },
       h4Outglow: {
         ...abstractTheme.typography.h4,
-        textShadow: "0px 0px 12px #EA2122",
+        textShadow: `0px 0px 12px ${abstractTheme.palette.primary.main}`,
         fontWeight: "bold",
       },
       h5Outglow: {
         ...abstractTheme.typography.h5,
-        textShadow: "0px 0px 12px #EA2122",
+        textShadow: `0px 0px 12px ${abstractTheme.palette.primary.main}`,
         fontWeight: "bold",
       },
       link: {
@@ -79,7 +79,8 @@ const theme = responsiveFontSizes(
                   )} 100%) no-repeat, ${alpha("#000", 1)}`,
                 backgroundPosition: "center bottom",
                 backgroundSize: "auto 200%",
-                transition: "background-position 0.3s ease",
+                transition:
+                  "background-position 0.3s ease, box-shadow 0.3s ease",
                 fontWeight: "bold",
                 textTransform: "none",
               };
@@ -97,6 +98,7 @@ const theme = responsiveFontSizes(
                     theme.palette.action.disabledBackground,
                   border: (theme) =>
                     `2px solid ${theme.palette.action.disabled}`,
+                  boxShadow: "none",
                 },
               };
             })()

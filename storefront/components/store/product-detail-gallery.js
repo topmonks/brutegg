@@ -194,7 +194,7 @@ export default function ProductDetailGallery({ name, images = [] }) {
             onKeyDown={(e) => e.key === "Enter" && handleClickOpen(item)}
             sx={{
               mr: 1,
-              mt: "3px",
+              mt: 1,
               width: { xs: "45%", sm: "28%" },
               height: { xs: "100px", sm: "130px" },
             }}
