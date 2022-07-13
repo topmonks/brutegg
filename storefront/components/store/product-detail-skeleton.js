@@ -5,7 +5,7 @@ import useDisplayAfterDelay from "../../hooks/use-display-after-delay";
 
 export function ProductDetailSkeleton() {
   const display = useDisplayAfterDelay(200);
-  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isSm = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   if (!display) {
     return <Fragment></Fragment>;
@@ -29,13 +29,13 @@ export function ProductDetailSkeleton() {
           animation="wave"
           height={"100%"}
           variant="rectangular"
-          width={isXs ? 120 : 200}
+          width={isSm ? 120 : 200}
         />
         <Skeleton
           animation="wave"
           height={"100%"}
           variant="rectangular"
-          width={isXs ? 120 : 250}
+          width={isSm ? 120 : 250}
         />
       </Box>
 
