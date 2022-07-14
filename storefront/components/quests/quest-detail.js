@@ -4,14 +4,33 @@ import { Fragment, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useTranslation } from "react-i18next";
 import { alpha, Box } from "@mui/system";
+import { keyframes } from "@emotion/react";
+import Image from "next/image";
 
 import { getProduct } from "../../libs/swell";
 import { ProductPropTypes } from "../../types/swell";
 import { productState } from "../../state/products";
 import PriceTag from "../price-tag";
 import StyledDescription from "../styled-description";
-import Image from "next/image";
 import DiscordButton from "../discord-button";
+
+const shakeChest = keyframes`
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(1px, 0, 0);
+  }
+`;
 
 /**
  *
@@ -53,6 +72,7 @@ export function QuestDetail({ quest: _quest }) {
           flexWrap: "wrap",
           height: "100%",
           overflowY: "auto",
+          alignContent: "flex-start",
         }}
       >
         <Box
@@ -78,7 +98,7 @@ export function QuestDetail({ quest: _quest }) {
               mt: {
                 md: 2,
               },
-              "& img": {
+              "&>img": {
                 filter: (theme) =>
                   `drop-shadow(0 0 20px ${alpha(
                     theme.palette.primary.main,
@@ -87,12 +107,29 @@ export function QuestDetail({ quest: _quest }) {
                     theme.palette.primary.main,
                     0.9
                   )})`,
+                transition: "filter 0.8s ease",
+                height: {
+                  xs: "60px",
+                  md: "100px",
+                },
+              },
+              "&:hover": {
+                "&>img": {
+                  animation: `${shakeChest} 0.82s cubic-bezier(.36,.07,.19,.97) both`,
+                  filter: (theme) =>
+                    `drop-shadow(0 0 15px ${alpha(
+                      theme.palette.primary.main,
+                      0.9
+                    )}) drop-shadow(0 0 5px ${alpha(
+                      theme.palette.primary.main,
+                      1
+                    )})`,
+                },
               },
             }}
           >
             <img
               alt="Brute helmet logo"
-              height={isSm ? 60 : 100}
               src="https://res.cloudinary.com/brutegg/image/upload/v1657626779/brutegg-swell/chest_tf2blb.png"
             />
             <Typography component="div" sx={{ fontWeight: "bold" }}>
@@ -104,6 +141,7 @@ export function QuestDetail({ quest: _quest }) {
             <Box
               sx={{
                 mt: {
+                  xs: 0,
                   md: 5,
                 },
               }}
@@ -130,17 +168,19 @@ export function QuestDetail({ quest: _quest }) {
             </Box>
           )}
 
-          {!isSm && (
-            <Box
-              sx={{
-                mt: {
-                  md: 5,
-                },
-              }}
-            >
-              <DiscordButton />
-            </Box>
-          )}
+          <Box
+            sx={{
+              mt: {
+                md: 5,
+              },
+              display: {
+                xs: "none",
+                md: "block",
+              },
+            }}
+          >
+            <DiscordButton />
+          </Box>
         </Box>
         <Box
           sx={{
@@ -170,6 +210,19 @@ export function QuestDetail({ quest: _quest }) {
             dangerouslySetInnerHTML={{ __html: quest.description }}
             sx={{ overflowY: "auto" }}
           ></StyledDescription>
+        </Box>
+        <Box
+          sx={{
+            my: 2,
+            mx: 1,
+            width: "100%",
+            display: {
+              xs: "block",
+              md: "none",
+            },
+          }}
+        >
+          <DiscordButton fullWidth />
         </Box>
       </Box>
     </Fragment>

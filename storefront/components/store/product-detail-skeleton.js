@@ -13,7 +13,7 @@ export function ProductDetailSkeleton() {
 
   return (
     <Fragment>
-      <Box sx={{ height: "20%", px: 3, py: 2 }}>
+      <Box sx={{ height: { xs: "20vh", sm: "20%" }, px: 3, py: 2 }}>
         <Skeleton animation="wave" height="100%" variant="rectangular" />
       </Box>
 
@@ -29,20 +29,22 @@ export function ProductDetailSkeleton() {
           animation="wave"
           height={"100%"}
           variant="rectangular"
-          width={isSm ? 120 : 200}
+          width={isSm ? 100 : 200}
         />
         <Skeleton
           animation="wave"
           height={"100%"}
           variant="rectangular"
-          width={isSm ? 120 : 250}
+          width={isSm ? 100 : 250}
         />
       </Box>
 
-      <Box sx={{ height: "50%", px: 3, py: 2 }}>
+      <Box sx={{ height: { xs: "40vh", sm: "50%" }, px: 3, py: 2 }}>
         <Skeleton animation="wave" height="100%" variant="rectangular" />
       </Box>
-      <Box sx={{ height: "calc(30% - 40px)", px: 1, pb: 1 }}>
+      <Box
+        sx={{ height: { xs: "15vh", sm: "calc(30% - 40px)" }, px: 1, pb: 1 }}
+      >
         <Skeleton animation="wave" height="100%" variant="rectangular" />
       </Box>
     </Fragment>

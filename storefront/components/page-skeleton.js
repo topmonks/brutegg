@@ -14,6 +14,7 @@ import { ProductsHeadline } from "./store/products-headline";
 import ProfileLayout from "./profile/profile-layout";
 import CheckoutLayout from "./checkout/checkout-layout";
 import { CheckoutHeadline } from "./checkout/checkout-headline";
+import DoubleBorderBox from "./double-border-box";
 
 function QuestsSkeleton({
   stretched: _stretched,
@@ -30,24 +31,34 @@ function QuestsSkeleton({
   return (
     <Fragment>
       {displayHeadline && <QuestHeadline />}
-      <Grid
-        container
-        justifyContent={"center"}
-        spacing={1}
-        sx={[fromMainNavigation && { mt: 1 }]}
-      >
-        {new Array(20).fill().map((_, ix) => {
-          return (
-            <Grid item key={ix} sm={fromMainNavigation ? 8 : 12} xs={12}>
-              <Skeleton
-                animation="wave"
-                height={isXs ? 120 : 75}
-                sx={{ mb: 1 }}
-                variant="rectangular"
-              />
-            </Grid>
-          );
-        })}
+
+      <Grid container justifyContent={"center"}>
+        <Grid item sm={fromMainNavigation ? 8 : 12} xs={12}>
+          <DoubleBorderBox
+            sx={[
+              fromMainNavigation && { mt: 2 },
+              {
+                width: "100%",
+                p: (theme) => ({
+                  xs: theme.spacing(1) + " !important",
+                  md: theme.spacing(2) + " !important",
+                }),
+              },
+            ]}
+          >
+            {new Array(20).fill().map((_, ix) => {
+              return (
+                <Skeleton
+                  animation="wave"
+                  height={isXs ? 120 : 75}
+                  key={ix}
+                  sx={{ mb: 1 }}
+                  variant="rectangular"
+                />
+              );
+            })}
+          </DoubleBorderBox>
+        </Grid>
       </Grid>
     </Fragment>
   );

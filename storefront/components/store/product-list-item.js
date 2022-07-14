@@ -68,8 +68,7 @@ export default function ProductListItem({ product, selected }) {
           cursor: "pointer",
           p: 1,
           mb: 1,
-          border: (theme) =>
-            "1px solid " + alpha(theme.palette[rarity]?.main, 0.0),
+          border: () => "1px solid " + alpha("#fff", 0.2),
           background: (theme) =>
             `linear-gradient(-180deg, ${alpha(
               theme.palette[rarity]?.main,
@@ -78,7 +77,7 @@ export default function ProductListItem({ product, selected }) {
               theme.palette[rarity]?.main,
               0
             )} 55%) center no-repeat, ${alpha("#fff", 0.1)}`,
-          boxShadow: () => "inset 0 0 0 1px " + alpha("#fff", 0.2),
+          transition: "box-shadow 0.2s ease",
         },
         selected && {
           background: (theme) =>
