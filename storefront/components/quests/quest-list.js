@@ -10,6 +10,7 @@ import { getProducts } from "../../libs/swell";
 import window from "../../libs/window";
 import { questsState } from "../../state/quests";
 import QuestListItem from "./quest-list-item";
+import DoubleBorderBox from "../double-border-box";
 
 export const STRETCHED_STORE_LIST_GRID = {
   xs: 12,
@@ -75,22 +76,23 @@ export default function QuestList({
 
   return (
     <Fragment>
-      <Grid columns={12} container spacing={1}>
-        {quests.map((q) => {
-          const isSelectedQuest = q.id === _selectedQuestId;
-
-          return (
-            <Grid
-              item
-              key={q.id}
-              {...gridItemAttrs}
-              {...{ [QUEST_ID_DATA_ATTR_NAME]: q.id }}
-            >
-              <QuestListItem quest={q} selected={isSelectedQuest} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      <DoubleBorderBox>
+        <Grid columns={12} container spacing={1} sx={{ p: 2 }}>
+          {quests.map((q, ix) => {
+            const isSelectedQuest = q.id === _selectedQuestId;
+            return (
+              <Grid
+                item
+                key={q.id}
+                {...gridItemAttrs}
+                {...{ [QUEST_ID_DATA_ATTR_NAME]: q.id }}
+              >
+                <QuestListItem ix={ix} quest={q} selected={isSelectedQuest} />
+              </Grid>
+            );
+          })}
+        </Grid>
+      </DoubleBorderBox>
     </Fragment>
   );
 }

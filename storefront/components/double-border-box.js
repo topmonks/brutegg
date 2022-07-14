@@ -3,7 +3,7 @@ import { alpha, Box } from "@mui/system";
 
 export default styled(Box)(() => ({
   borderRadius: 0,
-  border: "3px solid #101112",
+  border: `3px solid ${alpha("#314057", 0.3)}`,
   padding: "1px",
   boxShadow: `inset 0 0 20px 0 ${alpha("#000", 0.8)}, inset 0 0 0 1px ${alpha(
     "#fff",
