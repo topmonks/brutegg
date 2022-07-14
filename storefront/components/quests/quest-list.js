@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import useEventTarget from "../../hooks/use-event-target";
-import { Grid } from "@mui/material";
+import { ButtonBase, Grid } from "@mui/material";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import pageSkeleton from "../page-skeleton";
 import { LINKS } from "../navbar";
@@ -77,7 +77,7 @@ export default function QuestList({
   return (
     <Fragment>
       <DoubleBorderBox>
-        <Grid columns={12} container spacing={1} sx={{ p: 2 }}>
+        <Grid columns={12} container spacing={2} sx={{ p: 2 }}>
           {quests.map((q, ix) => {
             const isSelectedQuest = q.id === _selectedQuestId;
             return (
@@ -87,7 +87,18 @@ export default function QuestList({
                 {...gridItemAttrs}
                 {...{ [QUEST_ID_DATA_ATTR_NAME]: q.id }}
               >
-                <QuestListItem ix={ix} quest={q} selected={isSelectedQuest} />
+                <ButtonBase
+                  component="div"
+                  sx={{
+                    display: "block",
+                    width: "100%",
+                    "&& .MuiTouchRipple-child": (theme) => ({
+                      backgroundColor: theme.palette.primary.main,
+                    }),
+                  }}
+                >
+                  <QuestListItem ix={ix} quest={q} selected={isSelectedQuest} />
+                </ButtonBase>
               </Grid>
             );
           })}

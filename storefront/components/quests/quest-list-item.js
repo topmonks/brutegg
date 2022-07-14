@@ -57,7 +57,6 @@ export default function QuestListItem({ quest, selected, ix = 0 }) {
           pr: 1,
           pl: 2,
           py: 2,
-          mb: 1,
           transition:
             "box-shadow 0.2s ease, border 0.3s ease, background 0.2s ease",
           border: `1px solid ${alpha("#22272E", 0.9)}`,
@@ -73,6 +72,22 @@ export default function QuestListItem({ quest, selected, ix = 0 }) {
             "bottom right",
             "center left",
           ][ix % 6],
+        },
+        !selected && {
+          "&:hover": {
+            background: `linear-gradient(90deg, ${alpha(
+              "#22272E",
+              0.6
+            )} 0%, ${alpha(
+              "#111214",
+              1
+            )} 100%), url("https://res.cloudinary.com/brutegg/image/upload/v1657795773/brutegg-swell/bg-quest-item-gray_ugsraa.png")`,
+            border: `1px solid ${alpha("#22272E", 0.1)}`,
+            boxShadow: `0 0 0 3px ${alpha(
+              "#22272E",
+              0.6
+            )}, -10px -5px 20px 0 ${alpha("#22272E", 0.4)}`,
+          },
         },
         selected && {
           border: (theme) =>
