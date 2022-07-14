@@ -10,7 +10,8 @@
     "Account successfully updated": "Informace k účtu úspěšně aktualizovány",
     "Connecting": "Připojuji",
     "Change to Polygon": "Přepnout na síť Polygon",
-    "Back": "Zpět"
+    "Back": "Zpět",
+    "Ask the community": "Poraďte se s komunitou"
   },
   "Navbar": {
     "Quests": "Questy",
@@ -46,7 +47,8 @@
     "Reward": "Výhra",
     "Complete the tasks": "Splňte questy",
     "Earn amazing rewards by completing community challenges.": "Vydělejte si na úžasné odměny plněním úkolů pro komunitu.",
-    "How to start": "Jak začít"
+    "How to start": "Jak začít",
+    "Quest sponsor": "Sponzor questu"
   },
   "Checkout": {
     "First name": "Jméno",

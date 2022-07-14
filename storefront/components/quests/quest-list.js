@@ -77,7 +77,7 @@ export default function QuestList({
   return (
     <Fragment>
       <DoubleBorderBox>
-        <Grid columns={12} container spacing={2} sx={{ p: 2 }}>
+        <Grid columns={12} container spacing={2} sx={{ p: { xs: 1, md: 2 } }}>
           {quests.map((q, ix) => {
             const isSelectedQuest = q.id === _selectedQuestId;
             return (

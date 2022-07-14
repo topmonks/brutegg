@@ -85,7 +85,7 @@ export default function Item({ quest }) {
           {selectedQuestIdOnClick !== id ? (
             <QuestDetailSkeleton />
           ) : (
-            <QuestDetail product={quest} />
+            <QuestDetail quest={quest} />
           )}
         </ProductDetailStickyWrapper>
       </Fragment>

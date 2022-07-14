@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
-import { Grid, Typography, alpha } from "@mui/material";
+import { Grid, Typography, alpha, useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
@@ -46,7 +46,7 @@ export default function QuestListItem({ quest, selected, ix = 0 }) {
 
   const thumbnail = quest.images?.[0]?.file;
 
-  console.log(quest);
+  const isSm = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   return (
     <Box
@@ -64,14 +64,6 @@ export default function QuestListItem({ quest, selected, ix = 0 }) {
             "#22272E",
             0.6
           )} 0%, ${alpha("#111214", 1)} 100%)`,
-          backgroundPosition: [
-            "bottom left",
-            "center right",
-            "top right",
-            "top left",
-            "bottom right",
-            "center left",
-          ][ix % 6],
         },
         !selected && {
           "&:hover": {
@@ -82,6 +74,14 @@ export default function QuestListItem({ quest, selected, ix = 0 }) {
               "#111214",
               1
             )} 100%), url("https://res.cloudinary.com/brutegg/image/upload/v1657795773/brutegg-swell/bg-quest-item-gray_ugsraa.png")`,
+            backgroundPosition: [
+              "bottom left",
+              "center right",
+              "top right",
+              "top left",
+              "bottom right",
+              "center left",
+            ][ix % 6],
             border: `1px solid ${alpha("#22272E", 0.1)}`,
             boxShadow: `0 0 0 3px ${alpha(
               "#22272E",
@@ -109,7 +109,12 @@ export default function QuestListItem({ quest, selected, ix = 0 }) {
         },
       ]}
     >
-      <Grid alignItems="center" container gap={2}>
+      <Grid
+        alignItems="center"
+        columnSpacing={isSm ? 1 : 2}
+        container
+        rowSpacing={1}
+      >
         {thumbnail && (
           <Grid item xs="auto">
             <Box
@@ -157,12 +162,12 @@ export default function QuestListItem({ quest, selected, ix = 0 }) {
         </Grid>
         <Grid
           item
-          sm="auto"
+          md="auto"
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-end",
-            flexDirection: { xs: "row", sm: "column" },
+            alignItems: { xs: "center", md: "flex-end" },
+            flexDirection: { xs: "row", md: "column" },
           }}
           xs={12}
         >

@@ -121,6 +121,7 @@ export const darkTheme = createTheme(theme, {
     [RARITY.EPIC]: createColor("#B70DE1"),
     [RARITY.LEGENDARY]: createColor("#F6851B"),
     confirmGreen: createColor("#08C375"),
+    discord: createColor("#5865F2"),
   },
   components: {
     MuiCssBaseline: {
