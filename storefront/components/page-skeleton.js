@@ -21,7 +21,7 @@ function QuestsSkeleton({
   fromMainNavigation = false,
   displayHeadline = true,
 }) {
-  const display = useDisplayAfterDelay(300);
+  const display = useDisplayAfterDelay(0);
   const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   if (!display) {
@@ -71,7 +71,7 @@ QuestsSkeleton.propTypes = {
 };
 
 function StoreSkeleton({ stretched, displayHeadline = true }) {
-  const display = useDisplayAfterDelay(300);
+  const display = useDisplayAfterDelay(0);
 
   if (!display) {
     return <Fragment></Fragment>;
@@ -109,7 +109,7 @@ StoreSkeleton.propTypes = {
 };
 
 function FaqSkeleton() {
-  const display = useDisplayAfterDelay(400);
+  const display = useDisplayAfterDelay(0);
 
   if (!display) {
     return <Fragment></Fragment>;
@@ -124,7 +124,7 @@ function FaqSkeleton() {
 }
 
 function ProfileSkeleton() {
-  const display = useDisplayAfterDelay(200);
+  const display = useDisplayAfterDelay(0);
 
   if (!display) {
     return <Fragment></Fragment>;
@@ -202,7 +202,7 @@ function ProfileSkeleton() {
 }
 
 function CheckoutSkeleton() {
-  const display = useDisplayAfterDelay(200);
+  const display = useDisplayAfterDelay(0);
 
   if (!display) {
     return <Fragment></Fragment>;
