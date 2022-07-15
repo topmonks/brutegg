@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { withLocale } from "../../libs/router";
 import { LINKS } from "../navbar";
 
-export default function BackToStoreButton() {
+export default function BackToStoreButton(props) {
   const { t } = useTranslation("Checkout");
   const router = useRouter();
 
@@ -13,6 +13,7 @@ export default function BackToStoreButton() {
       onClick={() => router.push(withLocale(router.locale, LINKS.STORE))}
       size="large"
       variant="text"
+      {...props}
     >
       {t("Back to the store")}
     </Button>

@@ -46,7 +46,7 @@ export default function Form({ onSubmit, initialFormState }) {
   );
 
   const checkoutEnabled = useMemo(() => {
-    return checkoutValidator().validate(formData.toJSON()).error == null;
+    return checkoutValidator.validate(formData.toJSON()).error == null;
   }, [formData]);
 
   return (

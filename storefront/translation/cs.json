@@ -67,6 +67,8 @@
     "Apartment, building": "Byt, budova (volitelné)",
     "City": "Město",
     "Zip": "PSČ",
+    "Phone": "Telefon",
+    "Email": "E-mail",
     "Back to the store": "Zpět do obchodu",
     "Checkout": "Dokončit objednávku",
     "Payment is being prepared": "Platba se připravuje",
@@ -88,7 +90,8 @@
     "Invalid format of webpage link": "Neplatný formát odkazu",
     "Invalid email": "Neplatný email",
     "Invalid format": "Nesprávný formát",
-    "Save changes": "Uložit změny"
+    "Save changes": "Uložit změny",
+    "Enter the phone number in the format +420 111 222 333": "Napište číslo ve formátu +420 111 222 333"
   },
   "Countries": {
     "Czech Republic": "Česko",

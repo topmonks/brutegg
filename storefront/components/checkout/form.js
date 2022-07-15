@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useFormData from "../../hooks/use-form-data";
 import { checkoutValidator } from "../../validations/checkout";
@@ -8,18 +8,20 @@ import CountrySelect from "./form/country";
 import FirstName from "./form/first-name";
 import LastName from "./form/last-name";
 import AddressOne from "./form/address-1";
-import AddressTwo from "./form/address-2";
 import City from "./form/city";
 import Zip from "./form/zip";
 import { removeEmpty } from "../../libs/util";
 import { useRecoilState } from "recoil";
 import { checkoutFormState, defaultFormState } from "../../state/checkout";
 import BackToStoreButton from "./back-to-store-button";
+import PhoneNumber from "./form/phone-number";
+import Email from "./form/email";
 
 export default function Form({
   onSubmit,
   initialFormState,
-  hideActions = false,
+  submitIsLoading,
+  disableActions = false,
 }) {
   const { t } = useTranslation("Checkout");
   const [formData, setFormData, onChange] = useFormData(defaultFormState);
@@ -38,22 +40,17 @@ export default function Form({
     setFormData((f) => f.merge(removeEmpty(initialFormState)));
   }, [initialFormState, setFormData]);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
       setFormData((f) => f.set("__timestamp", new Date().toISOString()));
-      setIsLoading(true);
-      Promise.resolve()
-        .then(() => onSubmit(formData.toJSON()))
-        .finally(() => setIsLoading(false));
+      onSubmit(formData.toJSON());
     },
     [onSubmit, formData, setFormData]
   );
 
   const checkoutEnabled = useMemo(() => {
-    return checkoutValidator().validate(formData.toJSON()).error == null;
+    return checkoutValidator.validate(formData.toJSON()).error == null;
   }, [formData]);
 
   return (
@@ -65,7 +62,12 @@ export default function Form({
             flexDirection: "column",
             mx: "auto",
             gap: 2,
-            mt: 2,
+            m: {
+              xs: 1,
+              sm: 2,
+              md: 3,
+              lg: 5,
+            },
             width: { md: "80%" },
           }}
         >
@@ -74,11 +76,12 @@ export default function Form({
           </Typography>
           <FirstName formData={formData} onChange={onChange} />
           <LastName formData={formData} onChange={onChange} />
+          <Email formData={formData} onChange={onChange} />
+          <PhoneNumber formData={formData} onChange={onChange} />
           <Typography component="h3" variant="h6">
             {t("Address")}
           </Typography>
           <AddressOne formData={formData} onChange={onChange} />
-          <AddressTwo formData={formData} onChange={onChange} />
           <Box
             sx={{
               display: "flex",
@@ -98,31 +101,36 @@ export default function Form({
                 flexWrap: { xs: "wrap", sm: "nowrap" },
                 mb: { xs: 2, sm: 10 },
               },
-              hideActions && {
-                display: "none",
-              },
             ]}
           >
-            {isLoading ? (
-              <Button
-                disableElevation
-                disabled
-                startIcon={<CircularProgress size={20} />}
-                variant="contained"
-              >
-                {t("Payment is being prepared")}
-              </Button>
-            ) : (
-              <Button
-                disableElevation
-                size="large"
-                type="submit"
-                variant="contained"
-              >
-                {t("Continue to payment")}
-              </Button>
-            )}
-            <BackToStoreButton />
+            <Button
+              disableElevation
+              disabled={!checkoutEnabled || submitIsLoading || disableActions}
+              size="large"
+              startIcon={submitIsLoading && <CircularProgress size={20} />}
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "auto",
+                },
+              }}
+              type="submit"
+              variant="contained"
+            >
+              {submitIsLoading
+                ? t("Payment is being prepared")
+                : t("Continue to payment")}
+            </Button>
+
+            <BackToStoreButton
+              disabled={disableActions}
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "auto",
+                },
+              }}
+            />
           </Box>
         </Box>
       </form>
@@ -131,7 +139,8 @@ export default function Form({
 }
 
 Form.propTypes = {
-  hideActions: PropTypes.bool,
+  disableActions: PropTypes.bool,
   initialFormState: PropTypes.object,
   onSubmit: PropTypes.func,
+  submitIsLoading: PropTypes.bool,
 };

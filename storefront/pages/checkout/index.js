@@ -2,24 +2,17 @@ import PropTypes from "prop-types";
 import { Box } from "@mui/system";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import Form from "../../components/checkout/form";
 import { swellNodeClient } from "../../libs/swell-node";
 import { withSessionSsr } from "../../libs/with-session";
 import { snackbarState } from "../../state/snackbar";
-import { ethereumState } from "../../state/ethereum";
-import useMetamaskUnlocked from "../../hooks/use-metamask-unlocked";
 import useUpdateSession from "../../hooks/use-update-session";
-import UnlockButton from "../../components/unlock-button";
-import MetamaskButton from "../../components/web3/metamask-button";
 import PaymentDialog from "../../components/checkout/payment-dialog";
 import CheckoutLayout from "../../components/checkout/checkout-layout";
 import CartSummary from "../../components/checkout/cart-summary";
-import styled from "@emotion/styled";
 import { CheckoutHeadline } from "../../components/checkout/checkout-headline";
 import Layout from "../../components/layout";
-import BruteDivider from "../../components/divider";
-import BackToStoreButton from "../../components/checkout/back-to-store-button";
 import useGetCart from "../../hooks/use-get-cart";
 import { useRouter } from "next/router";
 import { withLocale } from "../../libs/router";
@@ -27,6 +20,7 @@ import { LINKS } from "../../components/navbar";
 import useWatchPayment from "../../hooks/use-watch-payment";
 import useUpdateShipping from "../../hooks/use-update-shipping";
 import PaymentWatcher from "../../components/checkout/payment-watcher";
+import UnlockMetamaskLayout from "../../components/unlock-metamask-layout";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -57,6 +51,8 @@ export const getServerSideProps = withSessionSsr(async (context) => {
     id: user.id,
     firstName: user.first_name,
     lastName: user.last_name,
+    email: user.email,
+    phone: user.phone,
     address1: user.shipping.address1,
     address2: user.shipping.address2,
     city: user.shipping.city,
@@ -69,23 +65,14 @@ export const getServerSideProps = withSessionSsr(async (context) => {
   };
 });
 
-const VerticalAlign = styled(Box)(({ theme }) => ({
-  height: "60vh",
-  [theme.breakpoints.down("sm")]: {
-    height: "auto",
-  },
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-}));
-
 export default function Checkout({ user, address }) {
   const { t } = useTranslation("Checkout");
   const [, setSnackbar] = useRecoilState(snackbarState);
 
   const [formData, setFormData] = useState();
 
-  const [{ error }, { isSuccess: cartIsUpdated }] = useUpdateShipping(formData);
+  const [{ error }, { isSuccess: cartIsUpdated, isLoading }] =
+    useUpdateShipping(formData);
 
   useEffect(() => {
     if (!error) {
@@ -108,11 +95,9 @@ export default function Checkout({ user, address }) {
     setPaymentDialogOpen(true);
   }, [cartIsUpdated, setSnackbar, t]);
 
-  const [session] = useUpdateSession(address, "address");
+  useUpdateSession(address, "address");
   useUpdateSession(user, "user");
 
-  const ethereum = useRecoilValue(ethereumState);
-  const isUnlocked = useMetamaskUnlocked(session?.address);
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
   const handleClose = useCallback(() => setPaymentDialogOpen(false), []);
 
@@ -127,38 +112,6 @@ export default function Checkout({ user, address }) {
     setPaymentDialogOpen(true);
   }, [paymentTx]);
 
-  let content;
-
-  if (ethereum.account) {
-    if (isUnlocked) {
-      content = (
-        <Form
-          hideActions={paymentDialogOpen}
-          initialFormState={user}
-          onSubmit={setFormData}
-        />
-      );
-    } else {
-      content = (
-        <VerticalAlign>
-          <Box sx={{ textAlign: "center" }}>
-            <UnlockButton size="large" sx={{ fontWeight: "bold" }} />
-            <Box sx={{ width: "100%", my: 2 }}>
-              <BruteDivider />
-            </Box>
-            <BackToStoreButton />
-          </Box>
-        </VerticalAlign>
-      );
-    }
-  } else {
-    content = (
-      <VerticalAlign>
-        <MetamaskButton />
-      </VerticalAlign>
-    );
-  }
-
   return (
     <Fragment>
       <PaymentWatcher />
@@ -168,10 +121,36 @@ export default function Checkout({ user, address }) {
       <CheckoutLayout>
         <Fragment>
           <PaymentDialog handleClose={handleClose} open={paymentDialogOpen} />
-          {content}
+          <UnlockMetamaskLayout
+            AlignProps={{
+              sx: {
+                "& .inner": {
+                  textAlign: "center",
+                },
+              },
+            }}
+            backToStore
+          >
+            <Form
+              disableActions={paymentDialogOpen}
+              initialFormState={user}
+              onSubmit={setFormData}
+              submitIsLoading={isLoading}
+            />
+          </UnlockMetamaskLayout>
         </Fragment>
+
         <Fragment>
-          <Box sx={{ pr: { md: 5 } }}>
+          <Box
+            sx={{
+              p: {
+                xs: 1,
+                sm: 1,
+                md: 2,
+                lg: 5,
+              },
+            }}
+          >
             <CartSummary />
           </Box>
         </Fragment>

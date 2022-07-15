@@ -13,6 +13,9 @@ import Link from "next/link";
 import { withLocale } from "../libs/router";
 import { useRouter } from "next/router";
 import { LINKS } from "./navbar";
+import BruteDivider from "./divider";
+import BackToStoreButton from "./checkout/back-to-store-button";
+import { Fragment } from "react";
 
 const VerticalAlign = styled(Box)(({ theme }) => ({
   height: "60vh",
@@ -27,6 +30,7 @@ const VerticalAlign = styled(Box)(({ theme }) => ({
 export default function UnlockMetamaskLayout({
   needsConnected = true,
   needsUnlocked = true,
+  backToStore = false,
   AlignProps,
   children,
 }) {
@@ -37,18 +41,52 @@ export default function UnlockMetamaskLayout({
 
   const isUnlocked = useMetamaskUnlocked(session?.address);
 
+  const backToStoreFooter = (
+    <Box sx={{ textAlign: "center", mt: 5 }}>
+      <BruteDivider />
+      <BackToStoreButton sx={{ my: 2 }} />
+    </Box>
+  );
+
   if (ethereum.account || !needsConnected) {
     if (isUnlocked || !needsUnlocked) {
       return children;
     } else {
       return (
+        <Fragment>
+          <VerticalAlign {...AlignProps}>
+            <Box className="inner inner-unlock">
+              <UnlockButton size="large" sx={{ fontWeight: "bold", mb: 2 }} />
+              <Typography variant="body1">
+                {t(
+                  "In order for us to give you access to your account settings, you need to confirm your account from your wallet address via MetaMask."
+                )}
+              </Typography>
+              <Typography
+                sx={{ display: "inline-block", mt: 4 }}
+                variant="body1"
+              >
+                {t("You don't know what to do next? Visit")}{" "}
+                <Typography variant="link">
+                  <Link href={withLocale(router.locale, LINKS.FAQ)}>
+                    {t("help center")}
+                  </Link>
+                </Typography>
+              </Typography>
+            </Box>
+          </VerticalAlign>
+          {backToStore && backToStoreFooter}
+        </Fragment>
+      );
+    }
+  } else {
+    return (
+      <Fragment>
         <VerticalAlign {...AlignProps}>
-          <Box className="inner inner-unlock">
-            <UnlockButton size="large" sx={{ fontWeight: "bold", mb: 2 }} />
-            <Typography variant="body1">
-              {t(
-                "In order for us to give you access to your account settings, you need to confirm your account from your wallet address via MetaMask."
-              )}
+          <Box className="inner inner-connect">
+            <MetamaskButton />
+            <Typography sx={{ mt: 2 }} variant="body1">
+              {t("Start by connecting Metamask")}
             </Typography>
             <Typography sx={{ display: "inline-block", mt: 4 }} variant="body1">
               {t("You don't know what to do next? Visit")}{" "}
@@ -60,32 +98,15 @@ export default function UnlockMetamaskLayout({
             </Typography>
           </Box>
         </VerticalAlign>
-      );
-    }
-  } else {
-    return (
-      <VerticalAlign {...AlignProps}>
-        <Box className="inner inner-connect">
-          <MetamaskButton />
-          <Typography sx={{ mt: 2 }} variant="body1">
-            {t("Start by connecting Metamask")}
-          </Typography>
-          <Typography sx={{ display: "inline-block", mt: 4 }} variant="body1">
-            {t("You don't know what to do next? Visit")}{" "}
-            <Typography variant="link">
-              <Link href={withLocale(router.locale, LINKS.FAQ)}>
-                {t("help center")}
-              </Link>
-            </Typography>
-          </Typography>
-        </Box>
-      </VerticalAlign>
+        {backToStore && backToStoreFooter}
+      </Fragment>
     );
   }
 }
 
 UnlockMetamaskLayout.propTypes = {
   AlignProps: PropTypes.object,
+  backToStore: PropTypes.bool,
   children: PropTypes.node,
   needsConnected: PropTypes.bool,
   needsUnlocked: PropTypes.bool,

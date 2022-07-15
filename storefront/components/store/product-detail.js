@@ -59,6 +59,7 @@ export function ProductDetail({ product: _product }) {
   const {
     isSuccess: cartIsUpdated,
     isLoading: cartIsLoading,
+    isRefetching: cartIsRefetching,
     isError,
     refetch,
   } = useQuery(
@@ -83,6 +84,10 @@ export function ProductDetail({ product: _product }) {
       return;
     }
 
+    if (cartIsRefetching) {
+      return;
+    }
+
     if (eventTarget && window.CustomEvent) {
       eventTarget.dispatchEvent(
         new window.CustomEvent(NAVBAR_CHANGE, {
@@ -94,7 +99,7 @@ export function ProductDetail({ product: _product }) {
     }
 
     router.push(withLocale(router.locale, USER_LINKS.CHECKOUT));
-  }, [cartIsUpdated, router, eventTarget]);
+  }, [cartIsUpdated, router, eventTarget, cartIsRefetching]);
 
   const initialSupply = product.attributes.brute_initial_supply?.value;
   const rarity = product.attributes.brute_rarity?.value;

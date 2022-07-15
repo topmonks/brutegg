@@ -1,29 +1,16 @@
-import { Divider, Grid } from "@mui/material";
-import { Box } from "@mui/system";
+import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import DoubleBorderBox from "../double-border-box";
 
 export default function CheckoutLayout({ children }) {
   return (
     <Grid container direction="row-reverse" spacing={2}>
-      <Grid item sm={5} sx={{ display: "flex" }} xs={12}>
-        <Divider
-          flexItem
-          orientation="vertical"
-          sx={{ mr: { sm: 2, md: 5 }, display: { xs: "none", sm: "block" } }}
-        />
-        <Box sx={{ width: "100%" }}>{children[1]}</Box>
+      <Grid item sm={5} xs={12}>
+        <DoubleBorderBox sx={{ height: "100%" }}>{children[1]}</DoubleBorderBox>
       </Grid>
 
       <Grid item sm={7} xs={12}>
-        <Box
-          sx={{
-            pl: {
-              md: 5,
-            },
-          }}
-        >
-          {children[0]}
-        </Box>
+        <DoubleBorderBox>{children[0]}</DoubleBorderBox>
       </Grid>
     </Grid>
   );

@@ -1,11 +1,10 @@
 import { Box } from "@mui/system";
-import { Skeleton, useMediaQuery } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { Fragment } from "react";
 import useDisplayAfterDelay from "../../hooks/use-display-after-delay";
 
 export function ProductDetailSkeleton() {
   const display = useDisplayAfterDelay(200);
-  const isSm = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   if (!display) {
     return <Fragment></Fragment>;
@@ -28,14 +27,24 @@ export function ProductDetailSkeleton() {
         <Skeleton
           animation="wave"
           height={"100%"}
+          sx={{
+            width: {
+              xs: "100px",
+              lg: "200px",
+            },
+          }}
           variant="rectangular"
-          width={isSm ? 100 : 200}
         />
         <Skeleton
           animation="wave"
           height={"100%"}
+          sx={{
+            width: {
+              xs: "100px",
+              lg: "250px",
+            },
+          }}
           variant="rectangular"
-          width={isSm ? 100 : 250}
         />
       </Box>
 

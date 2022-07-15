@@ -23,10 +23,11 @@ async function upsertCustomerRoute(req, res) {
   });
 
   const body = req.body;
-  const email = composeVirtualEmailFromAddress(publicAddress);
+  const email = body.email || composeVirtualEmailFromAddress(publicAddress);
 
   const update = {
     email,
+    phone: body.phone,
     first_name: body.firstName,
     last_name: body.lastName,
     shipping: {

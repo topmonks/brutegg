@@ -221,6 +221,12 @@ function CheckoutSkeleton() {
               display: "flex",
               flexDirection: "column",
               gap: 2,
+              m: {
+                xs: 1,
+                sm: 2,
+                md: 3,
+                lg: 5,
+              },
               width: { md: "60%" },
             }}
           >
@@ -252,17 +258,35 @@ function CheckoutSkeleton() {
               display: "flex",
               flexDirection: "column",
               gap: 2,
-              width: { md: "60%" },
+              m: {
+                xs: 1,
+                sm: 2,
+                md: 3,
+                lg: 5,
+              },
             }}
           >
             <Skeleton
               animation="pulse"
-              height={50}
+              height={100}
               variant="rectangular"
             ></Skeleton>
             <Skeleton
               animation="pulse"
-              height={30}
+              height={40}
+              sx={{ mt: 2 }}
+              variant="rectangular"
+            ></Skeleton>
+            <Skeleton
+              animation="pulse"
+              height={40}
+              sx={{ mt: 2 }}
+              variant="rectangular"
+            ></Skeleton>
+            <Skeleton
+              animation="pulse"
+              height={40}
+              sx={{ mt: 2 }}
               variant="rectangular"
             ></Skeleton>
           </Box>
