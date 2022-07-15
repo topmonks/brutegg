@@ -13,6 +13,7 @@ import { productState } from "../../state/products";
 import PriceTag from "../price-tag";
 import StyledDescription from "../styled-description";
 import DiscordButton from "../discord-button";
+import RedditButton from "../reddit-button";
 
 const shakeChest = keyframes`
   10%, 90% {
@@ -181,6 +182,19 @@ export function QuestDetail({ quest: _quest }) {
           >
             <DiscordButton />
           </Box>
+          <Box
+            sx={{
+              mt: {
+                md: 2,
+              },
+              display: {
+                xs: "none",
+                md: "block",
+              },
+            }}
+          >
+            <RedditButton />
+          </Box>
         </Box>
         <Box
           sx={{
@@ -223,6 +237,8 @@ export function QuestDetail({ quest: _quest }) {
           }}
         >
           <DiscordButton fullWidth />
+          <Box sx={{ mt: 2 }} />
+          <RedditButton fullWidth />
         </Box>
       </Box>
     </Fragment>
