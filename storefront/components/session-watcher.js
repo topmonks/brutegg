@@ -20,7 +20,14 @@ export default function SessionWatcher() {
       window
         ?.fetch("/api/swell/get-customer")
         .then(fetchThrowHttpError)
-        .then((res) => res.json()),
+        .then((res) => res.json())
+        .catch((e) => {
+          if (e.status === 404) {
+            return null;
+          }
+
+          return e;
+        }),
     {
       enabled: Boolean(session?.address),
       refetchOnWindowFocus: false,

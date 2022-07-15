@@ -21,5 +21,12 @@ async function getCustomer(req, res) {
     limit: 1,
   });
 
+  if (!user) {
+    res.status(404).end();
+    return;
+  }
+
+  console.log(user);
+
   res.send(user);
 }
