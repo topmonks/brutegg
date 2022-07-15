@@ -11,8 +11,7 @@ import AddressOne from "./form/address-1";
 import City from "./form/city";
 import Zip from "./form/zip";
 import { removeEmpty } from "../../libs/util";
-import { useRecoilState } from "recoil";
-import { checkoutFormState, defaultFormState } from "../../state/checkout";
+import { defaultFormState } from "../../state/checkout";
 import BackToStoreButton from "./back-to-store-button";
 import PhoneNumber from "./form/phone-number";
 import Email from "./form/email";
@@ -25,12 +24,6 @@ export default function Form({
 }) {
   const { t } = useTranslation("Checkout");
   const [formData, setFormData, onChange] = useFormData(defaultFormState);
-
-  const [, setCheckoutForm] = useRecoilState(checkoutFormState);
-
-  useEffect(() => {
-    setCheckoutForm(formData.toJSON());
-  }, [formData, setCheckoutForm]);
 
   useEffect(() => {
     if (!initialFormState) {

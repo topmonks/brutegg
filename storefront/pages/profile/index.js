@@ -8,8 +8,10 @@ import ProfileLayout from "../../components/profile/profile-layout";
 import UnlockMetamaskLayout from "../../components/unlock-metamask-layout";
 import useUpdateSession from "../../hooks/use-update-session";
 import { swellNodeClient } from "../../libs/swell-node";
+import { removeEmpty } from "../../libs/util";
 import window from "../../libs/window";
 import { withSessionSsr } from "../../libs/with-session";
+import { defaultFormState } from "../../state/profile";
 import { snackbarState } from "../../state/snackbar";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
@@ -34,19 +36,22 @@ export const getServerSideProps = withSessionSsr(async (context) => {
   });
 
   if (!user) {
+    resultProps.user = defaultFormState;
     return { props: resultProps };
   }
 
-  resultProps.user = {
+  resultProps.user = removeEmpty({
     id: user.id,
     firstName: user.first_name,
     lastName: user.last_name,
+    discord: user.discord_username,
+    reddit: user.reddit_username,
+    instagram: user.instagram_username,
     address1: user.shipping.address1,
-    address2: user.shipping.address2,
     city: user.shipping.city,
     zip: user.shipping.zip,
     country: user.shipping.country,
-  };
+  });
 
   return {
     props: resultProps,

@@ -1,22 +1,22 @@
 import PropTypes from "prop-types";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { address2Validator } from "../../../validations/checkout";
 import { MemoTextField } from "../../memo-textfield";
 import useFormValidation from "../../../hooks/use-form-validation";
 import { common } from "../../../validations/i18n";
+import { discordValidator } from "../../../validations/profile";
 
-export default function AddressTwo({ formData, onChange, allowEmpty = true }) {
-  const { t } = useTranslation("Checkout");
+export default function Discord({ formData, onChange, allowEmpty }) {
+  const { t } = useTranslation("Profile");
 
-  let validator = address2Validator;
+  let validator = discordValidator;
 
   if (allowEmpty) {
     validator = validator.allow("");
   }
 
-  const [invalidAddress2, setAddress2Blurred] = useFormValidation(
-    formData.get("address2"),
+  const [invalidDiscord, setDiscordBlurred] = useFormValidation(
+    formData.get("discord"),
     validator.messages({
       ...common(t),
     })
@@ -25,24 +25,24 @@ export default function AddressTwo({ formData, onChange, allowEmpty = true }) {
   return (
     <Fragment>
       <MemoTextField
-        error={Boolean(invalidAddress2)}
+        error={Boolean(invalidDiscord)}
         fullWidth
-        helperText={invalidAddress2}
-        id="address2"
-        label={t("Apartment, building")}
-        name="address2"
-        onBlur={setAddress2Blurred}
+        helperText={invalidDiscord}
+        id="discord"
+        label={t("Discord")}
+        name="discord"
+        onBlur={setDiscordBlurred}
         onChange={onChange}
         required={!allowEmpty}
         type="text"
-        value={formData.get("address2")}
+        value={formData.get("discord")}
         variant="outlined"
       />
     </Fragment>
   );
 }
 
-AddressTwo.propTypes = {
+Discord.propTypes = {
   allowEmpty: PropTypes.bool,
   formData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,

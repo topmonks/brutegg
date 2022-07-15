@@ -6,12 +6,18 @@ import useFormValidation from "../../../hooks/use-form-validation";
 import { firstNameValidator } from "../../../validations/checkout";
 import { common } from "../../../validations/i18n";
 
-export default function FirstName({ formData, onChange }) {
+export default function FirstName({ formData, onChange, allowEmpty }) {
   const { t } = useTranslation("Checkout");
+
+  let validator = firstNameValidator;
+
+  if (allowEmpty) {
+    validator = validator.allow("");
+  }
 
   const [invalidFirstName, setFirstNameBlurred] = useFormValidation(
     formData.get("firstName"),
-    firstNameValidator.messages({
+    validator.messages({
       ...common(t),
     })
   );
@@ -27,7 +33,7 @@ export default function FirstName({ formData, onChange }) {
         name="firstName"
         onBlur={setFirstNameBlurred}
         onChange={onChange}
-        required
+        required={!allowEmpty}
         type="text"
         value={formData.get("firstName")}
         variant="outlined"
@@ -37,6 +43,7 @@ export default function FirstName({ formData, onChange }) {
 }
 
 FirstName.propTypes = {
+  allowEmpty: PropTypes.bool,
   formData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };

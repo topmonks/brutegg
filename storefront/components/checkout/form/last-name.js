@@ -6,12 +6,18 @@ import { MemoTextField } from "../../../components/memo-textfield";
 import useFormValidation from "../../../hooks/use-form-validation";
 import { common } from "../../../validations/i18n";
 
-export default function LastName({ formData, onChange }) {
+export default function LastName({ formData, onChange, allowEmpty }) {
   const { t } = useTranslation("Checkout");
+
+  let validator = lastNameValidator;
+
+  if (allowEmpty) {
+    validator = validator.allow("");
+  }
 
   const [invalidLastName, setLastNameBlurred] = useFormValidation(
     formData.get("lastName"),
-    lastNameValidator.messages({
+    validator.messages({
       ...common(t),
     })
   );
@@ -27,7 +33,7 @@ export default function LastName({ formData, onChange }) {
         name="lastName"
         onBlur={setLastNameBlurred}
         onChange={onChange}
-        required
+        required={!allowEmpty}
         type="text"
         value={formData.get("lastName")}
         variant="outlined"

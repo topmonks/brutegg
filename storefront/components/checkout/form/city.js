@@ -6,12 +6,18 @@ import { MemoTextField } from "../../memo-textfield";
 import useFormValidation from "../../../hooks/use-form-validation";
 import { common } from "../../../validations/i18n";
 
-export default function City({ formData, onChange }) {
+export default function City({ formData, onChange, allowEmpty }) {
   const { t } = useTranslation("Checkout");
+
+  let validator = cityValidator;
+
+  if (allowEmpty) {
+    validator = validator.allow("");
+  }
 
   const [invalidCity, setCityBlurred] = useFormValidation(
     formData.get("city"),
-    cityValidator.messages({
+    validator.messages({
       ...common(t),
     })
   );
@@ -27,7 +33,7 @@ export default function City({ formData, onChange }) {
         name="city"
         onBlur={setCityBlurred}
         onChange={onChange}
-        required
+        required={!allowEmpty}
         type="text"
         value={formData.get("city")}
         variant="outlined"
@@ -37,6 +43,7 @@ export default function City({ formData, onChange }) {
 }
 
 City.propTypes = {
+  allowEmpty: PropTypes.bool,
   formData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };

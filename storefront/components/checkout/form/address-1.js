@@ -6,12 +6,18 @@ import { MemoTextField } from "../../memo-textfield";
 import useFormValidation from "../../../hooks/use-form-validation";
 import { common } from "../../../validations/i18n";
 
-export default function AddressOne({ formData, onChange }) {
+export default function AddressOne({ formData, onChange, allowEmpty }) {
   const { t } = useTranslation("Checkout");
+
+  let validator = address1Validator;
+
+  if (allowEmpty) {
+    validator = validator.allow("");
+  }
 
   const [invalidAddress1, setAddress1Blurred] = useFormValidation(
     formData.get("address1"),
-    address1Validator.messages({
+    validator.messages({
       ...common(t),
     })
   );
@@ -27,7 +33,7 @@ export default function AddressOne({ formData, onChange }) {
         name="address1"
         onBlur={setAddress1Blurred}
         onChange={onChange}
-        required
+        required={!allowEmpty}
         type="text"
         value={formData.get("address1")}
         variant="outlined"
@@ -37,6 +43,7 @@ export default function AddressOne({ formData, onChange }) {
 }
 
 AddressOne.propTypes = {
+  allowEmpty: PropTypes.bool,
   formData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };

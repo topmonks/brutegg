@@ -30,6 +30,9 @@ async function upsertCustomerRoute(req, res) {
     phone: body.phone,
     first_name: body.firstName,
     last_name: body.lastName,
+    instagram_username: body.instagram,
+    reddit_username: body.reddit,
+    discord_username: body.discord,
     shipping: {
       address1: body.address1,
       address2: body.address2,

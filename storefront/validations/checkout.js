@@ -15,7 +15,7 @@ export const zipValidatior = Joi.string();
 export const countryValidator = Joi.string();
 
 export const checkoutValidator = Joi.object({
-  firstName: firstNameValidator.required(),
+  firstName: firstNameValidator,
   lastName: lastNameValidator,
   email: emailValidator,
   phone: phoneNumberValidator,

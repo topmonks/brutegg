@@ -3,27 +3,19 @@ import { Box, Button, Typography } from "@mui/material";
 import { Fragment, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useFormData from "../../hooks/use-form-data";
-import { checkoutValidator } from "../../validations/checkout";
 import CountrySelect from "../checkout/form/country";
 import FirstName from "../checkout/form/first-name";
 import LastName from "../checkout/form/last-name";
 import AddressOne from "../checkout/form/address-1";
-import AddressTwo from "../checkout/form/address-2";
 import City from "../checkout/form/city";
 import Zip from "../checkout/form/zip";
 import { removeEmpty } from "../../libs/util";
 import NickName from "../checkout/form/nickname";
-
-const defaultFormState = {
-  firstName: "",
-  lastName: "",
-  nickName: "",
-  address1: "",
-  address2: "",
-  city: "",
-  zip: "",
-  country: "",
-};
+import { defaultFormState } from "../../state/profile";
+import { profileValidator } from "../../validations/profile";
+import Reddit from "./form/reddit";
+import Discord from "./form/discord";
+import Instagram from "./form/instagram";
 
 export default function Form({ onSubmit, initialFormState }) {
   const { t } = useTranslation("Profile");
@@ -45,8 +37,10 @@ export default function Form({ onSubmit, initialFormState }) {
     [onSubmit, formData]
   );
 
-  const checkoutEnabled = useMemo(() => {
-    return checkoutValidator.validate(formData.toJSON()).error == null;
+  const profileSaveEnabled = useMemo(() => {
+    console.log(profileValidator.validate(formData.toJSON()));
+
+    return profileValidator.validate(formData.toJSON()).error == null;
   }, [formData]);
 
   return (
@@ -66,17 +60,19 @@ export default function Form({ onSubmit, initialFormState }) {
           <Typography sx={{ fontWeight: "bold", mt: 1 }} variant="subtitle1">
             {t("User information")}
           </Typography>
-          <FirstName formData={formData} onChange={onChange} />
-          <LastName formData={formData} onChange={onChange} />
+          <FirstName allowEmpty formData={formData} onChange={onChange} />
+          <LastName allowEmpty formData={formData} onChange={onChange} />
           <NickName formData={formData} onChange={onChange} />
           <Typography sx={{ fontWeight: "bold", mt: 1 }} variant="subtitle1">
             {t("Socials")}
           </Typography>
+          <Discord allowEmpty formData={formData} onChange={onChange} />
+          <Reddit allowEmpty formData={formData} onChange={onChange} />
+          <Instagram allowEmpty formData={formData} onChange={onChange} />
           <Typography sx={{ fontWeight: "bold", mt: 1 }} variant="subtitle1">
             {t("Address")}
           </Typography>
-          <AddressOne formData={formData} onChange={onChange} />
-          <AddressTwo formData={formData} onChange={onChange} />
+          <AddressOne allowEmpty formData={formData} onChange={onChange} />
           <Box
             sx={{
               display: "flex",
@@ -84,8 +80,8 @@ export default function Form({ onSubmit, initialFormState }) {
               flexWrap: { xs: "wrap", sm: "nowrap" },
             }}
           >
-            <City formData={formData} onChange={onChange} />
-            <Zip formData={formData} onChange={onChange} />
+            <City allowEmpty formData={formData} onChange={onChange} />
+            <Zip allowEmpty formData={formData} onChange={onChange} />
           </Box>
           <CountrySelect formData={formData} onChange={setFormData} />
           <Box
@@ -99,6 +95,7 @@ export default function Form({ onSubmit, initialFormState }) {
           >
             <Button
               disableElevation
+              disabled={!profileSaveEnabled}
               size="large"
               sx={{ width: { xs: "100%", sm: "auto" } }}
               type="submit"

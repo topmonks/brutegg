@@ -1,22 +1,22 @@
 import PropTypes from "prop-types";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { address2Validator } from "../../../validations/checkout";
 import { MemoTextField } from "../../memo-textfield";
 import useFormValidation from "../../../hooks/use-form-validation";
 import { common } from "../../../validations/i18n";
+import { instagramValidator } from "../../../validations/profile";
 
-export default function AddressTwo({ formData, onChange, allowEmpty = true }) {
-  const { t } = useTranslation("Checkout");
+export default function Instagram({ formData, onChange, allowEmpty }) {
+  const { t } = useTranslation("Profile");
 
-  let validator = address2Validator;
+  let validator = instagramValidator;
 
   if (allowEmpty) {
     validator = validator.allow("");
   }
 
-  const [invalidAddress2, setAddress2Blurred] = useFormValidation(
-    formData.get("address2"),
+  const [invalidInstagram, setInstagramBlurred] = useFormValidation(
+    formData.get("instagram"),
     validator.messages({
       ...common(t),
     })
@@ -25,24 +25,24 @@ export default function AddressTwo({ formData, onChange, allowEmpty = true }) {
   return (
     <Fragment>
       <MemoTextField
-        error={Boolean(invalidAddress2)}
+        error={Boolean(invalidInstagram)}
         fullWidth
-        helperText={invalidAddress2}
-        id="address2"
-        label={t("Apartment, building")}
-        name="address2"
-        onBlur={setAddress2Blurred}
+        helperText={invalidInstagram}
+        id="instagram"
+        label={t("Instagram")}
+        name="instagram"
+        onBlur={setInstagramBlurred}
         onChange={onChange}
         required={!allowEmpty}
         type="text"
-        value={formData.get("address2")}
+        value={formData.get("instagram")}
         variant="outlined"
       />
     </Fragment>
   );
 }
 
-AddressTwo.propTypes = {
+Instagram.propTypes = {
   allowEmpty: PropTypes.bool,
   formData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,

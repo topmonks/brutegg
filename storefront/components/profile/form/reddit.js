@@ -1,22 +1,22 @@
 import PropTypes from "prop-types";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { address2Validator } from "../../../validations/checkout";
 import { MemoTextField } from "../../memo-textfield";
 import useFormValidation from "../../../hooks/use-form-validation";
 import { common } from "../../../validations/i18n";
+import { redditValidator } from "../../../validations/profile";
 
-export default function AddressTwo({ formData, onChange, allowEmpty = true }) {
-  const { t } = useTranslation("Checkout");
+export default function Reddit({ formData, onChange, allowEmpty }) {
+  const { t } = useTranslation("Profile");
 
-  let validator = address2Validator;
+  let validator = redditValidator;
 
   if (allowEmpty) {
     validator = validator.allow("");
   }
 
-  const [invalidAddress2, setAddress2Blurred] = useFormValidation(
-    formData.get("address2"),
+  const [invalidReddit, setRedditBlurred] = useFormValidation(
+    formData.get("reddit"),
     validator.messages({
       ...common(t),
     })
@@ -25,24 +25,24 @@ export default function AddressTwo({ formData, onChange, allowEmpty = true }) {
   return (
     <Fragment>
       <MemoTextField
-        error={Boolean(invalidAddress2)}
+        error={Boolean(invalidReddit)}
         fullWidth
-        helperText={invalidAddress2}
-        id="address2"
-        label={t("Apartment, building")}
-        name="address2"
-        onBlur={setAddress2Blurred}
+        helperText={invalidReddit}
+        id="reddit"
+        label={t("Reddit")}
+        name="reddit"
+        onBlur={setRedditBlurred}
         onChange={onChange}
         required={!allowEmpty}
         type="text"
-        value={formData.get("address2")}
+        value={formData.get("reddit")}
         variant="outlined"
       />
     </Fragment>
   );
 }
 
-AddressTwo.propTypes = {
+Reddit.propTypes = {
   allowEmpty: PropTypes.bool,
   formData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,

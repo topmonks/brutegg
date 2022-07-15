@@ -22,6 +22,8 @@ import useUpdateShipping from "../../hooks/use-update-shipping";
 import PaymentWatcher from "../../components/checkout/payment-watcher";
 import UnlockMetamaskLayout from "../../components/unlock-metamask-layout";
 import { removeEmpty } from "../../libs/util";
+import { defaultFormState } from "../../state/checkout";
+import { composeVirtualEmailFromAddress } from "../../libs/web3";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -45,14 +47,20 @@ export const getServerSideProps = withSessionSsr(async (context) => {
   });
 
   if (!user) {
+    resultProps.user = defaultFormState;
     return { props: resultProps };
   }
+
+  const email =
+    user.email === composeVirtualEmailFromAddress(publicAddress)
+      ? ""
+      : user.email;
 
   resultProps.user = removeEmpty({
     id: user.id,
     firstName: user.first_name,
     lastName: user.last_name,
-    email: user.email,
+    email: email,
     phone: user.phone,
     address1: user.shipping.address1,
     address2: user.shipping.address2,
