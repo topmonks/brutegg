@@ -6,12 +6,15 @@
     "Cancel": "Zrušit",
     "Profile": "Profil",
     "Disconnect": "Odpojit",
+    "Disconnect wallet": "Odpojit peněženku",
+    "Wallet successfully disconnected": "Peněženka úspěšně odpojena",
     "Error response": "Chyba",
     "Account successfully updated": "Informace k účtu úspěšně aktualizovány",
     "Connecting": "Připojuji",
     "Change to Polygon": "Přepnout na síť Polygon",
     "Back": "Zpět",
-    "Ask the community": "Poraďte se s komunitou"
+    "Ask the community": "Poraďte se s komunitou",
+    "Wallet": "Peněženka"
   },
   "Navbar": {
     "Quests": "Questy",
@@ -28,13 +31,14 @@
   },
   "Profile.Wallet": {
     "MetaMask wallet settings": "Nastavení peněženky MetaMask",
-    "Connected wallet": "Připojená peněženka"
+    "Connected wallet": "Připojená peněženka",
+    "You don't have a wallet connected at the moment. Do you know how to do that?": "Momentálně nemáš připojenou žádnou peněženku. Nevíš jak na to?",
+    "Check here": "Koukni sem"
   },
   "MetamaskButton": {
     "Install MetaMask": "Nainstalujte Metamask",
     "Connect wallet": "Propojte Metamask",
     "Wallet successfully connected": "Peněženka úspěšně propojena",
-    "Wallet successfully disconnected": "Peněženka úspěšně odpojena",
     "Add Brute token to Metamask": "Zobrazit Brute token v MetaMask"
   },
   "UnlockButton": {
@@ -116,10 +120,17 @@
     "Check the transaction on polygonscan.com": "Zkontrolujte transakci na polygonscan.com"
   },
   "MetamaskErrors": {
-    "4001": "Transakce byla odmítnuta uživatelem"
+    "4001": "Transakce byla odmítnuta uživatelem",
+    "User rejected the request.": "Źádost odmítnuta uživatelem."
   },
   "PendingTxs": {
     "Transaction confirmed": "Transakce potvrzena",
     "Check the polygonscan": "Otevřít v Polygonscan"
+  },
+  "UnlockMetamaskLayout": {
+    "In order for us to give you access to your account settings, you need to confirm your account from your wallet address via MetaMask.": "Abychom vám mohli dát přístup k nastavení vašeho účtu, je třeba účet potvrdit z adresy vaší peněženky přes MetaMask.",
+    "Start by connecting Metamask": "Začněte propojením Metamask",
+    "You don't know what to do next? Visit": "Nevíte, co dál? Navštivte",
+    "help center": "centrum nápovědy"
   }
 }

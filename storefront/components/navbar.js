@@ -139,9 +139,13 @@ export default function Navbar() {
         [t("Quests"), LINKS.QUESTS],
         [t("Store"), LINKS.STORE],
         [t("FAQ"), LINKS.FAQ],
-        ethereum.account && [t("Profile"), USER_LINKS.PROFILE],
+        (ethereum.account ||
+          [USER_LINKS.PROFILE, USER_LINKS.WALLET].includes(router.asPath)) && [
+          t("Profile"),
+          USER_LINKS.PROFILE,
+        ],
       ].filter(Boolean),
-    [t, ethereum.account]
+    [t, ethereum.account, router]
   );
 
   const findLink = useCallback(

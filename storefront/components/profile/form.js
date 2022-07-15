@@ -60,19 +60,19 @@ export default function Form({ onSubmit, initialFormState }) {
             width: { md: "60%" },
           }}
         >
-          <Typography component="h3" variant="h5">
+          <Typography component="h3" sx={{ fontWeight: "bold" }} variant="h6">
             {t("General settings")}
           </Typography>
-          <Typography component="h4" variant="h6">
+          <Typography sx={{ fontWeight: "bold", mt: 1 }} variant="subtitle1">
             {t("User information")}
           </Typography>
           <FirstName formData={formData} onChange={onChange} />
           <LastName formData={formData} onChange={onChange} />
           <NickName formData={formData} onChange={onChange} />
-          <Typography component="h4" variant="h6">
+          <Typography sx={{ fontWeight: "bold", mt: 1 }} variant="subtitle1">
             {t("Socials")}
           </Typography>
-          <Typography component="h4" variant="h6">
+          <Typography sx={{ fontWeight: "bold", mt: 1 }} variant="subtitle1">
             {t("Address")}
           </Typography>
           <AddressOne formData={formData} onChange={onChange} />
@@ -94,11 +94,13 @@ export default function Form({ onSubmit, initialFormState }) {
               gap: 2,
               flexWrap: { xs: "wrap", sm: "nowrap" },
               mb: { xs: 2, sm: 10 },
+              mt: 2,
             }}
           >
             <Button
               disableElevation
               size="large"
+              sx={{ width: { xs: "100%", sm: "auto" } }}
               type="submit"
               variant="contained"
             >

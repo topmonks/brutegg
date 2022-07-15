@@ -149,11 +149,46 @@ function ProfileSkeleton() {
         <Skeleton
           animation="pulse"
           height={30}
+          sx={{ mt: 2 }}
           variant="rectangular"
           width={250}
         ></Skeleton>
 
-        {new Array(5).fill().map((a, ix) => (
+        {new Array(3).fill().map((a, ix) => (
+          <Skeleton
+            animation="pulse"
+            height={50}
+            key={ix}
+            variant="rectangular"
+          ></Skeleton>
+        ))}
+
+        <Skeleton
+          animation="pulse"
+          height={30}
+          sx={{ mt: 2 }}
+          variant="rectangular"
+          width={250}
+        ></Skeleton>
+
+        {new Array(3).fill().map((a, ix) => (
+          <Skeleton
+            animation="pulse"
+            height={50}
+            key={ix}
+            variant="rectangular"
+          ></Skeleton>
+        ))}
+
+        <Skeleton
+          animation="pulse"
+          height={30}
+          sx={{ mt: 2 }}
+          variant="rectangular"
+          width={250}
+        ></Skeleton>
+
+        {new Array(3).fill().map((a, ix) => (
           <Skeleton
             animation="pulse"
             height={50}

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LinkIcon from "@mui/icons-material/Link";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 import { Fragment, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -25,15 +25,15 @@ import {
 } from "../../libs/metamask";
 import { ethereumState } from "../../state/ethereum";
 import { snackbarState } from "../../state/snackbar";
-import window from "../../libs/window";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
 import PriceTag from "../price-tag";
 import { useRouter } from "next/router";
 import { withLocale } from "../../libs/router";
-import { sessionState } from "../../state/session";
 import { bruteState } from "../../state/brute-token";
 import { USER_LINKS } from "../navbar";
+import DoubleBorderBox from "../double-border-box";
+import useDisconnectWallet from "../../hooks/use-disconnect-wallet";
 
 const buttonAnimation = (color) => keyframes`
   from {
@@ -115,7 +115,7 @@ function ConnectButton({ children }) {
       setSnackbar({
         getChildren: (handleClose) => (
           <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-            {e.message}
+            {t(e.message, { ns: "MetamaskErrors" })}
           </Alert>
         ),
       });
@@ -144,38 +144,20 @@ ConnectButton.propTypes = {
   children: PropTypes.node,
 };
 
-function clearAccountLocalStorage(account) {
-  const items = { ...window.localStorage };
-
-  Object.keys(items)
-    .filter((k) => k.includes(account))
-    .forEach((k) => {
-      window.localStorage?.removeItem(k);
-    });
-}
-
 function ConnectedButton() {
   const router = useRouter();
   const { t } = useTranslation("MetamaskButton");
-  const [ethereum, setEthereum] = useRecoilState(ethereumState);
+  const [ethereum] = useRecoilState(ethereumState);
   const anchorEl = useRef();
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const [, setSnackbar] = useRecoilState(snackbarState);
-  const [, setSession] = useRecoilState(sessionState);
   const brute = useRecoilValueLoadable(bruteState);
+
+  const disconnectWallet = useDisconnectWallet();
 
   const disconnect = () => {
     handleClose();
-    clearAccountLocalStorage(ethereum.account);
-    setEthereum((e) => ({ ...e, account: undefined }));
-    setSnackbar({
-      message: t("Wallet successfully disconnected"),
-    });
-    window?.fetch("/api/logout", {
-      method: "POST",
-    });
-    setSession(null);
+    disconnectWallet();
   };
 
   const changeToPolygon = () => {
@@ -183,9 +165,9 @@ function ConnectedButton() {
     optionallySwitchToPolygonChain();
   };
 
-  const goToProfile = () => {
+  const goToWallet = () => {
     handleClose();
-    router.push(withLocale(router.locale, USER_LINKS.PROFILE));
+    router.push(withLocale(router.locale, USER_LINKS.WALLET));
   };
 
   const addBruteTokenToMetamask = () => {
@@ -205,46 +187,57 @@ function ConnectedButton() {
       <Menu
         MenuListProps={{
           "aria-labelledby": "basic-button",
+          sx: { p: "2px" },
         }}
-        PaperProps={{ sx: { width: anchorEl.current?.offsetWidth } }}
+        PaperProps={{
+          sx: {
+            width: anchorEl.current?.offsetWidth,
+            borderRadius: 0,
+            background: "black",
+          },
+        }}
         anchorEl={anchorEl.current}
         disableScrollLock
         id="basic-menu"
         onClose={handleClose}
         open={open}
       >
-        {!isCorrectChain(ethereum.chainId) && (
-          <MenuItem onClick={changeToPolygon} sx={{ whiteSpace: "normal" }}>
+        <DoubleBorderBox>
+          {!isCorrectChain(ethereum.chainId) && (
+            <MenuItem onClick={changeToPolygon} sx={{ whiteSpace: "normal" }}>
+              <ListItemIcon>
+                <LinkIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>
+                {t("Change to Polygon", { ns: "Common" })}
+              </ListItemText>
+            </MenuItem>
+          )}
+          <MenuItem onClick={goToWallet}>
             <ListItemIcon>
-              <LinkIcon fontSize="small" />
+              <AccountBalanceWalletIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>{t("Wallet", { ns: "Common" })}</ListItemText>
+          </MenuItem>
+          <MenuItem
+            disabled={brute.state === "loading"}
+            onClick={addBruteTokenToMetamask}
+            sx={{ whiteSpace: "normal" }}
+          >
+            <ListItemIcon>
+              <AddToQueueIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>{t("Add Brute token to Metamask")}</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={disconnect}>
+            <ListItemIcon>
+              <LogoutIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>
-              {t("Change to Polygon", { ns: "Common" })}
+              {t("Disconnect wallet", { ns: "Common" })}
             </ListItemText>
           </MenuItem>
-        )}
-        <MenuItem onClick={goToProfile}>
-          <ListItemIcon>
-            <AccountBoxIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{t("Profile", { ns: "Common" })}</ListItemText>
-        </MenuItem>
-        <MenuItem
-          disabled={brute.state === "loading"}
-          onClick={addBruteTokenToMetamask}
-          sx={{ whiteSpace: "normal" }}
-        >
-          <ListItemIcon>
-            <AddToQueueIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{t("Add Brute token to Metamask")}</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={disconnect}>
-          <ListItemIcon>
-            <LogoutIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>{t("Disconnect", { ns: "Common" })}</ListItemText>
-        </MenuItem>
+        </DoubleBorderBox>
       </Menu>
       <BaseButton
         onClick={() => setOpen(true)}

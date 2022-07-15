@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Grid } from "@mui/material";
+import { alpha, Grid } from "@mui/material";
 import ContextMenu from "../context-menu";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { ethereumState } from "../../state/ethereum";
 import { USER_LINKS } from "../navbar";
+import DoubleBorderBox from "../double-border-box";
 
 export default function ProfileLayout({ children }) {
   const { t } = useTranslation("Profile");
@@ -31,14 +32,35 @@ export default function ProfileLayout({ children }) {
   ];
 
   return (
-    <Grid container>
-      <Grid item lg={2} sm={3} sx={{ display: { xs: "none", sm: "block" } }}>
-        <ContextMenu links={links} />
+    <DoubleBorderBox>
+      <Grid container>
+        <Grid
+          item
+          lg={2}
+          sm={3}
+          sx={{
+            borderBottom: { xs: `2px solid ${alpha("#fff", 0.2)}`, sm: "none" },
+          }}
+          xs={12}
+        >
+          <ContextMenu links={links} />
+        </Grid>
+        <Grid
+          item
+          lg={10}
+          sm={9}
+          sx={{
+            px: { xs: 1, md: 5 },
+            py: { xs: 1, md: 4 },
+            minHeight: "80vh",
+            borderLeft: { xs: "none", sm: `2px solid ${alpha("#fff", 0.2)}` },
+          }}
+          xs={12}
+        >
+          {children}
+        </Grid>
       </Grid>
-      <Grid item lg={10} sm={9} sx={{ pl: { md: 3 }, pt: { md: 2 } }} xs={12}>
-        {children}
-      </Grid>
-    </Grid>
+    </DoubleBorderBox>
   );
 }
 

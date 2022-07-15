@@ -1,18 +1,15 @@
-import { Box } from "@mui/material";
 import PropTypes from "prop-types";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
+
 import Form from "../../components/profile/form";
 import ProfileLayout from "../../components/profile/profile-layout";
-import UnlockButton from "../../components/unlock-button";
-import MetamaskButton from "../../components/web3/metamask-button";
-import useMetamaskUnlocked from "../../hooks/use-metamask-unlocked";
+import UnlockMetamaskLayout from "../../components/unlock-metamask-layout";
 import useUpdateSession from "../../hooks/use-update-session";
 import { swellNodeClient } from "../../libs/swell-node";
 import window from "../../libs/window";
 import { withSessionSsr } from "../../libs/with-session";
-import { ethereumState } from "../../state/ethereum";
 import { snackbarState } from "../../state/snackbar";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
@@ -58,13 +55,10 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 
 export default function Profile({ address, user }) {
   const { t } = useTranslation("Profile");
-  const [session] = useUpdateSession(address, "address");
+  useUpdateSession(address, "address");
   useUpdateSession(user, "user");
 
-  const ethereum = useRecoilValue(ethereumState);
   const [, setSnackbar] = useRecoilState(snackbarState);
-
-  const isUnlocked = useMetamaskUnlocked(session?.address);
 
   const upsertCustomer = useCallback(
     (body = {}) => {
@@ -104,27 +98,25 @@ export default function Profile({ address, user }) {
     [t, setSnackbar]
   );
 
-  let content;
-
-  if (ethereum.account) {
-    if (isUnlocked) {
-      content = <Form initialFormState={user} onSubmit={upsertCustomer} />;
-    } else {
-      content = (
-        <Box display="flex" justifyContent="flex-start">
-          <UnlockButton size="large" sx={{ fontWeight: "bold" }} />
-        </Box>
-      );
-    }
-  } else {
-    content = (
-      <Box display="flex" justifyContent="flex-start">
-        <MetamaskButton />
-      </Box>
-    );
-  }
-
-  return <ProfileLayout>{content}</ProfileLayout>;
+  return (
+    <ProfileLayout>
+      <UnlockMetamaskLayout
+        AlignProps={{
+          sx: {
+            justifyContent: "flex-start !important",
+            alignItems: "flex-start !important",
+            "& .inner": {
+              width: {
+                md: "60%",
+              },
+            },
+          },
+        }}
+      >
+        <Form initialFormState={user} onSubmit={upsertCustomer} />
+      </UnlockMetamaskLayout>
+    </ProfileLayout>
+  );
 }
 
 Profile.propTypes = {
