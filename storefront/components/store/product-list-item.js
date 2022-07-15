@@ -1,14 +1,15 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
-import { Grid, Typography, alpha } from "@mui/material";
+import { Grid, Typography, alpha, ButtonBase } from "@mui/material";
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
 import { useRecoilValue } from "recoil";
+import Image from "next/image";
+
 import { withLocale } from "../../libs/router";
 import window from "../../libs/window";
 import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
-import Image from "next/image";
 import BruteDivider from "../divider";
 import PriceTag from "../price-tag";
 
@@ -60,183 +61,195 @@ export default function ProductListItem({ product, selected }) {
   const initialSupply = product.attributes.brute_initial_supply?.value;
 
   return (
-    <Box
-      onClick={goToProduct}
+    <ButtonBase
+      component="div"
       sx={[
         {
-          height: "300px",
-          cursor: "pointer",
-          p: 1,
-          mb: 1,
-          border: () => "1px solid " + alpha("#fff", 0.2),
-          background: (theme) =>
-            `linear-gradient(-180deg, ${alpha(
-              theme.palette[rarity]?.main,
-              0.4
-            )} 0%, ${alpha(
-              theme.palette[rarity]?.main,
-              0
-            )} 55%) center no-repeat, ${alpha("#fff", 0.1)}`,
-          transition: "box-shadow 0.2s ease",
-        },
-        selected && {
-          background: (theme) =>
-            `linear-gradient(-180deg, ${alpha(
-              theme.palette[rarity]?.main,
-              0.6
-            )} 0%, ${alpha(
-              theme.palette[rarity]?.main,
-              0
-            )} 40%) center no-repeat, ${alpha("#fff", 0.1)}`,
-          border: (theme) =>
-            "1px solid " + alpha(theme.palette[rarity]?.main, 1),
-          boxShadow: (theme) =>
-            "0 0 0 3px " + alpha(theme.palette[rarity]?.main, 0.8),
+          display: "block",
+          "&& .MuiTouchRipple-child": (theme) => ({
+            backgroundColor: alpha(theme.palette[rarity]?.main, 1),
+          }),
         },
       ]}
     >
-      <Grid
-        alignItems="stretch"
-        container
-        direction="column"
-        justifyContent="space-between"
-        sx={{ height: "100%" }}
+      <Box
+        onClick={goToProduct}
+        sx={[
+          {
+            height: "300px",
+            cursor: "pointer",
+            p: 1,
+            mb: 1,
+            border: () => "1px solid " + alpha("#fff", 0.2),
+            background: (theme) =>
+              `linear-gradient(-180deg, ${alpha(
+                theme.palette[rarity]?.main,
+                0.4
+              )} 0%, ${alpha(
+                theme.palette[rarity]?.main,
+                0
+              )} 55%) center no-repeat, ${alpha("#fff", 0.1)}`,
+            transition: "box-shadow 0.2s ease",
+          },
+          selected && {
+            background: (theme) =>
+              `linear-gradient(-180deg, ${alpha(
+                theme.palette[rarity]?.main,
+                0.6
+              )} 0%, ${alpha(
+                theme.palette[rarity]?.main,
+                0
+              )} 40%) center no-repeat, ${alpha("#fff", 0.1)}`,
+            border: (theme) =>
+              "1px solid " + alpha(theme.palette[rarity]?.main, 1),
+            boxShadow: (theme) =>
+              "0 0 0 3px " + alpha(theme.palette[rarity]?.main, 0.8),
+          },
+        ]}
       >
         <Grid
-          item
-          sx={[
-            {
-              height: "70%",
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-            },
-            selected && {},
-          ]}
+          alignItems="stretch"
+          container
+          direction="column"
+          justifyContent="space-between"
+          sx={{ height: "100%" }}
         >
-          {thumbnail && (
-            <Box
-              sx={[
-                {
-                  height: "100%",
-                  width: "100%",
-                  position: "relative",
-                  "& img": {
-                    p: "25px !important",
-                    transition: "0.5s filter ease",
-                    filter: (theme) =>
-                      `drop-shadow(0 0 20px ${alpha(
-                        theme.palette[rarity]?.main,
-                        0.5
-                      )}) drop-shadow(0 0 5px ${alpha(
-                        theme.palette[rarity]?.main,
-                        0.9
-                      )})`,
-                  },
-                  "&:hover img": {
-                    filter: (theme) =>
-                      `drop-shadow(0 0 20px ${alpha(
-                        theme.palette[rarity]?.main,
-                        0.7
-                      )}) drop-shadow(0 0 10px ${alpha(
-                        theme.palette[rarity]?.main,
-                        0.9
-                      )})`,
-                  },
-                },
-                selected && {
-                  "& img": {
-                    filter: (theme) =>
-                      `drop-shadow(0 0 20px ${alpha(
-                        theme.palette[rarity]?.main,
-                        0.7
-                      )}) drop-shadow(0 0 10px ${alpha(
-                        theme.palette[rarity]?.main,
-                        0.9
-                      )})`,
-                  },
-                },
-              ]}
-            >
-              <Image
-                height={thumbnail.height}
-                layout="fill"
-                objectFit="contain"
-                src={thumbnail.url}
-                width={thumbnail.width}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  height: "60%",
-                  left: 0,
-                  right: 0,
-                  margin: "auto",
-                  top: "15%",
-                  aspectRatio: "1/1",
-                  borderRadius: "50%",
-                  zIndex: -1,
-                  border: (theme) =>
-                    "2px solid " + alpha(theme.palette[rarity]?.main, 0.4),
-                  boxShadow: (theme) =>
-                    "0 0 20px 2px " + alpha(theme.palette[rarity]?.main, 0.3),
-                }}
-              />
-            </Box>
-          )}
-        </Grid>
-        <Grid
-          item
-          sx={{
-            height: "30%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <Typography
-            component="h3"
-            display="block"
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              textShadow: (theme) =>
-                "0 0 10px " + alpha(theme.palette[rarity]?.main, 0.8),
-            }}
-            variant="body1"
+          <Grid
+            item
+            sx={[
+              {
+                height: "70%",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+              },
+              selected && {},
+            ]}
           >
-            {product.name}
-          </Typography>
-          <BruteDivider rarity={rarity} />
-          <Box
+            {thumbnail && (
+              <Box
+                sx={[
+                  {
+                    height: "100%",
+                    width: "100%",
+                    position: "relative",
+                    "& img": {
+                      p: "25px !important",
+                      transition: "0.5s filter ease",
+                      filter: (theme) =>
+                        `drop-shadow(0 0 20px ${alpha(
+                          theme.palette[rarity]?.main,
+                          0.5
+                        )}) drop-shadow(0 0 5px ${alpha(
+                          theme.palette[rarity]?.main,
+                          0.9
+                        )})`,
+                    },
+                    "&:hover img": {
+                      filter: (theme) =>
+                        `drop-shadow(0 0 20px ${alpha(
+                          theme.palette[rarity]?.main,
+                          0.7
+                        )}) drop-shadow(0 0 10px ${alpha(
+                          theme.palette[rarity]?.main,
+                          0.9
+                        )})`,
+                    },
+                  },
+                  selected && {
+                    "& img": {
+                      filter: (theme) =>
+                        `drop-shadow(0 0 20px ${alpha(
+                          theme.palette[rarity]?.main,
+                          0.7
+                        )}) drop-shadow(0 0 10px ${alpha(
+                          theme.palette[rarity]?.main,
+                          0.9
+                        )})`,
+                    },
+                  },
+                ]}
+              >
+                <Image
+                  height={thumbnail.height}
+                  layout="fill"
+                  objectFit="contain"
+                  src={thumbnail.url}
+                  width={thumbnail.width}
+                />
+                <Box
+                  sx={{
+                    position: "absolute",
+                    height: "60%",
+                    left: 0,
+                    right: 0,
+                    margin: "auto",
+                    top: "15%",
+                    aspectRatio: "1/1",
+                    borderRadius: "50%",
+                    zIndex: -1,
+                    border: (theme) =>
+                      "2px solid " + alpha(theme.palette[rarity]?.main, 0.4),
+                    boxShadow: (theme) =>
+                      "0 0 20px 2px " + alpha(theme.palette[rarity]?.main, 0.3),
+                  }}
+                />
+              </Box>
+            )}
+          </Grid>
+          <Grid
+            item
             sx={{
+              height: "30%",
               display: "flex",
+              justifyContent: "center",
               alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-              px: 1,
+              flexWrap: "wrap",
             }}
           >
             <Typography
+              component="h3"
+              display="block"
               sx={{
+                textAlign: "center",
+                fontWeight: "bold",
                 textShadow: (theme) =>
-                  `0 0 10px ${alpha(
-                    theme.palette[rarity]?.main,
-                    0.8
-                  )}, 0 0 2px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
+                  "0 0 10px " + alpha(theme.palette[rarity]?.main, 0.8),
+              }}
+              variant="body1"
+            >
+              {product.name}
+            </Typography>
+            <BruteDivider rarity={rarity} />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                px: 1,
               }}
             >
-              {product.stock_level}
-              {initialSupply && "/" + initialSupply}
-            </Typography>
-            <Typography component="div" sx={{ fontWeight: "bold" }}>
-              {price && <PriceTag amount={price} />}
-            </Typography>
-          </Box>
+              <Typography
+                sx={{
+                  textShadow: (theme) =>
+                    `0 0 10px ${alpha(
+                      theme.palette[rarity]?.main,
+                      0.8
+                    )}, 0 0 2px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
+                }}
+              >
+                {product.stock_level}
+                {initialSupply && "/" + initialSupply}
+              </Typography>
+              <Typography component="div" sx={{ fontWeight: "bold" }}>
+                {price && <PriceTag amount={price} />}
+              </Typography>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </ButtonBase>
   );
 }
 

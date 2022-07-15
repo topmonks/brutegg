@@ -232,10 +232,12 @@ export function ProductDetail({ product: _product }) {
           </Typography>
           <Button
             disableElevation
-            disabled={cartIsLoading}
+            disabled={cartIsLoading || cartIsUpdated}
             onClick={isError ? refetch : () => setSelectedProduct(product)}
             size="large"
-            startIcon={cartIsLoading && <CircularProgress size={20} />}
+            startIcon={
+              (cartIsLoading || cartIsUpdated) && <CircularProgress size={20} />
+            }
             sx={{ width: { sm: "250px" } }}
             variant="contained"
           >
