@@ -21,6 +21,7 @@ import useWatchPayment from "../../hooks/use-watch-payment";
 import useUpdateShipping from "../../hooks/use-update-shipping";
 import PaymentWatcher from "../../components/checkout/payment-watcher";
 import UnlockMetamaskLayout from "../../components/unlock-metamask-layout";
+import { removeEmpty } from "../../libs/util";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -47,7 +48,7 @@ export const getServerSideProps = withSessionSsr(async (context) => {
     return { props: resultProps };
   }
 
-  resultProps.user = {
+  resultProps.user = removeEmpty({
     id: user.id,
     firstName: user.first_name,
     lastName: user.last_name,
@@ -58,7 +59,7 @@ export const getServerSideProps = withSessionSsr(async (context) => {
     city: user.shipping.city,
     zip: user.shipping.zip,
     country: user.shipping.country,
-  };
+  });
 
   return {
     props: resultProps,
@@ -126,6 +127,7 @@ export default function Checkout({ user, address }) {
               sx: {
                 "& .inner": {
                   textAlign: "center",
+                  mt: 2,
                 },
               },
             }}

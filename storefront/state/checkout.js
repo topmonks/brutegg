@@ -9,7 +9,7 @@ export const defaultFormState = {
   address2: "",
   city: "",
   zip: "",
-  country: "",
+  country: "CZ",
 };
 
 export const checkoutFormState = atom({
