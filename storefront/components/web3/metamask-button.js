@@ -202,7 +202,7 @@ function ConnectedButton() {
         onClose={handleClose}
         open={open}
       >
-        <DoubleBorderBox>
+        <DoubleBorderBox sx={{ py: "5px !important" }}>
           {!isCorrectChain(ethereum.chainId) && (
             <MenuItem onClick={changeToPolygon} sx={{ whiteSpace: "normal" }}>
               <ListItemIcon>
