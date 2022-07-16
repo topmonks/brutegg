@@ -15,13 +15,18 @@
     "Back": "Zpět",
     "Ask the community": "Poraďte se s komunitou",
     "Wallet": "Peněženka",
-    "Join reddit": "Připojte se na r/brute"
+    "Join reddit": "Připojte se na r/brute",
+    "Copy link to paragraph": "Zkopírovat odkaz na odstavec"
   },
   "Navbar": {
     "Quests": "Questy",
     "Store": "Obchod",
     "FAQ": "Nápověda",
     "Profile": "Profil"
+  },
+  "FAQ": {
+    "FAQ": "Nápověda",
+    "Isn't there an answer to your question? Ask directly at": "Není zde odpověď na tvoji otázku? Zeptej se přímo na"
   },
   "Profile": {
     "Wallet": "Peněženka",

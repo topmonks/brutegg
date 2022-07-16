@@ -15,6 +15,7 @@ import ProfileLayout from "./profile/profile-layout";
 import CheckoutLayout from "./checkout/checkout-layout";
 import { CheckoutHeadline } from "./checkout/checkout-headline";
 import DoubleBorderBox from "./double-border-box";
+import FAQLayout from "./faq/faq-layout";
 
 function QuestsSkeleton({
   stretched: _stretched,
@@ -116,10 +117,10 @@ function FaqSkeleton() {
   }
 
   return (
-    <Fragment>
+    <FAQLayout>
       <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
       <Skeleton height={500} variant="rectangular"></Skeleton>
-    </Fragment>
+    </FAQLayout>
   );
 }
 

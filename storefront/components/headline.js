@@ -6,7 +6,13 @@ import Link from "next/link";
 import { withLocale } from "../libs/router";
 import { LINKS } from "./navbar";
 
-export function Headline({ headlineText, paragraph, faqText, center = false }) {
+export function Headline({
+  headlineText,
+  paragraph,
+  faqText,
+  faqLink,
+  center = false,
+}) {
   const router = useRouter();
 
   return (
@@ -29,7 +35,9 @@ export function Headline({ headlineText, paragraph, faqText, center = false }) {
           </Typography>
           {faqText && (
             <Typography sx={{ display: "inline", ml: 1 }} variant="link">
-              <Link href={withLocale(router.locale, LINKS.FAQ)}>{faqText}</Link>
+              <Link href={faqLink || withLocale(router.locale, LINKS.FAQ)}>
+                {faqText}
+              </Link>
             </Typography>
           )}
         </Grid>
@@ -47,6 +55,7 @@ export function Headline({ headlineText, paragraph, faqText, center = false }) {
 
 Headline.propTypes = {
   center: PropTypes.bool,
+  faqLink: PropTypes.string,
   faqText: PropTypes.node,
   headlineText: PropTypes.node,
   paragraph: PropTypes.node,
