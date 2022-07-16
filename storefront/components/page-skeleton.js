@@ -94,7 +94,7 @@ function StoreSkeleton({ stretched, displayHeadline = true }) {
         {new Array(20).fill().map((_, ix) => {
           return (
             <Grid item key={ix} {...gridItemAttrs}>
-              <Skeleton animation="wave" height={300} variant="rectangular" />
+              <Skeleton animation="pulse" height={300} variant="rectangular" />
             </Grid>
           );
         })}

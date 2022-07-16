@@ -8,11 +8,7 @@ export default function MetamaskWatcher() {
 
   useEffect(() => {
     (async () => {
-      let chainId;
-      if (window.ethereum) {
-        chainId = await window.ethereum.request({ method: "eth_chainId" });
-      }
-
+      let chainId = await window.ethereum?.request({ method: "eth_chainId" });
       let isConnected = Boolean(window.ethereum?.isConnected());
       let account = window.ethereum?.selectedAddress;
 

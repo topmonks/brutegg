@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { ethereumState } from "../state/ethereum";
-import window from "../libs/window";
+import { ethereumState } from "../../state/ethereum";
+import window from "../../libs/window";
 
 export default function Web3Loader() {
   const [, setEthereum] = useRecoilState(ethereumState);

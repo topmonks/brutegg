@@ -14,7 +14,7 @@ import MetamaskWatcher from "../components/web3/metamask-watcher";
 import Snackbar from "../components/snackbar";
 import PendingTxsWatcher from "../components/web3/pending-txs-watcher";
 import SessionWatcher from "../components/session-watcher";
-import Web3Loader from "../components/web3-loader";
+import Web3Loader from "../components//web3/web3-loader";
 import Head from "next/head";
 import ErrorFallback from "../components/error-fallback";
 import window from "../libs/window";
