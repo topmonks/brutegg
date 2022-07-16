@@ -11,6 +11,7 @@ export function Headline({
   paragraph,
   faqText,
   faqLink,
+  restText,
   center = false,
 }) {
   const router = useRouter();
@@ -40,6 +41,7 @@ export function Headline({
               </Link>
             </Typography>
           )}
+          {restText}
         </Grid>
         <Grid
           item

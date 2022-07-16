@@ -28,7 +28,7 @@ export default function FAQ({ faq }) {
         dangerouslySetInnerHTML={{ __html: faq.description }}
         sx={{
           "& h1,h2,h3,h4": {
-            "scroll-margin-top": "30px",
+            scrollMarginTop: "30px",
           },
         }}
       ></Box>
