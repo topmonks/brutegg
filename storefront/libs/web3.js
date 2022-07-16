@@ -20,5 +20,5 @@ export function composeNonce(message, dateISOString) {
 }
 
 export function composeVirtualEmailFromAddress(address) {
-  return `${address}@address.eth`;
+  return `${address.toLowerCase()}@address.eth`;
 }

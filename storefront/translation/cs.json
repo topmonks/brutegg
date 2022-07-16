@@ -126,6 +126,7 @@
   },
   "MetamaskErrors": {
     "4001": "Transakce byla odmítnuta uživatelem",
+    "32603": "Nedostatek MATIC na transakci",
     "User rejected the request.": "Źádost odmítnuta uživatelem."
   },
   "PendingTxs": {
