@@ -22,7 +22,10 @@ export function Headline({
         alignItems="center"
         container
         justifyContent="space-between"
-        sx={[{ my: { sm: 3, md: 5 } }, center && { textAlign: "center" }]}
+        sx={[
+          { my: { sm: 3, md: 5 } },
+          center && { textAlign: { sm: "center" } },
+        ]}
       >
         <Grid item md={center ? 12 : "auto"} sm={center ? 12 : 9}>
           <Typography display="block" variant="h5Outglow">

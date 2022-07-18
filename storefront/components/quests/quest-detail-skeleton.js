@@ -32,7 +32,7 @@ export function QuestDetailSkeleton() {
             height: { xs: "150px", md: "60%" },
           }}
         >
-          <Skeleton animation="wave" height="100%" variant="rectangular" />
+          <Skeleton animation="pulse" height="100%" variant="rectangular" />
         </Box>
         <Box
           sx={{
@@ -46,7 +46,7 @@ export function QuestDetailSkeleton() {
             },
           }}
         >
-          <Skeleton animation="wave" height="100%" variant="rectangular" />
+          <Skeleton animation="pulse" height="100%" variant="rectangular" />
         </Box>
       </Box>
     </Fragment>

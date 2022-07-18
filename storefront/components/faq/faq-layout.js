@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { alpha, Box, Grid } from "@mui/material";
+import { alpha, Box, GlobalStyles, Grid } from "@mui/material";
 import ContextMenu from "../context-menu";
 import { Fragment } from "react";
 import DoubleBorderBox from "../double-border-box";
@@ -8,8 +8,16 @@ import { FAQHeadline } from "./faq-headline";
 export default function FAQLayout({ children, links }) {
   return (
     <Fragment>
+      <GlobalStyles
+        styles={{
+          html: {
+            scrollBehavior: "smooth",
+          },
+        }}
+      />
       <FAQHeadline />
-      <DoubleBorderBox>
+
+      <DoubleBorderBox sx={{ mt: 2 }}>
         <Grid container>
           <Grid
             item

@@ -1,8 +1,9 @@
 import { Box } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import AnchoredHeaders from "../../components/anchored-headers";
 import FAQLayout from "../../components/faq/faq-layout";
 import { getProduct } from "../../libs/swell";
+import _window from "../../libs/window";
 import { ProductPropTypes } from "../../types/swell";
 
 export async function getStaticProps() {
@@ -28,13 +29,28 @@ export default function FAQ({ faq }) {
         dangerouslySetInnerHTML={{ __html: faq.description }}
         sx={{
           "& h1,h2,h3,h4": {
-            scrollMarginTop: "30px",
+            scrollMarginTop: "16px",
           },
         }}
       ></Box>
     ),
     [faq]
   );
+
+  const scrolledTo = useRef(false);
+  useEffect(() => {
+    if (scrolledTo.current) {
+      return;
+    }
+
+    if (!_window.location.hash) {
+      return;
+    }
+
+    _window.document.querySelector(_window.location.hash)?.scrollIntoView();
+
+    scrolledTo.current = true;
+  }, []);
 
   return (
     <FAQLayout links={headings}>
