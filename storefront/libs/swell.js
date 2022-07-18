@@ -96,3 +96,7 @@ export function getProductsQuery() {
     sort: "attributes.brute_price desc",
   });
 }
+
+export function getFAQQuery() {
+  return getProduct("faq");
+}

@@ -3,16 +3,16 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import AnchoredHeaders from "../../components/anchored-headers";
 import FAQLayout from "../../components/faq/faq-layout";
-import { getProduct } from "../../libs/swell";
+import { getFAQQuery } from "../../libs/swell";
 import _window from "../../libs/window";
 import { ProductPropTypes } from "../../types/swell";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("faq", () => getProduct("faq"));
+  await queryClient.prefetchQuery(["faq"], getFAQQuery);
 
-  if (!queryClient.getQueryData("faq")) {
+  if (!queryClient.getQueryData(["faq"])) {
     return {
       notFound: true,
     };
@@ -26,7 +26,7 @@ export async function getStaticProps() {
 }
 
 export default function FAQ() {
-  const { data: faq } = useQuery(["faq"], () => getProduct("faq"));
+  const { data: faq } = useQuery(["faq"], getFAQQuery);
 
   const [headings, setHeadings] = useState([]);
 
