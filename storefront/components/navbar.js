@@ -155,7 +155,7 @@ export default function Navbar() {
 
   const eventTarget = useRecoilValue(eventTargetState);
 
-  const [value, setValue] = useState(findLink());
+  const [value, setValue] = useState(false);
 
   useEffect(() => {
     setValue(findLink());

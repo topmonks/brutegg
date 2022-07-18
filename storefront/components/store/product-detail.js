@@ -11,9 +11,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { useQuery } from "react-query";
 
 import { withLocale } from "../../libs/router";
-import swell, { getProduct } from "../../libs/swell";
+import swell, {
+  getProduct,
+  isInStock,
+  isStockNotTracked,
+} from "../../libs/swell";
 import window from "../../libs/window";
 import { eventTargetState, NAVBAR_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
@@ -22,7 +27,6 @@ import { useTranslation } from "react-i18next";
 import StyledDescription from "../styled-description";
 import PriceTag from "../price-tag";
 import { USER_LINKS } from "../navbar";
-import { useQuery } from "react-query";
 import ProductDetailGallery from "./product-detail-gallery";
 import BruteDivider from "../divider";
 
@@ -74,7 +78,7 @@ export function ProductDetail({ product: _product }) {
       });
     },
     {
-      enabled: Boolean(selectedProduct?.id),
+      enabled: Boolean(selectedProduct?.id) && inStock,
       refetchOnWindowFocus: false,
     }
   );
@@ -109,6 +113,8 @@ export function ProductDetail({ product: _product }) {
   const creatorThumbnail =
     product.attributes.brute_creator_thumbnail?.value?.file;
   const creatorLink = product.attributes.brute_creator_link?.value;
+  const inStock = isInStock(product);
+  const stockNotTracked = isStockNotTracked(product);
 
   const isSm = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
@@ -196,8 +202,15 @@ export function ProductDetail({ product: _product }) {
               }}
               variant="subtitle1"
             >
-              {t("Remaining rewards")}: {product.stock_level}
-              {initialSupply && "/" + initialSupply}
+              {t("Remaining rewards")}:{" "}
+              {stockNotTracked ? (
+                "∞"
+              ) : (
+                <Fragment>
+                  {product.stock_level}
+                  {initialSupply && "/" + initialSupply}
+                </Fragment>
+              )}
             </Typography>
           </Box>
           {creatorThumbnail && (
@@ -237,7 +250,7 @@ export function ProductDetail({ product: _product }) {
           </Typography>
           <Button
             disableElevation
-            disabled={cartIsLoading || cartIsUpdated}
+            disabled={cartIsLoading || cartIsUpdated || !inStock}
             onClick={isError ? refetch : () => setSelectedProduct(product)}
             size="large"
             startIcon={
@@ -246,7 +259,9 @@ export function ProductDetail({ product: _product }) {
             sx={{ width: { sm: "250px" } }}
             variant="contained"
           >
-            {t("Get", { ns: "Common" })}
+            {inStock
+              ? t("Get", { ns: "Common" })
+              : t("Sold out", { ns: "Common" })}
           </Button>
         </Box>
         <Divider sx={{ borderBottomWidth: "medium" }} />

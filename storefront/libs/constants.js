@@ -43,3 +43,8 @@ export const SWELL_PRODUCT_TYPES = {
   PHYSICAL: "physical",
   DIGITAL: "digital",
 };
+
+export const SWELL_STOCK_STATUS = {
+  OUT_OF_STOCK: "out_of_stock",
+  IN_STOCK: "in_stock",
+};

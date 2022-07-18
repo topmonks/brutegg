@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import { Box } from "@mui/system";
 import { Grid, Typography, alpha, ButtonBase } from "@mui/material";
 import { useRouter } from "next/router";
-import { useCallback, useEffect } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 import { withLocale } from "../../libs/router";
 import window from "../../libs/window";
@@ -12,6 +13,7 @@ import { eventTargetState, STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
 import BruteDivider from "../divider";
 import PriceTag from "../price-tag";
+import { isInStock, isStockNotTracked } from "../../libs/swell";
 
 /**
  *
@@ -19,6 +21,7 @@ import PriceTag from "../price-tag";
  * @param {import("../../types/swell").Product} params.product
  */
 export default function ProductListItem({ product, selected }) {
+  const { t } = useTranslation("Store");
   const router = useRouter();
   const eventTarget = useRecoilValue(eventTargetState);
 
@@ -57,8 +60,9 @@ export default function ProductListItem({ product, selected }) {
 
   const rarity = product.attributes.brute_rarity?.value || "primary";
   const price = product.attributes.brute_price?.value;
-
   const initialSupply = product.attributes.brute_initial_supply?.value;
+  const inStock = isInStock(product);
+  const stockNotTracked = isStockNotTracked(product);
 
   return (
     <ButtonBase
@@ -68,6 +72,11 @@ export default function ProductListItem({ product, selected }) {
           display: "block",
           "&& .MuiTouchRipple-child": (theme) => ({
             backgroundColor: alpha(theme.palette[rarity]?.main, 1),
+          }),
+        },
+        !inStock && {
+          "&& .MuiTouchRipple-child": () => ({
+            backgroundColor: alpha("#fff", 1),
           }),
         },
       ]}
@@ -104,6 +113,9 @@ export default function ProductListItem({ product, selected }) {
               "1px solid " + alpha(theme.palette[rarity]?.main, 1),
             boxShadow: (theme) =>
               "0 0 0 3px " + alpha(theme.palette[rarity]?.main, 0.8),
+          },
+          !inStock && {
+            filter: "grayscale(1)",
           },
         ]}
       >
@@ -239,8 +251,18 @@ export default function ProductListItem({ product, selected }) {
                     )}, 0 0 2px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
                 }}
               >
-                {product.stock_level}
-                {initialSupply && "/" + initialSupply}
+                {inStock ? (
+                  stockNotTracked ? (
+                    "∞"
+                  ) : (
+                    <Fragment>
+                      {product.stock_level}
+                      {initialSupply && "/" + initialSupply}
+                    </Fragment>
+                  )
+                ) : (
+                  t("Sold out", { ns: "Common" })
+                )}
               </Typography>
               <Typography component="div" sx={{ fontWeight: "bold" }}>
                 {price && <PriceTag amount={price} />}

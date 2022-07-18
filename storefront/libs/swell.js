@@ -1,4 +1,5 @@
 import swell from "swell-js";
+import { SWELL_STOCK_STATUS } from "./constants";
 import getWeb3 from "./web3";
 
 swell.init(
@@ -6,6 +7,25 @@ swell.init(
   process.env.NEXT_PUBLIC_SWELL_PUBLIC_KEY
 );
 export default swell;
+
+/**
+ *
+ * @param {import("../types/swell").Product} product
+ */
+export function isInStock(product) {
+  return (
+    product.stock_status === SWELL_STOCK_STATUS.IN_STOCK ||
+    isStockNotTracked(product)
+  );
+}
+
+/**
+ *
+ * @param {import("../types/swell").Product} product
+ */
+export function isStockNotTracked(product) {
+  return product.stock_status === null;
+}
 
 export async function getStoreProducts(opts) {
   const category = await getCategory("store");
