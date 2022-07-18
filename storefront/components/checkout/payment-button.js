@@ -50,7 +50,12 @@ export default function PaymentButton() {
 
     const totalPriceInWei = web3.utils.toWei(totalPrice, "ether");
 
-    const gasPrice = await web3.eth.getGasPrice();
+    let gasPrice = await web3.eth.getGasPrice();
+    // *1.5
+    gasPrice = web3.utils
+      .toBN("3")
+      .mul(web3.utils.toBN(gasPrice))
+      .divRound(web3.utils.toBN("2"));
 
     bruteContract.methods
       .transferWithNonce(
