@@ -215,7 +215,7 @@ export default function Navbar() {
             value={value}
             variant="scrollable"
           >
-            {isXs && <FullscreenTab />}
+            {isXs && screenfull.isEnabled && <FullscreenTab />}
             {topMenu.map(([label, tabValue]) => (
               <CustomTab
                 key={tabValue}
