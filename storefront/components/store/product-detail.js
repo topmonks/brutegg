@@ -10,7 +10,7 @@ import { useTheme } from "@emotion/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useQuery } from "react-query";
 
 import { withLocale } from "../../libs/router";
@@ -22,7 +22,6 @@ import swell, {
 import window from "../../libs/window";
 import { eventTargetState, NAVBAR_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
-import { productState } from "../../state/products";
 import { useTranslation } from "react-i18next";
 import StyledDescription from "../styled-description";
 import PriceTag from "../price-tag";
@@ -30,31 +29,13 @@ import { USER_LINKS } from "../navbar";
 import ProductDetailGallery from "./product-detail-gallery";
 import BruteDivider from "../divider";
 
-/**
- *
- * @param {Object} props
- * @param {import("../../types/swell").Product} props.product
- */
-export function ProductDetail({ product: _product }) {
+export function ProductDetail() {
   const { t } = useTranslation("StoreItem");
   const router = useRouter();
   const {
     slug: [id],
   } = router.query;
-
-  const [refreshedProduct, setProduct] = useRecoilState(
-    productState(_product.id)
-  );
-
-  /**
-   * @type {import("../../types/swell").Product}
-   */
-  const product = refreshedProduct ?? _product;
-
-  // refresh product in browsers DOM
-  useEffect(() => {
-    getProduct(id).then(setProduct);
-  }, [setProduct, id]);
+  const { data: product } = useQuery(["products", id], () => getProduct(id));
 
   const eventTarget = useRecoilValue(eventTargetState);
 

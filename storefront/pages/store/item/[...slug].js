@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import StoreLayout from "../../../components/store/store-layout";
 import ProductList, {
   scrollToProductId,
@@ -10,9 +10,9 @@ import { ProductDetailStickyWrapper } from "../../../components/store/product-de
 import useEventTarget from "../../../hooks/use-event-target";
 import { getProduct, getStoreProducts } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
-import { ProductPropTypes } from "../../../types/swell";
 import { useMediaQuery } from "@mui/material";
 import window from "../../../libs/window";
+import { dehydrate, QueryClient } from "react-query";
 
 export async function getStaticPaths() {
   const products = await getStoreProducts({ category: "store" });
@@ -32,20 +32,26 @@ export async function getStaticProps(context) {
     slug: [id, slug],
   } = context.params;
 
-  const product = await getProduct(id || slug);
+  const queryClient = new QueryClient();
 
-  if (!product) {
+  await queryClient.prefetchQuery(["products", id || slug], () =>
+    getProduct(id || slug)
+  );
+
+  if (!queryClient.getQueryData(["products", id || slug])) {
     return {
       notFound: true,
     };
   }
 
   return {
-    props: { product },
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 }
 
-export default function Item({ product }) {
+export default function Item() {
   const router = useRouter();
   const {
     slug: [id],
@@ -75,10 +81,6 @@ export default function Item({ product }) {
     [id, isXs]
   );
 
-  useEffect(() => {
-    setProductDisplayed(true);
-  }, [product]);
-
   useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
   return (
@@ -98,14 +100,10 @@ export default function Item({ product }) {
           {selectedProductIdOnClick !== id ? (
             <ProductDetailSkeleton />
           ) : (
-            <ProductDetail product={product} />
+            <ProductDetail />
           )}
         </ProductDetailStickyWrapper>
       </Fragment>
     </StoreLayout>
   );
 }
-
-Item.propTypes = {
-  product: ProductPropTypes,
-};
