@@ -26,7 +26,5 @@ async function getCustomer(req, res) {
     return;
   }
 
-  console.log(user);
-
   res.send(user);
 }

@@ -98,6 +98,11 @@ async function createOrder(req, res) {
       type: "uint256",
       name: "amount",
     },
+    {
+      internalType: "bytes32",
+      name: "nonce",
+      type: "bytes32",
+    },
   ];
   const decoded = web3.eth.abi.decodeParameters(
     erc20TransferABI,
@@ -106,6 +111,14 @@ async function createOrder(req, res) {
 
   const isReceiverCorrect = decoded.receiver === treasuryAddress;
   const isAmountCorrect = decoded.amount === costInWei;
+  const isCartIdCorrect = web3.utils.toUtf8(decoded.nonce) === cartId;
+
+  if (!isCartIdCorrect) {
+    res.status(400).send({
+      message: `Tx nonce ${decoded.nonce} differs from ${cartId}`,
+    });
+    return;
+  }
 
   if (!isReceiverCorrect) {
     res.status(400).send({
