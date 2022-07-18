@@ -7,7 +7,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "postinstall": "node scripts/copy_deps_to_firestore_functions.mjs && npm i --prefix ../firebase/functions"
+    "postinstall": "node scripts/copy-deps-to-firestore-functions.mjs && npm i --prefix ../firebase/functions"
   },
   "dependencies": {
     "@emotion/react": "11.9.3",
