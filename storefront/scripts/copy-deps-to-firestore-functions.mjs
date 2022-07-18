@@ -1,5 +1,8 @@
-import storefrontPackage from "../package.json" assert {type: "json"};
-import firebasePackage from "../../firebase/functions/package.json" assert {type: "json"};
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
+const storefrontPackage = require("../package.json");
+const firebasePackage = require("../../firebase/functions/package.json");
 
 import { writeFileSync } from "fs";
 
