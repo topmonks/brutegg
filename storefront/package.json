@@ -14,7 +14,7 @@
     "@emotion/styled": "11.9.3",
     "@metamask/eth-sig-util": "4.0.1",
     "@mui/icons-material": "5.8.4",
-    "@mui/material": "5.9.0",
+    "@mui/material": "5.9.1",
     "i18next": "21.8.14",
     "immutable": "4.1.0",
     "iron-session": "6.1.3",
