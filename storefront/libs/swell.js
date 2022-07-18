@@ -89,3 +89,10 @@ export function calculateCartPrice(cart, providedWeb3) {
 
   return total;
 }
+
+export function getProductsQuery() {
+  return getStoreProducts({
+    expand: ["attributes"],
+    sort: "attributes.brute_price desc",
+  });
+}

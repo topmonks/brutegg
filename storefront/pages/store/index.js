@@ -1,31 +1,31 @@
 import PropTypes from "prop-types";
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { productsState } from "../../state/products";
+import { Fragment, useCallback, useState } from "react";
 import Head from "next/head";
 import StoreLayout from "../../components/store/store-layout";
 import useEventTarget from "../../hooks/use-event-target";
 import { ProductDetailSkeleton } from "../../components/store/product-detail-skeleton";
 import { STORE_ITEM_CHANGE } from "../../state/event-target";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
-import { getStoreProducts } from "../../libs/swell";
+import { getProductsQuery } from "../../libs/swell";
 import ProductList, {
   scrollToProductId,
 } from "../../components/store/product-list";
 import { useMediaQuery } from "@mui/material";
+import { dehydrate, QueryClient } from "react-query";
 
 export async function getStaticProps(_context) {
-  const products = await getStoreProducts({
-    expand: ["attributes"],
-    sort: "attributes.brute_price desc",
-  });
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery("products", getProductsQuery);
+
   return {
-    props: { products },
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 }
 
-export default function Store(props) {
-  const [, setProducts] = useRecoilState(productsState);
+export default function Store() {
   const [productSkeletonDisplayed, setProductSkeletonDisplayed] =
     useState(false);
 
@@ -37,10 +37,6 @@ export default function Store(props) {
     }, 0);
   }, []);
   useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
-
-  useEffect(() => {
-    setProducts(props.products.results);
-  }, [props.products, setProducts]);
 
   const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
@@ -56,7 +52,6 @@ export default function Store(props) {
       >
         <ProductList
           displayHeadline={false}
-          ssr={{ products: props.products.results }}
           stretched={productSkeletonDisplayed}
         />
 

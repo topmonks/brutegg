@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { Fragment, useCallback, useState } from "react";
 import ProductListItem from "../../components/store/product-list-item";
-import { productsState } from "../../state/products";
 import useEventTarget from "../../hooks/use-event-target";
 import { Grid } from "@mui/material";
 import { STORE_ITEM_CHANGE } from "../../state/event-target";
 import pageSkeleton from "../../components/page-skeleton";
 import { LINKS } from "../../components/navbar";
-import { getStoreProducts } from "../../libs/swell";
+import { getProductsQuery } from "../../libs/swell";
 import window from "../../libs/window";
+import { useQuery } from "react-query";
 
 export const STRETCHED_STORE_LIST_GRID = {
   lg: 15,
@@ -46,15 +45,14 @@ export function scrollToProductId(id, attrs) {
 }
 
 export default function ProductList({
-  ssr = { products: [] },
   stretched,
   selectedProductId,
   displayHeadline = true,
 }) {
-  const [_products, setProducts] = useRecoilState(productsState);
-
-  const [productsLoading, setProductsLoading] = useState(false);
-  const products = _products.length ? _products : ssr.products;
+  const { data: products, isLoading: productsLoading } = useQuery(
+    ["products"],
+    getProductsQuery
+  );
 
   const [_selectedProductId, setSelectedProductId] =
     useState(selectedProductId);
@@ -65,23 +63,11 @@ export default function ProductList({
 
   useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
-  useEffect(() => {
-    setProductsLoading(true);
-    getStoreProducts({
-      expand: ["attributes"],
-      sort: "attributes.brute_price desc",
-    })
-      .then(({ results }) => {
-        setProducts(results);
-      })
-      .finally(() => setProductsLoading(false));
-  }, [setProducts]);
-
   const gridItemAttrs = stretched
     ? STRETCHED_STORE_LIST_GRID
     : FULL_STORE_LIST_GRID;
 
-  if (productsLoading && !products.length) {
+  if (productsLoading) {
     const StoreSkeleton = pageSkeleton[LINKS.STORE];
 
     return (
@@ -92,7 +78,7 @@ export default function ProductList({
   return (
     <Fragment>
       <Grid columns={COLUMNS_COUNT} container spacing={1}>
-        {products.map((p) => {
+        {products.results.map((p) => {
           const isSelectedProduct = p.id === _selectedProductId;
           return (
             <Grid
@@ -113,8 +99,5 @@ export default function ProductList({
 ProductList.propTypes = {
   displayHeadline: PropTypes.bool,
   selectedProductId: PropTypes.string,
-  ssr: PropTypes.shape({
-    products: PropTypes.array,
-  }),
   stretched: PropTypes.bool,
 };
