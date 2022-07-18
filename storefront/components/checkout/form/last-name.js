@@ -43,6 +43,7 @@ export default function LastName({ formData, onChange, allowEmpty }) {
 }
 
 LastName.propTypes = {
+  allowEmpty: PropTypes.bool,
   formData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };

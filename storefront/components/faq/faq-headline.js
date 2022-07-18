@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material";
-import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Headline } from "../headline";
 

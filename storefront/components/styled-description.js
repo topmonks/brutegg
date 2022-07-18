@@ -4,7 +4,7 @@ import { useTheme } from "@emotion/react";
 
 export default function StyledDescription({ children, rarity, ...props }) {
   const theme = useTheme();
-  const color = theme.palette[rarity]?.main || theme.palette.primary.main;
+  const _color = theme.palette[rarity]?.main || theme.palette.primary.main;
 
   return (
     <Typography

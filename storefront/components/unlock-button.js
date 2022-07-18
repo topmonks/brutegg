@@ -15,7 +15,7 @@ export default function UnlockButton(props) {
   const { t } = useTranslation("UnlockButton");
   const ethereum = useRecoilValue(ethereumState);
   const [, setSnackbar] = useRecoilState(snackbarState);
-  const [session, setSession] = useRecoilState(sessionState);
+  const [, setSession] = useRecoilState(sessionState);
   const refreshProps = useRefreshProps();
   const [loading, setLoading] = useState(false);
 

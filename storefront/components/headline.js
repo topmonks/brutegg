@@ -61,4 +61,5 @@ Headline.propTypes = {
   faqText: PropTypes.node,
   headlineText: PropTypes.node,
   paragraph: PropTypes.node,
+  restText: PropTypes.node,
 };

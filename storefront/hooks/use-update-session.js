@@ -9,9 +9,5 @@ export default function useUpdateSession(prop, propName) {
     setSession((s) => ({ ...s, [propName]: prop }));
   }, [prop, propName, setSession]);
 
-  useEffect(() => {
-    // console.log(session);
-  }, [session]);
-
   return [session, setSession];
 }

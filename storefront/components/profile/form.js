@@ -38,8 +38,6 @@ export default function Form({ onSubmit, initialFormState }) {
   );
 
   const profileSaveEnabled = useMemo(() => {
-    console.log(profileValidator.validate(formData.toJSON()));
-
     return profileValidator.validate(formData.toJSON()).error == null;
   }, [formData]);
 
