@@ -57,7 +57,7 @@ export default function UnlockButton(props) {
 
   const sign = useCallback(async () => {
     const date = new Date().toISOString();
-    const message = t("Sign the login to brute-gg.web.app");
+    const message = t("Sign the login to brute.cz");
     const nonce = composeNonce(message, date);
     const web3 = getWeb3();
     const signature = await web3.eth.personal.sign(nonce, ethereum.account);

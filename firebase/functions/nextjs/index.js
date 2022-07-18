@@ -18,7 +18,7 @@ const excludeCache = [
 
 export const server = onRequest(
   {
-    cors: ["brute-gg.web.app"],
+    cors: ["brute-gg.web.app", "brute.cz"],
     // firebase hosting only supports us-central1
     region: "us-central1",
     memory: "4GiB",
