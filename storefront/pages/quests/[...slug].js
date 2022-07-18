@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import useEventTarget from "../../hooks/use-event-target";
 import { getProduct, getProducts } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
@@ -9,6 +9,7 @@ import { QuestDetailSkeleton } from "../../components/quests/quest-detail-skelet
 import { QuestDetail } from "../../components/quests/quest-detail";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
 import QuestsLayout from "../../components/quests/quests-layout";
+import { dehydrate, QueryClient } from "react-query";
 
 export async function getStaticPaths() {
   const quests = await getProducts({ category: "quests" });
@@ -28,20 +29,26 @@ export async function getStaticProps(context) {
     slug: [id, slug],
   } = context.params;
 
-  const quest = await getProduct(id || slug);
+  const queryClient = new QueryClient();
 
-  if (!quest) {
+  await queryClient.prefetchQuery(["quests", id || slug], () =>
+    getProduct(id || slug)
+  );
+
+  if (!queryClient.getQueryData(["quests", id || slug])) {
     return {
       notFound: true,
     };
   }
 
   return {
-    props: { quest },
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 }
 
-export default function Item({ quest }) {
+export default function Item() {
   const router = useRouter();
   const {
     slug: [id],
@@ -66,10 +73,6 @@ export default function Item({ quest }) {
     [id]
   );
 
-  useEffect(() => {
-    setQuestDisplayed(true);
-  }, [quest]);
-
   useEventTarget(QUESTS_ITEM_CHANGE, onQuestItemChange);
 
   return (
@@ -85,7 +88,7 @@ export default function Item({ quest }) {
           {selectedQuestIdOnClick !== id ? (
             <QuestDetailSkeleton />
           ) : (
-            <QuestDetail quest={quest} />
+            <QuestDetail />
           )}
         </ProductDetailStickyWrapper>
       </Fragment>

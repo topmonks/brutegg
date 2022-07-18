@@ -1,7 +1,6 @@
 import { Typography, useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
-import { Fragment, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { alpha, Box } from "@mui/system";
 import { keyframes } from "@emotion/react";
@@ -9,11 +8,11 @@ import Image from "next/image";
 
 import { getProduct } from "../../libs/swell";
 import { ProductPropTypes } from "../../types/swell";
-import { productState } from "../../state/products";
 import PriceTag from "../price-tag";
 import StyledDescription from "../styled-description";
 import DiscordButton from "../discord-button";
 import RedditButton from "../reddit-button";
+import { useQuery } from "react-query";
 
 const shakeChest = keyframes`
   10%, 90% {
@@ -38,23 +37,14 @@ const shakeChest = keyframes`
  * @param {Object} props
  * @param {import("../../types/swell").Product} props.quest
  */
-export function QuestDetail({ quest: _quest }) {
+export function QuestDetail() {
   const { t } = useTranslation("Quests");
   const router = useRouter();
   const {
     slug: [id],
   } = router.query;
 
-  const [refreshedProduct, setProduct] = useRecoilState(
-    productState(_quest.id)
-  );
-
-  const quest = refreshedProduct ?? _quest;
-
-  // refresh product in browsers DOM
-  useEffect(() => {
-    getProduct(id).then(setProduct);
-  }, [setProduct, id]);
+  const { data: quest } = useQuery(["quests", id], () => getProduct(id));
 
   const reward = quest.attributes.brute_reward?.value;
   const perex = quest.attributes.brute_quest_perex?.value;
