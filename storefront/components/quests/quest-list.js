@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { Fragment, useCallback, useState } from "react";
 import useEventTarget from "../../hooks/use-event-target";
 import { ButtonBase, Grid } from "@mui/material";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
@@ -8,9 +7,9 @@ import pageSkeleton from "../page-skeleton";
 import { LINKS } from "../navbar";
 import { getProducts } from "../../libs/swell";
 import window from "../../libs/window";
-import { questsState } from "../../state/quests";
 import QuestListItem from "./quest-list-item";
 import DoubleBorderBox from "../double-border-box";
+import { useQuery } from "react-query";
 
 export const STRETCHED_STORE_LIST_GRID = {
   xs: 12,
@@ -35,15 +34,15 @@ export function scrollToQuestId(id) {
 }
 
 export default function QuestList({
-  ssr = { quests: [] },
   stretched,
   selectedQuestId,
   displayHeadline = true,
 }) {
-  const [_quests, setQuests] = useRecoilState(questsState);
-
-  const [questsLoading, setQuestsLoading] = useState(false);
-  const quests = _quests.length ? _quests : ssr.quests;
+  const { data: quests, isLoading: questsLoading } = useQuery(["quests"], () =>
+    getProducts({
+      category: "quests",
+    })
+  );
 
   const [_selectedQuestId, setSelectedQuestId] = useState(selectedQuestId);
 
@@ -53,20 +52,11 @@ export default function QuestList({
 
   useEventTarget(QUESTS_ITEM_CHANGE, onQuestsItemChange);
 
-  useEffect(() => {
-    setQuestsLoading(true);
-    getProducts({ category: "quests" })
-      .then(({ results }) => {
-        setQuests(results);
-      })
-      .finally(() => setQuestsLoading(false));
-  }, [setQuests]);
-
   const gridItemAttrs = stretched
     ? STRETCHED_STORE_LIST_GRID
     : FULL_STORE_LIST_GRID;
 
-  if (questsLoading && !quests.length) {
+  if (questsLoading) {
     const QuestsSkeleton = pageSkeleton[LINKS.QUESTS];
 
     return (
@@ -78,7 +68,7 @@ export default function QuestList({
     <Fragment>
       <DoubleBorderBox>
         <Grid columns={12} container spacing={2} sx={{ p: { xs: 1, md: 2 } }}>
-          {quests.map((q, ix) => {
+          {quests.results.map((q, ix) => {
             const isSelectedQuest = q.id === _selectedQuestId;
             return (
               <Grid
@@ -111,8 +101,5 @@ export default function QuestList({
 QuestList.propTypes = {
   displayHeadline: PropTypes.bool,
   selectedQuestId: PropTypes.string,
-  ssr: PropTypes.shape({
-    quests: PropTypes.array,
-  }),
   stretched: PropTypes.bool,
 };

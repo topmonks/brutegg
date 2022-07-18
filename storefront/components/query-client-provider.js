@@ -61,4 +61,5 @@ export default function QueryClientProvider({ children, state, ...opts }) {
 
 QueryClientProvider.propTypes = {
   children: PropTypes.node,
+  state: PropTypes.object,
 };

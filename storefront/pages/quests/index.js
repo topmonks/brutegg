@@ -1,7 +1,7 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { Fragment, useCallback, useState } from "react";
+import { dehydrate, QueryClient } from "react-query";
 import { QuestDetailSkeleton } from "../../components/quests/quest-detail-skeleton";
 import QuestList from "../../components/quests/quest-list";
 import QuestsLayout from "../../components/quests/quests-layout";
@@ -10,20 +10,24 @@ import { scrollToProductId } from "../../components/store/product-list";
 import useEventTarget from "../../hooks/use-event-target";
 import { getProducts } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
-import { questsState } from "../../state/quests";
 
 export async function getStaticProps(_context) {
-  const quests = await getProducts({
-    category: "quests",
-  });
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery("quests", () =>
+    getProducts({
+      category: "quests",
+    })
+  );
 
   return {
-    props: { quests },
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 }
 
-export default function Quests(props) {
-  const [, setQuests] = useRecoilState(questsState);
+export default function Quests() {
   const [questSkeletonDisplayed, setQuestSkeletonDisplayed] = useState(false);
 
   const onStoreItemChange = useCallback((event) => {
@@ -35,21 +39,13 @@ export default function Quests(props) {
   }, []);
   useEventTarget(QUESTS_ITEM_CHANGE, onStoreItemChange);
 
-  useEffect(() => {
-    setQuests(props.quests.results);
-  }, [props.quests, setQuests]);
-
   return (
     <Fragment>
       <Head>
         <title>Brute merch - Quests</title>
       </Head>
       <QuestsLayout rightExpanded={questSkeletonDisplayed}>
-        <QuestList
-          displayHeadline={false}
-          ssr={{ quests: props.quests.results }}
-          stretched={questSkeletonDisplayed}
-        />
+        <QuestList displayHeadline={false} stretched={questSkeletonDisplayed} />
 
         <Fragment>
           <ProductDetailStickyWrapper>
