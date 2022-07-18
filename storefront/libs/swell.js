@@ -97,6 +97,12 @@ export function getProductsQuery() {
   });
 }
 
+export function getQuestsQuery() {
+  return getProducts({
+    category: "quests",
+  });
+}
+
 export function getFAQQuery() {
   return getProduct("faq");
 }

@@ -5,7 +5,7 @@ import { ButtonBase, Grid } from "@mui/material";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import pageSkeleton from "../page-skeleton";
 import { LINKS } from "../navbar";
-import { getProducts } from "../../libs/swell";
+import { getQuestsQuery } from "../../libs/swell";
 import window from "../../libs/window";
 import QuestListItem from "./quest-list-item";
 import DoubleBorderBox from "../double-border-box";
@@ -38,10 +38,9 @@ export default function QuestList({
   selectedQuestId,
   displayHeadline = true,
 }) {
-  const { data: quests, isLoading: questsLoading } = useQuery(["quests"], () =>
-    getProducts({
-      category: "quests",
-    })
+  const { data: quests, isLoading: questsLoading } = useQuery(
+    ["quests"],
+    getQuestsQuery
   );
 
   const [_selectedQuestId, setSelectedQuestId] = useState(selectedQuestId);

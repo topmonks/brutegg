@@ -8,17 +8,13 @@ import QuestsLayout from "../../components/quests/quests-layout";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
 import { scrollToProductId } from "../../components/store/product-list";
 import useEventTarget from "../../hooks/use-event-target";
-import { getProducts } from "../../libs/swell";
+import { getQuestsQuery } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
 
 export async function getStaticProps(_context) {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("quests", () =>
-    getProducts({
-      category: "quests",
-    })
-  );
+  await queryClient.prefetchQuery(["quests"], getQuestsQuery);
 
   return {
     props: {
