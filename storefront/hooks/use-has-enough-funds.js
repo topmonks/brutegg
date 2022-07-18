@@ -6,7 +6,7 @@ import { bruteState } from "../state/brute-token";
 export default function useHasEnoughFunds(price) {
   const brute = useRecoilValue(bruteState);
   return useMemo(() => {
-    if (brute?.account.balance == null || price == null) {
+    if (brute?.account?.balance == null || price == null) {
       return false;
     }
     const web3 = getWeb3();
