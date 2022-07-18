@@ -93,7 +93,7 @@ const FullscreenTab = () => {
   const [isFullscreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
-    if(!screenfull.enabled) {
+    if(!screenfull.isEnabled) {
       return;
     }
     
