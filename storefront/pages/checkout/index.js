@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, Suspense, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import Form from "../../components/checkout/form";
@@ -24,6 +24,7 @@ import UnlockMetamaskLayout from "../../components/unlock-metamask-layout";
 import { removeEmpty } from "../../libs/util";
 import { defaultFormState } from "../../state/checkout";
 import { composeVirtualEmailFromAddress } from "../../libs/web3";
+import SkipOnSSR from "../../components/skip-on-ssr";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -129,7 +130,15 @@ export default function Checkout({ user, address }) {
       </Box>
       <CheckoutLayout>
         <Fragment>
-          <PaymentDialog handleClose={handleClose} open={paymentDialogOpen} />
+          <SkipOnSSR>
+            <Suspense fallback={() => <Fragment />}>
+              <PaymentDialog
+                handleClose={handleClose}
+                open={paymentDialogOpen}
+              />
+            </Suspense>
+          </SkipOnSSR>
+
           <UnlockMetamaskLayout
             AlignProps={{
               sx: {

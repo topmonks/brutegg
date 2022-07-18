@@ -23,6 +23,10 @@ import { useRouter } from "next/router";
 import { POLYGON_EXPLORER } from "../../libs/constants";
 import { useRecoilValue } from "recoil";
 import { ethereumState } from "../../state/ethereum";
+import useHasEnoughFunds from "../../hooks/use-has-enough-funds";
+import useCartPrice from "../../hooks/use-cart-price";
+import { bruteState } from "../../state/brute-token";
+import PriceTag from "../price-tag";
 
 const helmetAnimation = keyframes`
   0%   {opacity: 1}
@@ -268,9 +272,70 @@ PaymentNotInitialized.propTypes = {
   open: PropTypes.bool,
 };
 
+function PaymentNotEnoughFunds({ handleClose, open }) {
+  const { t } = useTranslation("PaymentDialog");
+  const totalPrice = useCartPrice();
+  const brute = useRecoilValue(bruteState);
+  const router = useRouter();
+
+  const goToQuests = useCallback(() => {
+    router.push(withLocale(router.locale, LINKS.QUESTS));
+  }, [router]);
+
+  return (
+    <DialogLayout handleClose={handleClose} open={open}>
+      <Box>
+        <Box
+          sx={{
+            mb: 2,
+            animation: `${helmetAnimation} 2.5s infinite alternate ease-out`,
+          }}
+        >
+          <img
+            alt="Brute helmet logo"
+            height={130}
+            src="https://res.cloudinary.com/brutegg/image/upload/v1657558525/brutegg-swell/helmet_pldqf4.svg"
+          />
+        </Box>
+        <Typography variant="h5">{t("Not enough Brute tokens")}</Typography>
+        <Typography variant="subtitle1">
+          {t("In your account you have")}{" "}
+          <PriceTag
+            amount={brute?.account?.balance || ""}
+            displayLetter={false}
+            displayLogo={false}
+          />
+          . {t("Purchased items cost")}{" "}
+          <PriceTag
+            amount={totalPrice?.toString() || ""}
+            sx={{ fontWeight: "bold" }}
+          />
+        </Typography>
+      </Box>
+
+      <Fragment>
+        <Button onClick={handleClose} variant="text">
+          {t("Back", { ns: "Common" })}
+        </Button>
+        <Button disableElevation onClick={goToQuests} variant="contained">
+          {t("Earn BRUTE for Quests")}
+        </Button>
+      </Fragment>
+    </DialogLayout>
+  );
+}
+
+PaymentNotEnoughFunds.propTypes = {
+  handleClose: PropTypes.func,
+  open: PropTypes.bool,
+};
+
 export default function PaymentDialog({ handleClose, open }) {
   const [watchingTxs, isTxPending, isTxSuccess, _isTxFailed] =
     useWatchPayment();
+
+  const totalPrice = useCartPrice();
+  const hasEnoughtFunds = useHasEnoughFunds(totalPrice);
 
   if (isTxPending) {
     return (
@@ -284,6 +349,10 @@ export default function PaymentDialog({ handleClose, open }) {
 
   if (isTxSuccess) {
     return <PaymentSuccess handleClose={handleClose} open={open} />;
+  }
+
+  if (!hasEnoughtFunds) {
+    return <PaymentNotEnoughFunds handleClose={handleClose} open={open} />;
   }
 
   return <PaymentNotInitialized handleClose={handleClose} open={open} />;

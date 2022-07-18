@@ -1,11 +1,12 @@
 import { Button } from "@mui/material";
-import { useCallback, useMemo } from "react";
+import { Fragment, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useBruteContract from "../../hooks/use-brute-contract";
+import useCartPrice from "../../hooks/use-cart-price";
 import useGetCart from "../../hooks/use-get-cart";
+import useHasEnoughFunds from "../../hooks/use-has-enough-funds";
 import useWatchTx from "../../hooks/use-watch-tx";
-import { calculateCartPrice } from "../../libs/swell";
 import getWeb3 from "../../libs/web3";
 import { ethereumState } from "../../state/ethereum";
 import { snackbarState } from "../../state/snackbar";
@@ -27,16 +28,7 @@ export default function PaymentButton() {
 
   const { data: cart, isLoading: cartIsLoading } = useGetCart();
 
-  const totalPrice = useMemo(() => {
-    if (!cart) {
-      return null;
-    }
-    if (!ethereum.web3Loaded) {
-      return null;
-    }
-
-    return calculateCartPrice(cart);
-  }, [cart, ethereum.web3Loaded]);
+  const totalPrice = useCartPrice();
 
   const pay = useCallback(async () => {
     const web3 = getWeb3();
@@ -92,6 +84,8 @@ export default function PaymentButton() {
     cart,
   ]);
 
+  const hasEnoughtFunds = useHasEnoughFunds(totalPrice);
+
   if (watchingTxs?.state === TX_STATES.PENDING) {
     return (
       <Button disableElevation disabled size="large" variant="contained">
@@ -103,13 +97,19 @@ export default function PaymentButton() {
   return (
     <Button
       disableElevation
-      disabled={cartIsLoading}
+      disabled={cartIsLoading || !hasEnoughtFunds}
       onClick={pay}
       size="large"
       sx={{ fontWeight: "bold" }}
       variant="contained"
     >
-      {t("Pay")} <PriceTag amount={totalPrice?.toString()} sx={{ ml: 1 }} />
+      {hasEnoughtFunds ? (
+        <Fragment>
+          {t("Pay")} <PriceTag amount={totalPrice?.toString()} sx={{ ml: 1 }} />
+        </Fragment>
+      ) : (
+        t("Not enough Brute tokens")
+      )}
     </Button>
   );
 }

@@ -66,21 +66,21 @@ const _brutePublicState = selectorFamily({
 
 export const bruteState = selector({
   key: "bruteState",
-  get: async ({ get }) => {
+  get: ({ get }) => {
     const ethereum = get(ethereumState);
 
     if (!ethereum.isInstalled) {
-      return undefined;
+      return null;
     }
 
     if (!ethereum.web3Loaded) {
-      return undefined;
+      return null;
     }
 
     const bruteContractAddress = BRUTE_ADDRESS[ethereum.chainId];
 
     if (!bruteContractAddress) {
-      return undefined;
+      return null;
     }
 
     const account = get(_bruteAccountState([bruteContractAddress]));
