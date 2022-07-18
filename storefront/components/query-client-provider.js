@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  Hydrate,
   QueryCache,
   QueryClient,
   QueryClientProvider as ReactQueryClientProvider,
@@ -11,7 +12,7 @@ import { useRecoilState } from "recoil";
 import { snackbarState } from "../state/snackbar";
 import window from "../libs/window";
 
-export default function QueryClientProvider({ children, ...opts }) {
+export default function QueryClientProvider({ children, state, ...opts }) {
   const { t } = useTranslation();
   const [, setSnackbar] = useRecoilState(snackbarState);
 
@@ -53,7 +54,7 @@ export default function QueryClientProvider({ children, ...opts }) {
 
   return (
     <ReactQueryClientProvider client={queryClient} {...opts}>
-      {children}
+      <Hydrate state={state}>{children}</Hydrate>
     </ReactQueryClientProvider>
   );
 }

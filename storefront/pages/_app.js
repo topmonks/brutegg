@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
           onError={myErrorHandler}
         >
           <Suspense fallback="Loading">
-            <QueryClientProvider>
+            <QueryClientProvider state={pageProps.dehydratedState}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles

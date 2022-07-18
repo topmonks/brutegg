@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { dehydrate, QueryClient, useQuery } from "react-query";
 import AnchoredHeaders from "../../components/anchored-headers";
 import FAQLayout from "../../components/faq/faq-layout";
 import { getProduct } from "../../libs/swell";
@@ -7,20 +8,26 @@ import _window from "../../libs/window";
 import { ProductPropTypes } from "../../types/swell";
 
 export async function getStaticProps() {
-  const faq = await getProduct("faq");
+  const queryClient = new QueryClient();
 
-  if (!faq) {
+  await queryClient.prefetchQuery("faq", () => getProduct("faq"));
+
+  if (!queryClient.getQueryData("faq")) {
     return {
       notFound: true,
     };
   }
 
   return {
-    props: { faq },
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 }
 
-export default function FAQ({ faq }) {
+export default function FAQ() {
+  const { data: faq } = useQuery(["faq"], () => getProduct("faq"));
+
   const [headings, setHeadings] = useState([]);
 
   const content = useMemo(
