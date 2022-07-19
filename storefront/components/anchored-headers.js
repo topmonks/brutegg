@@ -3,6 +3,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import deburr from "lodash.deburr";
+import { Box } from "@mui/material";
 
 function Anchor({ children, href }) {
   const { t } = useTranslation("Common");
@@ -68,7 +69,18 @@ function AnchoredHeaders({ children, onGenerateHeadings = () => {} }) {
     onGenerateHeadings(headingsHrefs);
   }, [headingsHrefs, onGenerateHeadings]);
 
-  return <div ref={localRef}>{children}</div>;
+  return (
+    <Box
+      ref={localRef}
+      sx={{
+        "& img": {
+          maxWidth: "100%",
+        },
+      }}
+    >
+      {children}
+    </Box>
+  );
 }
 
 AnchoredHeaders.propTypes = {

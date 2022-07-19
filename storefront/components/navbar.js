@@ -141,7 +141,7 @@ export default function Navbar() {
     () =>
       [
         [t("Quests"), LINKS.QUESTS],
-        [t("Store"), LINKS.STORE],
+        [t("Rewards"), LINKS.STORE],
         [t("FAQ"), LINKS.FAQ],
         (ethereum.account ||
           [USER_LINKS.PROFILE, USER_LINKS.WALLET].includes(router.asPath)) && [
@@ -200,10 +200,19 @@ export default function Navbar() {
         direction="row"
         justifyContent="space-between"
       >
-        <Grid item lg={1} sx={{ display: { xs: "none", lg: "block" }, pl: 2 }}>
+        <Grid
+          item
+          lg={1}
+          sx={{
+            display: { xs: "none", lg: "block" },
+            pl: 2,
+            cursor: "pointer",
+          }}
+        >
           <img
             alt="Brute gg logo"
             height={32}
+            onClick={() => handleChange(null, LINKS.STORE)}
             src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/brute-logo_qwbsfz.svg"
           />
         </Grid>

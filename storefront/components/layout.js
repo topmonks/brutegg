@@ -34,7 +34,7 @@ export default function Layout({ children, displayNavbar = true }) {
           body: {
             [theme.breakpoints.up("lg")]: {
               background: `url("https://res.cloudinary.com/brutegg/image/upload/v1658220272/brutegg-swell/bg-blue_cyzyrn.png") no-repeat top left, url("https://res.cloudinary.com/brutegg/image/upload/v1657539255/brutegg-swell/bg-red_gyrdes.svg") no-repeat top right, ${alpha(
-                "#111214",
+                "#000",
                 1
               )}`,
               backgroundSize: "512px 1176px, auto",
