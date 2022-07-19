@@ -8,7 +8,6 @@ import {
   STRETCHED_STORE_LIST_GRID,
 } from "./store/product-list";
 import { Fragment } from "react";
-import useDisplayAfterDelay from "../hooks/use-display-after-delay";
 import { QuestHeadline } from "./quests/quests-headline";
 import { ProductsHeadline } from "./store/products-headline";
 import ProfileLayout from "./profile/profile-layout";
@@ -22,12 +21,7 @@ function QuestsSkeleton({
   fromMainNavigation = false,
   displayHeadline = true,
 }) {
-  const display = useDisplayAfterDelay(0);
   const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-
-  if (!display) {
-    return <Fragment></Fragment>;
-  }
 
   return (
     <Fragment>
@@ -37,7 +31,6 @@ function QuestsSkeleton({
         <Grid item sm={fromMainNavigation ? 8 : 12} xs={12}>
           <DoubleBorderBox
             sx={[
-              fromMainNavigation && { mt: 2 },
               {
                 width: "100%",
                 p: (theme) => ({
@@ -51,9 +44,9 @@ function QuestsSkeleton({
               return (
                 <Skeleton
                   animation="wave"
-                  height={isXs ? 120 : 75}
+                  height={isXs ? 130 : 90}
                   key={ix}
-                  sx={{ mb: 1 }}
+                  sx={{ mb: 2 }}
                   variant="rectangular"
                 />
               );
@@ -72,12 +65,6 @@ QuestsSkeleton.propTypes = {
 };
 
 function StoreSkeleton({ stretched, displayHeadline = true }) {
-  const display = useDisplayAfterDelay(0);
-
-  if (!display) {
-    return <Fragment></Fragment>;
-  }
-
   const gridItemAttrs = stretched
     ? STRETCHED_STORE_LIST_GRID
     : FULL_STORE_LIST_GRID;
@@ -86,12 +73,7 @@ function StoreSkeleton({ stretched, displayHeadline = true }) {
     <Fragment>
       {displayHeadline && <ProductsHeadline center />}
 
-      <Grid
-        columns={COLUMNS_COUNT}
-        container
-        spacing={1}
-        sx={[!stretched && { mt: 1 }]}
-      >
+      <Grid columns={COLUMNS_COUNT} container spacing={1}>
         {new Array(20).fill().map((_, ix) => {
           return (
             <Grid item key={ix} {...gridItemAttrs}>
@@ -110,12 +92,6 @@ StoreSkeleton.propTypes = {
 };
 
 function FaqSkeleton() {
-  const display = useDisplayAfterDelay(0);
-
-  if (!display) {
-    return <Fragment></Fragment>;
-  }
-
   return (
     <FAQLayout>
       <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
@@ -125,12 +101,6 @@ function FaqSkeleton() {
 }
 
 function ProfileSkeleton() {
-  const display = useDisplayAfterDelay(0);
-
-  if (!display) {
-    return <Fragment></Fragment>;
-  }
-
   return (
     <ProfileLayout>
       <Box
@@ -203,12 +173,6 @@ function ProfileSkeleton() {
 }
 
 function CheckoutSkeleton() {
-  const display = useDisplayAfterDelay(0);
-
-  if (!display) {
-    return <Fragment></Fragment>;
-  }
-
   return (
     <Fragment>
       <Box sx={{ mb: 2 }}>

@@ -101,7 +101,7 @@ export function ProductDetail() {
 
   return (
     <Fragment>
-      <Box sx={{ display: "flex", flexDirection: "column", maxHeight: "100%" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <Box
           sx={{
             flexGrow: 1,
@@ -248,7 +248,8 @@ export function ProductDetail() {
         <Divider sx={{ borderBottomWidth: "medium" }} />
         <Box
           sx={{
-            flexGrow: 5,
+            flexGrow: 2,
+            flexBasis: "100%",
             overflowY: "auto",
             px: 3,
             pt: 1,

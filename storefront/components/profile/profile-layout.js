@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { alpha, Grid } from "@mui/material";
+import { alpha, Box, Grid } from "@mui/material";
 import ContextMenu from "../context-menu";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
@@ -49,7 +49,9 @@ export default function ProfileLayout({ children }) {
             }}
             xs={12}
           >
-            <ContextMenu links={links} />
+            <Box sx={{ position: { sm: "sticky" }, top: { sm: 8 } }}>
+              <ContextMenu links={links} />
+            </Box>
           </Grid>
           <Grid
             item

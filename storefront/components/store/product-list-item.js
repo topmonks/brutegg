@@ -97,7 +97,7 @@ export default function ProductListItem({ product, selected }) {
               )} 0%, ${alpha(
                 theme.palette[rarity]?.main,
                 0
-              )} 55%) center no-repeat, ${alpha("#fff", 0.1)}`,
+              )} 55%) center no-repeat, ${alpha("#fff", 0.05)}`,
             transition: "box-shadow 0.2s ease",
           },
           selected && {
@@ -108,11 +108,11 @@ export default function ProductListItem({ product, selected }) {
               )} 0%, ${alpha(
                 theme.palette[rarity]?.main,
                 0
-              )} 40%) center no-repeat, ${alpha("#fff", 0.1)}`,
+              )} 40%) center no-repeat, ${alpha("#fff", 0.01)}`,
             border: (theme) =>
               "1px solid " + alpha(theme.palette[rarity]?.main, 1),
             boxShadow: (theme) =>
-              "0 0 0 3px " + alpha(theme.palette[rarity]?.main, 0.8),
+              `0 0 0 3px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
           },
           !inStock && {
             filter: "grayscale(1)",

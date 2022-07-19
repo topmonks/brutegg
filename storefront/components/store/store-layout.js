@@ -12,7 +12,7 @@ export default function StoreLayout({
   return (
     <Fragment>
       {displayHeadline && <ProductsHeadline center={centerHeadline} />}
-      <Grid container sx={{ mt: 2 }}>
+      <Grid container>
         <Grid
           item
           sm={rightExpanded ? 5 : 12}

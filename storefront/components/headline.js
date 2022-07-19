@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Divider, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Link from "next/link";
@@ -23,7 +23,7 @@ export function Headline({
         container
         justifyContent="space-between"
         sx={[
-          { my: { sm: 3, md: 5 } },
+          { py: { xs: 2, sm: 3, md: 5 } },
           center && { textAlign: { sm: "center" } },
         ]}
       >
@@ -53,7 +53,6 @@ export function Headline({
           xs={12}
         ></Grid>
       </Grid>
-      <Divider />
     </Fragment>
   );
 }

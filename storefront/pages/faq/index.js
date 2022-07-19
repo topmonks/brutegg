@@ -46,6 +46,9 @@ export default function FAQ() {
 
   const scrolledTo = useRef(false);
   useEffect(() => {
+    if (!headings.length) {
+      return;
+    }
     if (scrolledTo.current) {
       return;
     }
@@ -57,7 +60,7 @@ export default function FAQ() {
     _window.document.querySelector(_window.location.hash)?.scrollIntoView();
 
     scrolledTo.current = true;
-  }, []);
+  }, [headings]);
 
   return (
     <FAQLayout links={headings}>

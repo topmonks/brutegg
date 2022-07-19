@@ -12,11 +12,7 @@ export default function QuestsLayout({
     <Fragment>
       {displayHeadline && <QuestHeadline />}
 
-      <Grid
-        container
-        justifyContent={rightExpanded ? "flex-start" : "center"}
-        sx={{ mt: 2 }}
-      >
+      <Grid container justifyContent={rightExpanded ? "flex-start" : "center"}>
         <Grid
           item
           sm={rightExpanded ? 5 : 8}

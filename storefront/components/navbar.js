@@ -193,7 +193,7 @@ export default function Navbar() {
   const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   return (
-    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <Box>
       <Grid
         alignItems="center"
         container

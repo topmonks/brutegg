@@ -3,7 +3,7 @@ import "../styles/globals.css";
 import "../libs/swell";
 import "../translation/i18n";
 
-import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { RecoilRoot } from "recoil";
 import { Fragment, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -42,14 +42,6 @@ function MyApp({ Component, pageProps }) {
             <QueryClientProvider state={pageProps.dehydratedState}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <GlobalStyles
-                  styles={{
-                    body: {
-                      backgroundColor: "black",
-                      overflowY: "scroll",
-                    },
-                  }}
-                />
                 <Suspense>
                   <MetamaskWatcher />
                   <PendingTxsWatcher />
