@@ -17,7 +17,7 @@ export default function FAQLayout({ children, links }) {
       />
       <FAQHeadline />
 
-      <DoubleBorderBox sx={{ mt: 2 }}>
+      <DoubleBorderBox>
         <Grid container>
           <Grid
             item

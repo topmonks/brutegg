@@ -35,7 +35,7 @@ export default function ProfileLayout({ children }) {
   return (
     <Fragment>
       <ProfileHeadline />
-      <DoubleBorderBox sx={{ mt: 2 }}>
+      <DoubleBorderBox>
         <Grid container>
           <Grid
             item
