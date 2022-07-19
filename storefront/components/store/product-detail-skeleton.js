@@ -12,7 +12,7 @@ export function ProductDetailSkeleton() {
 
   return (
     <Fragment>
-      <Box sx={{ height: { xs: "20vh", sm: "20%" }, px: 3, py: 2 }}>
+      <Box sx={{ height: { xs: "20vh", sm: "22%" }, px: 3, py: 2 }}>
         <Skeleton animation="wave" height="100%" variant="rectangular" />
       </Box>
 
@@ -20,7 +20,7 @@ export function ProductDetailSkeleton() {
         sx={{
           display: "flex",
           px: 3,
-          height: "40px",
+          height: "50px",
           justifyContent: "space-between",
         }}
       >
@@ -48,11 +48,11 @@ export function ProductDetailSkeleton() {
         />
       </Box>
 
-      <Box sx={{ height: { xs: "40vh", sm: "50%" }, px: 3, py: 2 }}>
+      <Box sx={{ height: { xs: "40vh", sm: "47%" }, px: 3, py: 2 }}>
         <Skeleton animation="wave" height="100%" variant="rectangular" />
       </Box>
       <Box
-        sx={{ height: { xs: "15vh", sm: "calc(30% - 40px)" }, px: 1, pb: 1 }}
+        sx={{ height: { xs: "15vh", sm: "calc(30% - 50px)" }, px: 1, pb: 1 }}
       >
         <Skeleton animation="wave" height="100%" variant="rectangular" />
       </Box>
