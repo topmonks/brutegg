@@ -12,7 +12,6 @@ import {
 import LogoutIcon from "@mui/icons-material/Logout";
 import LinkIcon from "@mui/icons-material/Link";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 import { Fragment, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
@@ -176,7 +175,7 @@ function ConnectedButton() {
     }
 
     const tokenImage =
-      "https://res.cloudinary.com/brutegg/image/upload/v1657270801/brutegg-swell/brute-tag-logo_rkqso9.png";
+      "https://res.cloudinary.com/brutegg/image/upload/v1658258662/brutegg-swell/helmet-token-logo_cq9pce.png";
 
     const { address, decimals, symbol } = brute.contents.public;
     addToken(address, symbol, parseInt(decimals), tokenImage);
@@ -225,7 +224,12 @@ function ConnectedButton() {
             sx={{ whiteSpace: "normal" }}
           >
             <ListItemIcon>
-              <AddToQueueIcon fontSize="small" />
+              <img
+                alt="Brutecoin logo"
+                height={18}
+                src="https://res.cloudinary.com/brutegg/image/upload/v1657558525/brutegg-swell/helmet_pldqf4.svg"
+                width={18}
+              />
             </ListItemIcon>
             <ListItemText>{t("Add Brute token to Metamask")}</ListItemText>
           </MenuItem>
