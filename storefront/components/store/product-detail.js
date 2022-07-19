@@ -310,7 +310,7 @@ export function ProductDetail() {
         <Divider sx={{ borderBottomWidth: "medium" }} />
         <Box sx={{ flexGrow: 1, pl: 1 }}>
           <ProductDetailGallery
-            images={product.images.concat(productVariant?.images || [])}
+            images={product.images?.concat(productVariant?.images || [])}
             name={product.name}
           />
         </Box>
