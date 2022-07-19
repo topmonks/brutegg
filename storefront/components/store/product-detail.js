@@ -9,7 +9,7 @@ import { Box, alpha } from "@mui/system";
 import { useTheme } from "@emotion/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useQuery } from "react-query";
 
@@ -28,6 +28,9 @@ import PriceTag from "../price-tag";
 import { USER_LINKS } from "../navbar";
 import ProductDetailGallery from "./product-detail-gallery";
 import BruteDivider from "../divider";
+import { SWELL_OPTIONS_TYPES } from "../../libs/constants";
+import ProductVariantSelect from "./product-variant-select";
+import { productOptionsState, productVariantState } from "../../state/product";
 
 export function ProductDetail() {
   const { t } = useTranslation("StoreItem");
@@ -40,6 +43,14 @@ export function ProductDetail() {
   const eventTarget = useRecoilValue(eventTargetState);
 
   const [selectedProduct, setSelectedProduct] = useState();
+  const productVariant = useRecoilValue(productVariantState(product.id));
+  const productOptions = useRecoilValue(productOptionsState(product.id));
+
+  const options = useMemo(() => {
+    return (product.options || []).filter(
+      (o) => o.active && o.input_type === SWELL_OPTIONS_TYPES.SELECT
+    );
+  }, [product]);
 
   const {
     isSuccess: cartIsUpdated,
@@ -56,6 +67,11 @@ export function ProductDetail() {
       await swell.cart.addItem({
         product_id: product.id,
         quantity: 1,
+        ...(productVariant
+          ? {
+              options: productOptions,
+            }
+          : {}),
       });
     },
     {
@@ -94,7 +110,9 @@ export function ProductDetail() {
   const creatorThumbnail =
     product.attributes.brute_creator_thumbnail?.value?.file;
   const creatorLink = product.attributes.brute_creator_link?.value;
-  const inStock = isInStock(product);
+  const inStock = productVariant
+    ? isInStock(productVariant)
+    : isInStock(product);
   const stockNotTracked = isStockNotTracked(product);
 
   const isSm = useMediaQuery((theme) => theme.breakpoints.down("md"));
@@ -216,6 +234,11 @@ export function ProductDetail() {
           )}
         </Box>
         <BruteDivider rarity={rarity} />
+        <Box sx={{ display: { xs: "block", md: "none" }, px: 3, pt: 1 }}>
+          {options.map((o, ix) => (
+            <ProductVariantSelect key={ix} options={o} product={product} />
+          ))}
+        </Box>
         <Box
           sx={{
             flexGrow: 1,
@@ -229,6 +252,25 @@ export function ProductDetail() {
           <Typography component="span" sx={{ fontWeight: "bold" }} variant="h5">
             <PriceTag amount={product.attributes.brute_price?.value} />
           </Typography>
+          {options.map((o, ix) => (
+            <Box
+              key={ix}
+              sx={{
+                display: { xs: "none", md: "block" },
+                width: "100%",
+                textAlign: "right",
+              }}
+            >
+              <ProductVariantSelect
+                FormControlOpts={{
+                  fullWidth: false,
+                  sx: { mr: 2, width: "150px" },
+                }}
+                options={o}
+                product={product}
+              />
+            </Box>
+          ))}
           <Button
             disableElevation
             disabled={cartIsLoading || cartIsUpdated || !inStock}
@@ -267,7 +309,10 @@ export function ProductDetail() {
         </Box>
         <Divider sx={{ borderBottomWidth: "medium" }} />
         <Box sx={{ flexGrow: 1, pl: 1 }}>
-          <ProductDetailGallery images={product.images} name={product.name} />
+          <ProductDetailGallery
+            images={product.images.concat(productVariant?.images || [])}
+            name={product.name}
+          />
         </Box>
       </Box>
     </Fragment>

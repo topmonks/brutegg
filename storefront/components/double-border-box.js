@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { alpha, Box } from "@mui/system";
 
-export default styled(Box)(() => ({
+export const style = {
   borderRadius: 0,
   border: `3px solid ${alpha("#314057", 0.3)}`,
   padding: "1px",
@@ -13,4 +13,6 @@ export default styled(Box)(() => ({
     "#111214",
     1
   )} 100%)`,
-}));
+};
+
+export default styled(Box)(() => style);
