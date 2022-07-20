@@ -1,7 +1,8 @@
-import { Box } from "@mui/material";
+import { alpha, Typography } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import AnchoredHeaders from "../../components/anchored-headers";
+import { style } from "../../components/double-border-box";
 import FAQLayout from "../../components/faq/faq-layout";
 import { getFAQQuery } from "../../libs/swell";
 import _window from "../../libs/window";
@@ -32,14 +33,32 @@ export default function FAQ() {
 
   const content = useMemo(
     () => (
-      <Box
+      <Typography
+        component="div"
         dangerouslySetInnerHTML={{ __html: faq.description }}
         sx={{
           "& h1,h2,h3,h4": {
             scrollMarginTop: "16px",
           },
+          "& img": (theme) => ({
+            maxWidth: "100%",
+            my: 2,
+            [theme.breakpoints.up("sm")]: {
+              ...style,
+            },
+            [theme.breakpoints.down("sm")]: {
+              boxShadow: `0 0 0 1px  ${alpha(
+                theme.palette.primary.main,
+                0.4
+              )}, 0 0 15px 0 #000`,
+              mx: "auto",
+              my: 1,
+              display: "block",
+            },
+            padding: "5px !important",
+          }),
         }}
-      ></Box>
+      ></Typography>
     ),
     [faq]
   );

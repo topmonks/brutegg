@@ -69,18 +69,7 @@ function AnchoredHeaders({ children, onGenerateHeadings = () => {} }) {
     onGenerateHeadings(headingsHrefs);
   }, [headingsHrefs, onGenerateHeadings]);
 
-  return (
-    <Box
-      ref={localRef}
-      sx={{
-        "& img": {
-          maxWidth: "100%",
-        },
-      }}
-    >
-      {children}
-    </Box>
-  );
+  return <Box ref={localRef}>{children}</Box>;
 }
 
 AnchoredHeaders.propTypes = {
