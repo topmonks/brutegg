@@ -8,13 +8,15 @@ import {
   STRETCHED_STORE_LIST_GRID,
 } from "./store/product-list";
 import { Fragment } from "react";
-import { QuestHeadline } from "./quests/quests-headline";
 import { ProductsHeadline } from "./store/products-headline";
 import ProfileLayout from "./profile/profile-layout";
 import CheckoutLayout from "./checkout/checkout-layout";
 import { CheckoutHeadline } from "./checkout/checkout-headline";
 import DoubleBorderBox from "./double-border-box";
 import FAQLayout from "./faq/faq-layout";
+import QuestsLayout from "./quests/quests-layout";
+import { ProductDetailStickyWrapper } from "./store/product-detail-sticky-wrapper";
+import { QuestDetailSkeleton } from "./quests/quest-detail-skeleton";
 
 function QuestsSkeleton({
   stretched: _stretched,
@@ -22,38 +24,50 @@ function QuestsSkeleton({
   displayHeadline = true,
 }) {
   const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const questListSkeleton = (
+    <DoubleBorderBox
+      sx={[
+        {
+          width: "100%",
+          p: (theme) => ({
+            xs: theme.spacing(1) + " !important",
+            md: theme.spacing(2) + " !important",
+          }),
+          "& .MuiSkeleton-root:last-child": {
+            mb: 0,
+          },
+        },
+      ]}
+    >
+      {new Array(7).fill().map((_, ix) => {
+        return (
+          <Skeleton
+            animation="wave"
+            height={isXs ? 130 : 90}
+            key={ix}
+            sx={{ mb: 2 }}
+            variant="rectangular"
+          />
+        );
+      })}
+    </DoubleBorderBox>
+  );
 
   return (
     <Fragment>
-      {displayHeadline && <QuestHeadline />}
+      {fromMainNavigation ? (
+        <QuestsLayout displayHeadline={displayHeadline} rightExpanded={true}>
+          {questListSkeleton}
 
-      <Grid container justifyContent={"center"}>
-        <Grid item sm={fromMainNavigation ? 8 : 12} xs={12}>
-          <DoubleBorderBox
-            sx={[
-              {
-                width: "100%",
-                p: (theme) => ({
-                  xs: theme.spacing(1) + " !important",
-                  md: theme.spacing(2) + " !important",
-                }),
-              },
-            ]}
-          >
-            {new Array(20).fill().map((_, ix) => {
-              return (
-                <Skeleton
-                  animation="wave"
-                  height={isXs ? 130 : 90}
-                  key={ix}
-                  sx={{ mb: 2 }}
-                  variant="rectangular"
-                />
-              );
-            })}
-          </DoubleBorderBox>
-        </Grid>
-      </Grid>
+          <Fragment>
+            <ProductDetailStickyWrapper>
+              <QuestDetailSkeleton />
+            </ProductDetailStickyWrapper>
+          </Fragment>
+        </QuestsLayout>
+      ) : (
+        <Fragment>{questListSkeleton}</Fragment>
+      )}
     </Fragment>
   );
 }

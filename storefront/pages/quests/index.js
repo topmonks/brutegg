@@ -1,7 +1,8 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useState } from "react";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "react-query";
+import { QuestDetail } from "../../components/quests/quest-detail";
 import { QuestDetailSkeleton } from "../../components/quests/quest-detail-skeleton";
 import QuestList from "../../components/quests/quest-list";
 import QuestsLayout from "../../components/quests/quests-layout";
@@ -16,6 +17,15 @@ export async function getStaticProps(_context) {
 
   await queryClient.prefetchQuery(["quests"], getQuestsQuery);
 
+  const firstQuest = queryClient.getQueryData(["quests"]).results[0];
+
+  if (firstQuest) {
+    await queryClient.prefetchQuery(
+      ["quests", firstQuest?.id],
+      () => firstQuest
+    );
+  }
+
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
@@ -24,13 +34,24 @@ export async function getStaticProps(_context) {
 }
 
 export default function Quests() {
-  const [questSkeletonDisplayed, setQuestSkeletonDisplayed] = useState(false);
+  const { data: quests } = useQuery(["quests"], getQuestsQuery);
+  const firstQuest = quests?.results[0];
+  const firstQuestId = firstQuest?.id;
+
+  const [selectedQuestIdOnClick, setSelectedQuestIdOnClick] =
+    useState(firstQuestId);
+
+  const [questSkeletonDisplayed, setQuestSkeletonDisplayed] = useState(
+    Boolean(firstQuest)
+  );
 
   const onStoreItemChange = useCallback((event) => {
+    const selectedQuestId = event.detail.quest?.id;
     setQuestSkeletonDisplayed(true);
+    setSelectedQuestIdOnClick(selectedQuestId);
 
     setTimeout(() => {
-      scrollToProductId(event.detail.product?.id);
+      scrollToProductId(selectedQuestId);
     }, 0);
   }, []);
   useEventTarget(QUESTS_ITEM_CHANGE, onStoreItemChange);
@@ -41,11 +62,19 @@ export default function Quests() {
         <title>Brute merch - Quests</title>
       </Head>
       <QuestsLayout rightExpanded={questSkeletonDisplayed}>
-        <QuestList displayHeadline={false} stretched={questSkeletonDisplayed} />
+        <QuestList
+          displayHeadline={false}
+          selectedQuestId={firstQuestId}
+          stretched={questSkeletonDisplayed}
+        />
 
         <Fragment>
           <ProductDetailStickyWrapper>
-            <QuestDetailSkeleton />
+            {selectedQuestIdOnClick !== firstQuestId ? (
+              <QuestDetailSkeleton />
+            ) : (
+              <QuestDetail id={firstQuestId} />
+            )}
           </ProductDetailStickyWrapper>
         </Fragment>
       </QuestsLayout>

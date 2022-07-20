@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Typography, useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
@@ -7,7 +8,6 @@ import { keyframes } from "@emotion/react";
 import Image from "next/image";
 
 import { getProduct } from "../../libs/swell";
-import { ProductPropTypes } from "../../types/swell";
 import PriceTag from "../price-tag";
 import StyledDescription from "../styled-description";
 import DiscordButton from "../discord-button";
@@ -37,12 +37,12 @@ const shakeChest = keyframes`
  * @param {Object} props
  * @param {import("../../types/swell").Product} props.quest
  */
-export function QuestDetail() {
+export function QuestDetail({ id: idFromProps }) {
   const { t } = useTranslation("Quests");
   const router = useRouter();
-  const {
-    slug: [id],
-  } = router.query;
+  const routerId = router.query.slug?.[0];
+
+  const id = idFromProps || routerId;
 
   const { data: quest } = useQuery(["quests", id], () => getProduct(id));
 
@@ -236,5 +236,5 @@ export function QuestDetail() {
 }
 
 QuestDetail.propTypes = {
-  quest: ProductPropTypes,
+  id: PropTypes.string,
 };
