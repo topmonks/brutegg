@@ -56,7 +56,7 @@ function QuestsSkeleton({
   return (
     <Fragment>
       {fromMainNavigation ? (
-        <QuestsLayout displayHeadline={displayHeadline} rightExpanded={true}>
+        <QuestsLayout displayHeadline={displayHeadline} rightExpanded={!isXs}>
           {questListSkeleton}
 
           <Fragment>

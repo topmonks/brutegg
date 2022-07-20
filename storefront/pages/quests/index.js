@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import Head from "next/head";
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useState } from "react";
@@ -41,13 +42,13 @@ export default function Quests() {
   const [selectedQuestIdOnClick, setSelectedQuestIdOnClick] =
     useState(firstQuestId);
 
-  const [questSkeletonDisplayed, setQuestSkeletonDisplayed] = useState(
+  const [rightDetailDisplayed, setRightDetailDisplayed] = useState(
     Boolean(firstQuest)
   );
 
   const onStoreItemChange = useCallback((event) => {
     const selectedQuestId = event.detail.quest?.id;
-    setQuestSkeletonDisplayed(true);
+    setRightDetailDisplayed(true);
     setSelectedQuestIdOnClick(selectedQuestId);
 
     setTimeout(() => {
@@ -56,21 +57,28 @@ export default function Quests() {
   }, []);
   useEventTarget(QUESTS_ITEM_CHANGE, onStoreItemChange);
 
+  const displaySkeleton = selectedQuestIdOnClick !== firstQuestId;
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"), {
+    noSsr: true,
+  });
+
   return (
     <Fragment>
       <Head>
         <title>Brute merch - Quests</title>
       </Head>
-      <QuestsLayout rightExpanded={questSkeletonDisplayed}>
+      <QuestsLayout
+        rightExpanded={rightDetailDisplayed && (!isXs || displaySkeleton)}
+      >
         <QuestList
           displayHeadline={false}
           selectedQuestId={firstQuestId}
-          stretched={questSkeletonDisplayed}
+          stretched={rightDetailDisplayed}
         />
 
         <Fragment>
           <ProductDetailStickyWrapper>
-            {selectedQuestIdOnClick !== firstQuestId ? (
+            {displaySkeleton ? (
               <QuestDetailSkeleton />
             ) : (
               <QuestDetail id={firstQuestId} />
