@@ -34,6 +34,8 @@ Anchor.propTypes = {
   href: PropTypes.string,
 };
 
+const VALID_ID_REGEX = /([A-Za-z])+([A-Za-z0-9-_.:])*/gm;
+
 function AnchoredHeaders({ children, onGenerateHeadings = () => {} }) {
   const localRef = useRef();
   const [headingsHrefs, setHeadingsHrefs] = useState();
@@ -43,7 +45,11 @@ function AnchoredHeaders({ children, onGenerateHeadings = () => {} }) {
     const headings = Array.from(el.querySelectorAll("h1,h2,h3,h4,h5"));
 
     headings.forEach((h) => {
-      h.id = deburr(h.innerText).replace(/ /g, "-").toLowerCase();
+      h.id = deburr(h.innerText)
+        .trim()
+        .replace(/[ ,]/g, "-")
+        .match(VALID_ID_REGEX)?.[0]
+        .toLowerCase();
     });
 
     const headingsHrefs = headings.map((h) => ({
