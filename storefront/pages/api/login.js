@@ -1,6 +1,7 @@
 import { withSessionRoute } from "../../libs/with-session";
 import { recoverPersonalSignature } from "@metamask/eth-sig-util";
 import { composeNonce } from "../../libs/web3";
+import { log } from "../../libs/logger";
 
 function checkSignature(nonce, signature) {
   const msgParams = {
@@ -14,6 +15,10 @@ export default withSessionRoute(loginRoute);
 
 async function loginRoute(req, res) {
   const { address, signature, message, date } = req.body;
+  log({
+    message: "Login attemp",
+    ...req.body,
+  });
   const recoveredAddress = checkSignature(
     composeNonce(message, date),
     signature
@@ -22,6 +27,11 @@ async function loginRoute(req, res) {
   if (recoveredAddress.toLowerCase() !== address.toLowerCase()) {
     res.status(400).send({
       error: `signature check failed, address sent ${address}, recovered address ${recoveredAddress}`,
+    });
+    log({
+      message: "signature check failed",
+      address,
+      recoveredAddress,
     });
     return;
   }
@@ -32,6 +42,10 @@ async function loginRoute(req, res) {
   if (timeDiff > 6e5) {
     res.status(400).send({
       error: `expired time nonce, time diff ${timeDiff}`,
+    });
+    log({
+      message: "expired time nonce",
+      timeDiff,
     });
     return;
   }
