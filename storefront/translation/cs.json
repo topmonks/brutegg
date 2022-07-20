@@ -111,11 +111,11 @@
     "How to?": "Jak na to?"
   },
   "Rarity": {
-    "common": "Běžné",
-    "uncommon": "Neobvyklé",
-    "rare": "Vzácné",
-    "epic": "Epické",
-    "legendary": "Legendární"
+    "common": "Common",
+    "uncommon": "Uncommon",
+    "rare": "Rare",
+    "epic": "Epic",
+    "legendary": "Legendary"
   },
   "StoreItem": {
     "Remaining rewards": "Zbývá odměn"
