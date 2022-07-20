@@ -140,8 +140,8 @@ export default function Navbar() {
   const topMenu = useMemo(
     () =>
       [
-        [t("Quests"), LINKS.QUESTS],
         [t("Rewards"), LINKS.STORE],
+        [t("Quests"), LINKS.QUESTS],
         [t("FAQ"), LINKS.FAQ],
         (ethereum.account ||
           [USER_LINKS.PROFILE, USER_LINKS.WALLET].includes(router.asPath)) && [
