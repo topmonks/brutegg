@@ -9,7 +9,7 @@ import { QuestDetailSkeleton } from "../../components/quests/quest-detail-skelet
 import { QuestDetail } from "../../components/quests/quest-detail";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
 import QuestsLayout from "../../components/quests/quests-layout";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 export async function getStaticPaths() {
   const quests = await getProducts({ category: "quests" });

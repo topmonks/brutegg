@@ -11,7 +11,7 @@ import ProductList, {
   scrollToProductId,
 } from "../../components/store/product-list";
 import { useMediaQuery } from "@mui/material";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 export async function getStaticProps(_context) {
   const queryClient = new QueryClient();

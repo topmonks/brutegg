@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { withLocale } from "../../libs/router";
 import swell, {
@@ -54,8 +54,7 @@ export function ProductDetail() {
 
   const {
     isSuccess: cartIsUpdated,
-    isLoading: cartIsLoading,
-    isRefetching: cartIsRefetching,
+    isFetching: cartIsFetching,
     isError,
     refetch,
   } = useQuery(
@@ -64,7 +63,7 @@ export function ProductDetail() {
       // clear cart, currently we don't support buying multiple items at once
       await swell.cart.setItems([]);
 
-      await swell.cart.addItem({
+      return await swell.cart.addItem({
         product_id: product.id,
         quantity: 1,
         ...(productVariant
@@ -81,11 +80,12 @@ export function ProductDetail() {
   );
 
   useEffect(() => {
+    console.log({ cartIsFetching, cartIsUpdated });
     if (!cartIsUpdated) {
       return;
     }
 
-    if (cartIsRefetching) {
+    if (cartIsFetching) {
       return;
     }
 
@@ -100,7 +100,7 @@ export function ProductDetail() {
     }
 
     router.push(withLocale(router.locale, USER_LINKS.CHECKOUT));
-  }, [cartIsUpdated, router, eventTarget, cartIsRefetching]);
+  }, [cartIsUpdated, router, eventTarget, cartIsFetching]);
 
   const initialSupply = product.attributes.brute_initial_supply?.value;
   const rarity = product.attributes.brute_rarity?.value;
@@ -273,11 +273,13 @@ export function ProductDetail() {
           ))}
           <Button
             disableElevation
-            disabled={cartIsLoading || cartIsUpdated || !inStock}
+            disabled={cartIsFetching || cartIsUpdated || !inStock}
             onClick={isError ? refetch : () => setSelectedProduct(product)}
             size="large"
             startIcon={
-              (cartIsLoading || cartIsUpdated) && <CircularProgress size={20} />
+              (cartIsFetching || cartIsUpdated) && (
+                <CircularProgress size={20} />
+              )
             }
             sx={{ width: { sm: "250px" } }}
             variant="contained"

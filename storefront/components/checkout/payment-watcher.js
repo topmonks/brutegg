@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from "recoil";
 import swell from "swell-js";
 

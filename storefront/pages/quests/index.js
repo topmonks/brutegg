@@ -2,7 +2,7 @@ import { useMediaQuery } from "@mui/material";
 import Head from "next/head";
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useState } from "react";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { QuestDetail } from "../../components/quests/quest-detail";
 import { QuestDetailSkeleton } from "../../components/quests/quest-detail-skeleton";
 import QuestList from "../../components/quests/quest-list";

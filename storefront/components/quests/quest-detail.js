@@ -12,7 +12,7 @@ import PriceTag from "../price-tag";
 import StyledDescription from "../styled-description";
 import DiscordButton from "../discord-button";
 import RedditButton from "../reddit-button";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const shakeChest = keyframes`
   10%, 90% {

@@ -1,13 +1,23 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { sessionState } from "../state/session";
 
 export default function useUpdateSession(prop, propName) {
   const [session, setSession] = useRecoilState(sessionState);
+  const updateSession = useCallback(
+    (obj) => {
+      setSession((s) => ({ ...s, ...obj }));
+    },
+    [setSession]
+  );
 
   useEffect(() => {
-    setSession((s) => ({ ...s, [propName]: prop }));
-  }, [prop, propName, setSession]);
+    if (!propName) {
+      return;
+    }
 
-  return [session, setSession];
+    updateSession({ [propName]: prop });
+  }, [prop, propName, updateSession]);
+
+  return [session, useUpdateSession];
 }

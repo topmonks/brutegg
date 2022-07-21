@@ -12,7 +12,7 @@ import { getProduct, getStoreProducts } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { useMediaQuery } from "@mui/material";
 import window from "../../../libs/window";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 export async function getStaticPaths() {
   const products = await getStoreProducts({ category: "store" });

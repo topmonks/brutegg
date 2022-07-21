@@ -8,7 +8,7 @@ import pageSkeleton from "../../components/page-skeleton";
 import { LINKS } from "../../components/navbar";
 import { getProductsQuery } from "../../libs/swell";
 import window from "../../libs/window";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const STRETCHED_STORE_LIST_GRID = {
   lg: 15,

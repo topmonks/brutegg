@@ -1,6 +1,6 @@
 import { alpha, Typography } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import AnchoredHeaders from "../../components/anchored-headers";
 import { style } from "../../components/double-border-box";
 import FAQLayout from "../../components/faq/faq-layout";

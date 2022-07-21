@@ -9,7 +9,7 @@ import { getQuestsQuery } from "../../libs/swell";
 import window from "../../libs/window";
 import QuestListItem from "./quest-list-item";
 import DoubleBorderBox from "../double-border-box";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const STRETCHED_STORE_LIST_GRID = {
   xs: 12,

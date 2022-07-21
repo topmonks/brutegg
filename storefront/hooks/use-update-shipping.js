@@ -1,9 +1,12 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import swell from "swell-js";
 
 import fetchThrowHttpError from "../libs/fetch-throw-http-error.mjs";
+import useUpdateSession from "./use-update-session.js";
 
 export default function useUpdateShipping(formData) {
+  const [, _updateSession] = useUpdateSession();
+
   const upsertCustomerResult = useQuery(
     ["/api/swell/upsert-customer", formData],
     () =>

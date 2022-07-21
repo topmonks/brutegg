@@ -7,7 +7,7 @@ import {
   QueryCache,
   QueryClient,
   QueryClientProvider as ReactQueryClientProvider,
-} from "react-query";
+} from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import { snackbarState } from "../state/snackbar";
 import window from "../libs/window";

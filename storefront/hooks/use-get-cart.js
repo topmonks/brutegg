@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import swell from "swell-js";
 
 export default function useGetCart(opts) {

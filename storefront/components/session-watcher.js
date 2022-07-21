@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import swell from "swell-js";
 
@@ -12,7 +12,7 @@ export default function SessionWatcher() {
   const session = useRecoilValue(sessionState);
 
   const { data: customer } = useQuery(
-    ["/api/swell/get-customer", session?.address],
+    ["/api/swell/get-customer/", session?.address],
     /**
      * @returns {Promise<import("../types/swell")>}
      */
@@ -34,7 +34,7 @@ export default function SessionWatcher() {
     }
   );
 
-  const { refetch: reUpdateCardAccount } = useQuery(
+  const { refetch: _reUpdateCardAccount } = useQuery(
     ["/swell.cart.update/", customer?.email],
     () =>
       swell.cart.update({
@@ -48,17 +48,17 @@ export default function SessionWatcher() {
     }
   );
 
-  useEffect(() => {
-    if (!session) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!session) {
+  //     return;
+  //   }
 
-    if (!customer) {
-      return;
-    }
+  //   if (!customer) {
+  //     return;
+  //   }
 
-    reUpdateCardAccount();
-  }, [session, reUpdateCardAccount, customer]);
+  //   reUpdateCardAccount();
+  // }, [session, reUpdateCardAccount, customer]);
 
   useEffect(() => {
     if (!session) {
