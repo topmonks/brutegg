@@ -37,6 +37,9 @@ export default function useUpdateShipping(formData) {
     ["/swell.cart.update/", formData],
     () =>
       swell.cart.update({
+        account: {
+          email: formData.email,
+        },
         shipping: {
           name: formData.firstName + " " + formData.lastName,
           address1: formData.address1,

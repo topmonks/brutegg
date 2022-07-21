@@ -9,7 +9,7 @@ import { Box, alpha } from "@mui/system";
 import { useTheme } from "@emotion/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useQuery } from "@tanstack/react-query";
 
@@ -42,7 +42,6 @@ export function ProductDetail() {
 
   const eventTarget = useRecoilValue(eventTargetState);
 
-  const [selectedProduct, setSelectedProduct] = useState();
   const productVariant = useRecoilValue(productVariantState(product.id));
   const productOptions = useRecoilValue(productOptionsState(product.id));
 
@@ -52,18 +51,15 @@ export function ProductDetail() {
     );
   }, [product]);
 
-  const {
-    isSuccess: cartIsUpdated,
-    isFetching: cartIsFetching,
-    isError,
-    refetch,
-  } = useQuery(
-    ["/swell.cart.add/", selectedProduct?.id],
-    async () => {
-      // clear cart, currently we don't support buying multiple items at once
+  const [cartIsUpdating, setCartIsUpdating] = useState(false);
+
+  const addToCart = useCallback(async () => {
+    try {
+      setCartIsUpdating(true);
+
       await swell.cart.setItems([]);
 
-      return await swell.cart.addItem({
+      const result = await swell.cart.addItem({
         product_id: product.id,
         quantity: 1,
         ...(productVariant
@@ -72,23 +68,14 @@ export function ProductDetail() {
             }
           : {}),
       });
-    },
-    {
-      enabled: Boolean(selectedProduct?.id) && inStock,
-      refetchOnWindowFocus: false,
-    }
-  );
 
-  useEffect(() => {
-    console.log({ cartIsFetching, cartIsUpdated });
-    if (!cartIsUpdated) {
-      return;
+      return result;
+    } finally {
+      setCartIsUpdating(false);
     }
+  }, [productVariant, productOptions, product]);
 
-    if (cartIsFetching) {
-      return;
-    }
-
+  const redirectToCheckout = useCallback(() => {
     if (eventTarget && window.CustomEvent) {
       eventTarget.dispatchEvent(
         new window.CustomEvent(NAVBAR_CHANGE, {
@@ -100,7 +87,7 @@ export function ProductDetail() {
     }
 
     router.push(withLocale(router.locale, USER_LINKS.CHECKOUT));
-  }, [cartIsUpdated, router, eventTarget, cartIsFetching]);
+  }, [router, eventTarget]);
 
   const initialSupply = product.attributes.brute_initial_supply?.value;
   const rarity = product.attributes.brute_rarity?.value;
@@ -273,14 +260,10 @@ export function ProductDetail() {
           ))}
           <Button
             disableElevation
-            disabled={cartIsFetching || cartIsUpdated || !inStock}
-            onClick={isError ? refetch : () => setSelectedProduct(product)}
+            disabled={cartIsUpdating || !inStock}
+            onClick={() => addToCart().then(redirectToCheckout)}
             size="large"
-            startIcon={
-              (cartIsFetching || cartIsUpdated) && (
-                <CircularProgress size={20} />
-              )
-            }
+            startIcon={cartIsUpdating && <CircularProgress size={20} />}
             sx={{ width: { sm: "250px" } }}
             variant="contained"
           >

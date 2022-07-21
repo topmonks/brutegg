@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Fragment, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useFormData from "../../hooks/use-form-data";
@@ -17,7 +17,11 @@ import Reddit from "./form/reddit";
 import Discord from "./form/discord";
 import Instagram from "./form/instagram";
 
-export default function Form({ onSubmit, initialFormState }) {
+export default function Form({
+  onSubmit,
+  initialFormState,
+  onSubmitIsLoading = false,
+}) {
   const { t } = useTranslation("Profile");
   const [formData, setFormData, onChange] = useFormData(defaultFormState);
 
@@ -93,8 +97,9 @@ export default function Form({ onSubmit, initialFormState }) {
           >
             <Button
               disableElevation
-              disabled={!profileSaveEnabled}
+              disabled={!profileSaveEnabled || onSubmitIsLoading}
               size="large"
+              startIcon={onSubmitIsLoading && <CircularProgress size={20} />}
               sx={{ width: { xs: "100%", sm: "auto" } }}
               type="submit"
               variant="contained"
@@ -111,4 +116,5 @@ export default function Form({ onSubmit, initialFormState }) {
 Form.propTypes = {
   initialFormState: PropTypes.object,
   onSubmit: PropTypes.func,
+  onSubmitIsLoading: PropTypes.bool,
 };

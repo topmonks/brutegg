@@ -48,18 +48,6 @@ export default function SessionWatcher() {
     }
   );
 
-  // useEffect(() => {
-  //   if (!session) {
-  //     return;
-  //   }
-
-  //   if (!customer) {
-  //     return;
-  //   }
-
-  //   reUpdateCardAccount();
-  // }, [session, reUpdateCardAccount, customer]);
-
   useEffect(() => {
     if (!session) {
       return;

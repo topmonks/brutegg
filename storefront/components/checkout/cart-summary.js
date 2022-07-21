@@ -114,7 +114,10 @@ function CartItem({ item }) {
           )}
         </Box>
         <Box>
-          <Typography variant="subtitle1">{item.product.name}</Typography>
+          <Typography variant="subtitle1">
+            {item.product.name}
+            {item.variant && <Fragment> - {item.variant.name}</Fragment>}
+          </Typography>
           <Typography variant="caption">
             <PriceTag
               amount={item.product.attributes.brute_price}
@@ -133,7 +136,8 @@ CartItem.propTypes = {
 };
 
 export default function CartSummary({ displayBalances = true }) {
-  const { data: cart } = useGetCart();
+  const { data: cart, isFetching } = useGetCart();
+
   const ethereum = useRecoilValue(ethereumState);
 
   const items = cart?.items || [];
@@ -151,9 +155,7 @@ export default function CartSummary({ displayBalances = true }) {
 
   return (
     <Fragment>
-      {items.map((i) => (
-        <CartItem item={i} key={i.id} />
-      ))}
+      {!isFetching && items.map((i) => <CartItem item={i} key={i.id} />)}
       {displayBalances && (
         <Box sx={{ mt: { xs: 1, sm: 10 } }}>
           <Balances cartPrice={cartPrice} />

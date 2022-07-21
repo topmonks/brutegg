@@ -54,11 +54,11 @@ export default function ProductVariantSelect({
             },
           },
         }}
-        id="demo-simple-select"
+        id="variant-select"
         label={options.name}
         labelId={options.id}
         onChange={handleChange}
-        value={productOptions?.[options.name]}
+        value={productOptions?.[options.name] || ""}
       >
         {options.values.map((v, ix) => (
           <MenuItem key={ix} value={v.id}>

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 
@@ -64,9 +64,11 @@ export default function Profile({ address, user }) {
   useUpdateSession(user, "user");
 
   const [, setSnackbar] = useRecoilState(snackbarState);
+  const [isLoading, setIsLoading] = useState(false);
 
   const upsertCustomer = useCallback(
     (body = {}) => {
+      setIsLoading(true);
       window
         ?.fetch("/api/swell/upsert-customer", {
           headers: {
@@ -98,7 +100,8 @@ export default function Profile({ address, user }) {
                 (await res.text()),
             });
           }
-        });
+        })
+        .finally(() => setIsLoading(false));
     },
     [t, setSnackbar]
   );
@@ -118,7 +121,11 @@ export default function Profile({ address, user }) {
           },
         }}
       >
-        <Form initialFormState={user} onSubmit={upsertCustomer} />
+        <Form
+          initialFormState={user}
+          onSubmit={upsertCustomer}
+          onSubmitIsLoading={isLoading}
+        />
       </UnlockMetamaskLayout>
     </ProfileLayout>
   );

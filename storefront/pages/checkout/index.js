@@ -81,10 +81,9 @@ export default function Checkout({ user, address }) {
 
   const [formData, setFormData] = useState();
 
-  const [{ error }, { data, isSuccess: cartIsUpdated, isFetching }] =
+  const [{ error }, { isSuccess: cartIsUpdated, isFetching }] =
     useUpdateShipping(formData);
 
-  console.log({ data, cartIsUpdated });
   useEffect(() => {
     if (!error) {
       return;
