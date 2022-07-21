@@ -27,6 +27,11 @@ jobs:
           cache-dependency-path: storefront/package-lock.json
       - name: Install Dependencies
         run: npm ci
+      - name: Copy secrets
+        run: |
+          echo >> .env.production
+          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env.production
+          echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> .env.production
       - name: Nextjs build
         run: |
           npm run build
@@ -65,13 +70,13 @@ jobs:
         run: |
           cp -rT storefront/public firebase/storefront-public
           cp ./storefront/next.config.js ./firebase/functions/nextjs/next.config.cjs
-      - name: Copy secrets
-        run: |
-          echo >> .env
-          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env.production
-          echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> .env.production
       - name: Copy Envs
         run: cp storefront/.env* firebase/functions/
+      - name: Copy secrets
+        run: |
+          echo >> firebase/functions/.env
+          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> firebase/functions/.env
+          echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> firebase/functions/.env
       - name: Deploy Firebase Functions
         uses: docker://w9jds/firebase-action:master
         with:
