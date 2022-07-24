@@ -16,7 +16,10 @@ export default function StoreLayout({
         <Grid
           item
           sm={rightExpanded ? 5 : 12}
-          sx={[rightExpanded && { display: { xs: "none", sm: "block" } }]}
+          sx={[
+            { width: { xs: "100%", sm: "auto" } },
+            rightExpanded && { display: { xs: "none", sm: "block" } },
+          ]}
         >
           {children[0]}
         </Grid>
