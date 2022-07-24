@@ -40,6 +40,13 @@ export default function FAQ() {
           "& h1,h2,h3,h4": {
             scrollMarginTop: "16px",
           },
+          a: (theme) => ({
+            color: theme.palette.primary.main,
+            background: alpha(theme.palette.primary.main, 0.1),
+            padding: 1,
+            textShadow: "0 0 5px black",
+            borderRadius: 2,
+          }),
           "& img": (theme) => ({
             maxWidth: "100%",
             my: 2,
