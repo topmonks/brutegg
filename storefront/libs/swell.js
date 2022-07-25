@@ -28,13 +28,13 @@ export function isStockNotTracked(product) {
 }
 
 export async function getStoreProducts(opts) {
-  const category = await getCategory("store");
-  const storeCategories = category.children.results
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ id }) => id)
-    .concat([category.id]);
+  // const category = await getCategory("store");
+  // const storeCategories = category.children.results
+  //   .sort((a, b) => a.sort - b.sort)
+  //   .map(({ id }) => id)
+  //   .concat([category.id]);
 
-  const products = await getProducts({ ...opts, categories: storeCategories });
+  const products = await getProducts({ ...opts, category: "store" });
 
   return products;
 }
