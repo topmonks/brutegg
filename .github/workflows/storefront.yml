@@ -76,7 +76,12 @@ jobs:
         run: cp storefront/.env* firebase/functions/
       - name: Copy secrets
         run: |
-          mv firebase/functions/.env.production firebase/functions/.env
+          echo >> .env.prod
+          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env.prod
+          echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> .env.prod
+          echo INFURA_MAINNET="${{ secrets.INFURA_MAINNET }}" >> .env.prod
+          echo INFURA_TESTNET="${{ secrets.INFURA_TESTNET }}" >> .env.prod
+        working-directory: firebase/functions
       - name: Deploy Firebase Functions
         uses: docker://w9jds/firebase-action:master
         with:
