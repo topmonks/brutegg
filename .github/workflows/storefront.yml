@@ -76,11 +76,11 @@ jobs:
         run: cp storefront/.env* firebase/functions/
       - name: Copy secrets
         run: |
-          echo >> .env.prod
-          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env.prod
-          echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> .env.prod
-          echo INFURA_MAINNET="${{ secrets.INFURA_MAINNET }}" >> .env.prod
-          echo INFURA_TESTNET="${{ secrets.INFURA_TESTNET }}" >> .env.prod
+          echo >> .env
+          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env
+          echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> .env
+          echo INFURA_MAINNET="${{ secrets.INFURA_MAINNET }}" >> .env
+          echo INFURA_TESTNET="${{ secrets.INFURA_TESTNET }}" >> .env
         working-directory: firebase/functions
       - name: Deploy Firebase Functions
         uses: docker://w9jds/firebase-action:master
