@@ -16,7 +16,7 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 export async function getStaticProps(_context) {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("products", getProductsQuery);
+  await queryClient.prefetchQuery(["products"], getProductsQuery);
 
   return {
     props: {

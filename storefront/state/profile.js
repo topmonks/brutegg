@@ -1,6 +1,9 @@
 export const defaultFormState = {
   firstName: "",
   lastName: "",
+  nickName: "",
+  email: "",
+  phone: "",
   discord: "",
   reddit: "",
   instagram: "",

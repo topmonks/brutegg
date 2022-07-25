@@ -10,12 +10,13 @@ import AddressOne from "../checkout/form/address-1";
 import City from "../checkout/form/city";
 import Zip from "../checkout/form/zip";
 import { removeEmpty } from "../../libs/util";
-import NickName from "../checkout/form/nickname";
 import { defaultFormState } from "../../state/profile";
 import { profileValidator } from "../../validations/profile";
 import Reddit from "./form/reddit";
 import Discord from "./form/discord";
 import Instagram from "./form/instagram";
+import Email from "../checkout/form/email";
+import PhoneNumber from "../checkout/form/phone-number";
 
 export default function Form({
   onSubmit,
@@ -64,7 +65,8 @@ export default function Form({
           </Typography>
           <FirstName allowEmpty formData={formData} onChange={onChange} />
           <LastName allowEmpty formData={formData} onChange={onChange} />
-          <NickName formData={formData} onChange={onChange} />
+          <Email formData={formData} onChange={onChange} />
+          <PhoneNumber formData={formData} onChange={onChange} />
           <Typography sx={{ fontWeight: "bold", mt: 1 }} variant="subtitle1">
             {t("Socials")}
           </Typography>

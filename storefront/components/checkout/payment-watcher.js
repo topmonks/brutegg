@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from "recoil";
 import swell from "swell-js";
 
@@ -10,15 +10,18 @@ import { bruteState } from "../../state/brute-token";
 import { ethereumState } from "../../state/ethereum";
 
 export default function PaymentWatcher() {
-  const [paymentTx, _isTxPending, isTxSuccess, _isTxFailed] = useWatchPayment();
+  const [paymentTx, isTxPending, isTxSuccess, _isTxFailed] = useWatchPayment();
+  const wasTxPending = useRef(false);
+  if (isTxPending) {
+    wasTxPending.current = true;
+  }
 
   const ethereum = useRecoilValue(ethereumState);
 
   const { data: cart } = useGetCart();
 
-  const { data: _cartUpdatedData, isFetched: cartIsUpdated } = useQuery(
-    ["/swell.cart.update/", cart?.id, paymentTx],
-    () =>
+  const updateCart = useMutation(
+    (paymentTx) =>
       swell.cart.update({
         metadata: {
           transactionHash: paymentTx.transactionHash,
@@ -28,13 +31,28 @@ export default function PaymentWatcher() {
         },
       }),
     {
-      enabled:
-        Boolean(paymentTx) && Boolean(paymentTx?.state) && Boolean(cart?.id),
+      onSuccess: () => {
+        if (isTxSuccess && wasTxPending.current) {
+          createOrder.mutate();
+        }
+      },
     }
   );
 
-  const { data: _createdOrder, isFetched: orderIsCreated } = useQuery(
-    ["/api/swell/create-order", cart?.id, paymentTx],
+  const updateCartMutate = updateCart.mutate;
+
+  useEffect(() => {
+    if (!paymentTx || !paymentTx.state) {
+      return;
+    }
+    if (!cart?.id) {
+      return;
+    }
+
+    updateCartMutate(paymentTx);
+  }, [paymentTx, cart?.id, updateCartMutate]);
+
+  const createOrder = useMutation(
     () =>
       window
         ?.fetch("/api/swell/create-order", {
@@ -50,20 +68,13 @@ export default function PaymentWatcher() {
         .then(fetchThrowHttpError)
         .then((res) => res.json()),
     {
-      enabled: isTxSuccess && cartIsUpdated,
-      refetchOnWindowFocus: false,
+      onSuccess: () => {
+        queryClient.invalidateQueries(["/swell.cart.get/"]);
+      },
     }
   );
 
   const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (!orderIsCreated) {
-      return;
-    }
-
-    queryClient.invalidateQueries(["/swell.cart.get/"]);
-  }, [orderIsCreated, queryClient]);
 
   const refreshBrute = useRecoilRefresher_UNSTABLE(bruteState);
 

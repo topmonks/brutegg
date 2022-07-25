@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
+import { useMutation } from "@tanstack/react-query";
 
 import Form from "../../components/profile/form";
 import ProfileLayout from "../../components/profile/profile-layout";
@@ -13,6 +13,7 @@ import window from "../../libs/window";
 import { withSessionSsr } from "../../libs/with-session";
 import { defaultFormState } from "../../state/profile";
 import { snackbarState } from "../../state/snackbar";
+import { composeVirtualEmailFromAddress } from "../../libs/web3";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -40,10 +41,17 @@ export const getServerSideProps = withSessionSsr(async (context) => {
     return { props: resultProps };
   }
 
+  const email =
+    user.email === composeVirtualEmailFromAddress(publicAddress)
+      ? ""
+      : user.email;
+
   resultProps.user = removeEmpty({
     id: user.id,
     firstName: user.first_name,
     lastName: user.last_name,
+    email: email,
+    phone: user.phone,
     discord: user.discord_username,
     reddit: user.reddit_username,
     instagram: user.instagram_username,
@@ -61,14 +69,12 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 export default function Profile({ address, user }) {
   const { t } = useTranslation("Profile");
   useUpdateSession(address, "address");
-  useUpdateSession(user, "user");
+  const [, , setSession] = useUpdateSession(user, "user");
 
   const [, setSnackbar] = useRecoilState(snackbarState);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const upsertCustomer = useCallback(
-    (body = {}) => {
-      setIsLoading(true);
+  const upsertCustomer = useMutation(
+    (body = {}) =>
       window
         ?.fetch("/api/swell/upsert-customer", {
           headers: {
@@ -81,29 +87,22 @@ export default function Profile({ address, user }) {
           if (res.status === 200) {
             const user = await res.json();
             if (user.errors) {
-              setSnackbar({
-                message:
-                  t("Error response", { ns: "Common" }) +
-                  " " +
-                  Object.values(user.errors).map((e) => e.message),
-              });
-            } else {
-              setSnackbar({
-                message: t("Account successfully updated", { ns: "Common" }),
-              });
+              throw new Error(Object.values(user.errors).map((e) => e.message));
             }
+
+            return user;
           } else {
-            setSnackbar({
-              message:
-                t("Error response", { ns: "Common" }) +
-                " " +
-                (await res.text()),
-            });
+            throw new Error(await res.text());
           }
-        })
-        .finally(() => setIsLoading(false));
-    },
-    [t, setSnackbar]
+        }),
+    {
+      onSuccess: (_data, formData) => {
+        setSession((s) => ({ ...s, user: { ...s.user, ...formData } }));
+        setSnackbar({
+          message: t("Account successfully updated", { ns: "Common" }),
+        });
+      },
+    }
   );
 
   return (
@@ -123,8 +122,8 @@ export default function Profile({ address, user }) {
       >
         <Form
           initialFormState={user}
-          onSubmit={upsertCustomer}
-          onSubmitIsLoading={isLoading}
+          onSubmit={upsertCustomer.mutate}
+          onSubmitIsLoading={upsertCustomer.isLoading}
         />
       </UnlockMetamaskLayout>
     </ProfileLayout>

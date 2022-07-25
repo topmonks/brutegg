@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import swell from "swell-js";
 
@@ -28,25 +28,24 @@ export default function SessionWatcher() {
 
           return e;
         }),
-    {
-      enabled: Boolean(session?.address),
-      refetchOnWindowFocus: false,
-    }
+    { enabled: Boolean(session?.address) }
   );
 
-  const { refetch: _reUpdateCardAccount } = useQuery(
-    ["/swell.cart.update/", customer?.email],
-    () =>
-      swell.cart.update({
-        account: {
-          email: customer.email,
-        },
-      }),
-    {
-      enabled: Boolean(customer?.email),
-      refetchOnWindowFocus: false,
-    }
+  const updateCartAccount = useMutation((email) =>
+    swell.cart.update({
+      account: {
+        email,
+      },
+    })
   );
+
+  const updateCartAccountMutate = updateCartAccount.mutate;
+
+  useEffect(() => {
+    if (customer?.email) {
+      updateCartAccountMutate(customer.email);
+    }
+  }, [customer?.email, updateCartAccountMutate]);
 
   useEffect(() => {
     if (!session) {

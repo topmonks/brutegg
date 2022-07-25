@@ -81,8 +81,10 @@ export default function Checkout({ user, address }) {
 
   const [formData, setFormData] = useState();
 
-  const [{ error }, { isSuccess: cartIsUpdated, isFetching }] =
-    useUpdateShipping(formData);
+  const [
+    { error, isLoading: upsertCustomerIsLoading },
+    { isSuccess: cartIsUpdated, isLoading: cartIsLoading },
+  ] = useUpdateShipping(formData);
 
   useEffect(() => {
     if (!error) {
@@ -154,7 +156,7 @@ export default function Checkout({ user, address }) {
               disableActions={paymentDialogOpen}
               initialFormState={user}
               onSubmit={setFormData}
-              submitIsLoading={isFetching}
+              submitIsLoading={upsertCustomerIsLoading || cartIsLoading}
             />
           </UnlockMetamaskLayout>
         </Fragment>

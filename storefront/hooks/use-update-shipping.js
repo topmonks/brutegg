@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import swell from "swell-js";
 
 import fetchThrowHttpError from "../libs/fetch-throw-http-error.mjs";
@@ -6,10 +7,10 @@ import useUpdateSession from "./use-update-session.js";
 
 export default function useUpdateShipping(formData) {
   const [, _updateSession] = useUpdateSession();
+  const queryClient = useQueryClient();
 
-  const upsertCustomerResult = useQuery(
-    ["/api/swell/upsert-customer", formData],
-    () =>
+  const upsertCustomer = useMutation(
+    (formData) =>
       window
         ?.fetch("/api/swell/upsert-customer", {
           headers: {
@@ -28,32 +29,37 @@ export default function useUpdateShipping(formData) {
           }
         }),
     {
-      enabled: Boolean(formData),
-      refetchOnWindowFocus: false,
+      onSuccess: () => {
+        queryClient.invalidateQueries(["/api/swell/get-customer/"]);
+        updateCart.mutate(formData);
+      },
     }
   );
 
-  const updateCartResult = useQuery(
-    ["/swell.cart.update/", formData],
-    () =>
-      swell.cart.update({
-        account: {
-          email: formData.email,
-        },
-        shipping: {
-          name: formData.firstName + " " + formData.lastName,
-          address1: formData.address1,
-          address2: formData.address2,
-          city: formData.city,
-          zip: formData.zip,
-          country: formData.country,
-        },
-      }),
-    {
-      enabled: Boolean(formData),
-      refetchOnWindowFocus: false,
-    }
+  const updateCart = useMutation((formData) =>
+    swell.cart.update({
+      account: {
+        email: formData.email,
+      },
+      shipping: {
+        name: formData.firstName + " " + formData.lastName,
+        address1: formData.address1,
+        address2: formData.address2,
+        city: formData.city,
+        zip: formData.zip,
+        country: formData.country,
+      },
+    })
   );
 
-  return [upsertCustomerResult, updateCartResult];
+  const upsertCustomerMutate = upsertCustomer.mutate;
+  useEffect(() => {
+    if (!formData) {
+      return;
+    }
+
+    upsertCustomerMutate(formData);
+  }, [formData, upsertCustomerMutate]);
+
+  return [upsertCustomer, updateCart];
 }

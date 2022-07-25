@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Hydrate,
+  MutationCache,
   QueryCache,
   QueryClient,
   QueryClientProvider as ReactQueryClientProvider,
@@ -20,6 +21,14 @@ export default function QueryClientProvider({ children, state, ...opts }) {
     () =>
       new QueryClient({
         defaultOptions: {},
+        mutationCache: new MutationCache({
+          onError: (error) => {
+            window.Rollbar?.error(error);
+            setSnackbar({
+              message: t("Error response", { ns: "Common" }) + " " + error,
+            });
+          },
+        }),
         queryCache: new QueryCache({
           onError: (error) => {
             window.Rollbar?.error(error);

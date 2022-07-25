@@ -19,5 +19,5 @@ export default function useUpdateSession(prop, propName) {
     updateSession({ [propName]: prop });
   }, [prop, propName, updateSession]);
 
-  return [session, useUpdateSession];
+  return [session, updateSession, setSession];
 }
