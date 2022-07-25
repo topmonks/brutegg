@@ -32,6 +32,8 @@ jobs:
           echo >> .env.production
           echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env.production
           echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> .env.production
+          echo INFURA_MAINNET="${{ secrets.INFURA_MAINNET }}" >> .env.production
+          echo INFURA_TESTNET="${{ secrets.INFURA_TESTNET }}" >> .env.production
       - name: Nextjs build
         run: |
           npm run build
