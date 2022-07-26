@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }) {
     <Fragment>
       <RecoilRoot>
         <Head>
-          <title>Brute merch shop</title>
+          <title>Brute.cz</title>
         </Head>
         <Web3Loader />
 

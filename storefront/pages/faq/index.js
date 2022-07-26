@@ -7,6 +7,8 @@ import FAQLayout from "../../components/faq/faq-layout";
 import { getFAQQuery } from "../../libs/swell";
 import _window from "../../libs/window";
 import { ProductPropTypes } from "../../types/swell";
+import Head from "next/head";
+import { useTranslation } from "react-i18next";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -88,8 +90,13 @@ export default function FAQ() {
     scrolledTo.current = true;
   }, [headings]);
 
+  const { t } = useTranslation();
+
   return (
     <FAQLayout links={headings}>
+      <Head>
+        <title>{t("FAQ", { ns: "Titles" })} | Brute</title>
+      </Head>
       <AnchoredHeaders onGenerateHeadings={setHeadings}>
         {content}
       </AnchoredHeaders>

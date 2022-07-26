@@ -12,6 +12,7 @@ import ProductList, {
 } from "../../components/store/product-list";
 import { useMediaQuery } from "@mui/material";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 export async function getStaticProps(_context) {
   const queryClient = new QueryClient();
@@ -39,11 +40,12 @@ export default function Store() {
   useEventTarget(STORE_ITEM_CHANGE, onStoreItemChange);
 
   const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const { t } = useTranslation();
 
   return (
     <Fragment>
       <Head>
-        <title>Brute merch - Store</title>
+        <title>{t("Rewards", { ns: "Titles" })} | Brute</title>
       </Head>
       <StoreLayout
         centerHeadline={!productSkeletonDisplayed}

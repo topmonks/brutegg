@@ -14,6 +14,7 @@ import { withSessionSsr } from "../../libs/with-session";
 import { defaultFormState } from "../../state/profile";
 import { snackbarState } from "../../state/snackbar";
 import { composeVirtualEmailFromAddress } from "../../libs/web3";
+import Head from "next/head";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -107,6 +108,9 @@ export default function Profile({ address, user }) {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>{t("Profile", { ns: "Titles" })} | Brute</title>
+      </Head>
       <UnlockMetamaskLayout
         AlignProps={{
           sx: {

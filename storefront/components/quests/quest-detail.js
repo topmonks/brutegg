@@ -1,18 +1,19 @@
 import PropTypes from "prop-types";
 import { Typography, useMediaQuery } from "@mui/material";
+import { alpha, Box } from "@mui/system";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { alpha, Box } from "@mui/system";
 import { keyframes } from "@emotion/react";
 import Image from "next/image";
+import Head from "next/head";
+import { useQuery } from "@tanstack/react-query";
 
 import { getProduct } from "../../libs/swell";
 import PriceTag from "../price-tag";
 import StyledDescription from "../styled-description";
 import DiscordButton from "../discord-button";
 import RedditButton from "../reddit-button";
-import { useQuery } from "@tanstack/react-query";
 
 const shakeChest = keyframes`
   10%, 90% {
@@ -56,6 +57,10 @@ export function QuestDetail({ id: idFromProps }) {
 
   return (
     <Fragment>
+      <Head>
+        <title>{quest.meta_title || quest.name} | Brute</title>
+        <meta content={quest.description} key="desc" name="description" />
+      </Head>
       <Box
         sx={{
           display: "flex",

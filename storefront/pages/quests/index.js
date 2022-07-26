@@ -12,6 +12,7 @@ import { scrollToProductId } from "../../components/store/product-list";
 import useEventTarget from "../../hooks/use-event-target";
 import { getQuestsQuery } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
+import { useTranslation } from "react-i18next";
 
 export async function getStaticProps(_context) {
   const queryClient = new QueryClient();
@@ -62,10 +63,12 @@ export default function Quests() {
     noSsr: true,
   });
 
+  const { t } = useTranslation();
+
   return (
     <Fragment>
       <Head>
-        <title>Brute merch - Quests</title>
+        <title>{t("Quests", { ns: "Titles" })} | Brute</title>
       </Head>
       <QuestsLayout
         rightExpanded={rightDetailDisplayed && (!isXs || displaySkeleton)}

@@ -26,6 +26,14 @@
     "FAQ": "Nápověda",
     "Profile": "Profil"
   },
+  "Titles": {
+    "Rewards": "Odměny",
+    "FAQ": "Nápověda",
+    "Profile": "Profil",
+    "Wallet": "Peněženka",
+    "Quests": "Questy",
+    "Checkout": "Dokončit objednávku"
+  },
   "FAQ": {
     "FAQ": "Nápověda",
     "Isn't there an answer to your question? Ask directly at": "Není zde odpověď na tvoji otázku? Zeptej se přímo na"

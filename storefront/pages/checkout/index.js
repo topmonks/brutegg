@@ -25,6 +25,7 @@ import { removeEmpty } from "../../libs/util";
 import { defaultFormState } from "../../state/checkout";
 import { composeVirtualEmailFromAddress } from "../../libs/web3";
 import SkipOnSSR from "../../components/skip-on-ssr";
+import Head from "next/head";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -126,6 +127,9 @@ export default function Checkout({ user, address }) {
 
   return (
     <Fragment>
+      <Head>
+        <title>{t("Checkout", { ns: "Titles" })} | Brute</title>
+      </Head>
       <PaymentWatcher />
       <Box sx={{ mb: 2 }}>
         <CheckoutHeadline />

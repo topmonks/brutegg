@@ -8,6 +8,7 @@ import {
 import { Box, alpha } from "@mui/system";
 import { useTheme } from "@emotion/react";
 import Image from "next/image";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -106,6 +107,10 @@ export function ProductDetail() {
 
   return (
     <Fragment>
+      <Head>
+        <title>{product.meta_title || product.name} | Brute</title>
+        <meta content={product.description} key="desc" name="description" />
+      </Head>
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <Box
           sx={{

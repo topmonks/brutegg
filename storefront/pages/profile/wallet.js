@@ -14,6 +14,7 @@ import MetamaskButton from "../../components/web3/metamask-button";
 import DisconnectButton from "../../components/profile/disconnect-button";
 import PriceTag from "../../components/price-tag";
 import { bruteState } from "../../state/brute-token";
+import Head from "next/head";
 
 export default function Wallet() {
   const { t } = useTranslation("Profile.Wallet");
@@ -23,6 +24,9 @@ export default function Wallet() {
 
   return (
     <ProfileLayout>
+      <Head>
+        <title>{t("Wallet", { ns: "Titles" })} | Brute</title>
+      </Head>
       <Fragment>
         <Typography component="h3" sx={{ fontWeight: "bold" }} variant="h6">
           {t("MetaMask wallet settings")}
