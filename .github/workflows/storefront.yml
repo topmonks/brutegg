@@ -27,23 +27,30 @@ jobs:
           cache-dependency-path: storefront/package-lock.json
       - name: Install Dependencies
         run: npm ci
+      # SWELL_SECRET_KEY is needed to next.js SSG
       - name: Copy secrets
         run: |
           echo >> .env.production
-          echo SESSION_PASSWORD="${{ secrets.SESSION_PASSWORD }}" >> .env.production
           echo SWELL_SECRET_KEY="${{ secrets.SWELL_SECRET_KEY }}" >> .env.production
-          echo INFURA_MAINNET="${{ secrets.INFURA_MAINNET }}" >> .env.production
-          echo INFURA_TESTNET="${{ secrets.INFURA_TESTNET }}" >> .env.production
       - name: Nextjs build
         run: |
           npm run build
           rm -rf ./.next/cache
-      - name: Archive Production Artifact
+      - name: Archive Next.js Build Artifact
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@master
         with:
           name: dist
           path: storefront/.next
+          retention-days: 1
+      # public folder contains dynamically generated sitemap,
+      # therefore is stored as build artifact
+      - name: Archive Production Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@master
+        with:
+          name: public
+          path: storefront/public
           retention-days: 1
 
   deploy:
@@ -63,14 +70,18 @@ jobs:
           cache-dependency-path: firebase/functions/package-lock.json
       - name: Install Dependencies
         run: npm ci --prefix firebase/functions
-      - name: Download Artifact
+      - name: Download build Artifact
         uses: actions/download-artifact@master
         with:
           name: dist
           path: firebase/functions/nextjs/.next
-      - name: Copy public statis assets
+      - name: Download public Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: public
+          path: firebase/storefront-public
+      - name: Copy next.js config
         run: |
-          cp -rT storefront/public firebase/storefront-public
           cp ./storefront/next.config.js ./firebase/functions/nextjs/next.config.cjs
       - name: Copy Envs
         run: cp storefront/.env* firebase/functions/
