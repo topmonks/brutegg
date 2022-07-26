@@ -32,7 +32,8 @@
     "Profile": "Profil",
     "Wallet": "Peněženka",
     "Quests": "Questy",
-    "Checkout": "Dokončit objednávku"
+    "Checkout": "Dokončit objednávku",
+    "List Orders": "Předchozí objednávky"
   },
   "FAQ": {
     "FAQ": "Nápověda",
@@ -51,6 +52,11 @@
     "Connected wallet": "Připojená peněženka",
     "You don't have a wallet connected at the moment. Do you know how to do that?": "Momentálně nemáš připojenou žádnou peněženku. Nevíš jak na to?",
     "Check here": "Koukni sem"
+  },
+  "Profile.Orders": {
+    "Created at": "Datum",
+    "Items": "Itemy",
+    "Transaction": "Transakce"
   },
   "MetamaskButton": {
     "Install MetaMask": "Nainstalujte Metamask",

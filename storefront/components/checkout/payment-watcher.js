@@ -24,6 +24,7 @@ export default function PaymentWatcher() {
     (paymentTx) =>
       swell.cart.update({
         metadata: {
+          chainId: ethereum.chainId,
           transactionHash: paymentTx.transactionHash,
           state: paymentTx.state,
           [[paymentTx.transactionHash, paymentTx.state].join("_")]:

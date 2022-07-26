@@ -129,6 +129,7 @@ export const LINKS = {
 export const USER_LINKS = {
   PROFILE: "/profile",
   WALLET: "/profile/wallet",
+  LIST_ORDERS: "/profile/orders",
   CHECKOUT: "/checkout",
 };
 

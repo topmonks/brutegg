@@ -30,6 +30,10 @@ export default function ProfileLayout({ children }) {
       textPrimary: t("Wallet"),
       href: USER_LINKS.WALLET,
     },
+    {
+      textPrimary: t("List Orders", { ns: "Titles" }),
+      href: USER_LINKS.LIST_ORDERS,
+    },
   ];
 
   return (
