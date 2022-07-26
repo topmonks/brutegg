@@ -45,8 +45,11 @@ export default function FAQ() {
           a: (theme) => ({
             color: theme.palette.primary.main,
             background: alpha(theme.palette.primary.main, 0.1),
-            padding: 1,
+            padding: 0.5,
+            lineHeight: 2,
             textShadow: "0 0 5px black",
+            fontWeight: "bold",
+            textDecoration: "underline",
             borderRadius: 2,
           }),
           "& img": (theme) => ({
