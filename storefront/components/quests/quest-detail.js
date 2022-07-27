@@ -160,7 +160,7 @@ export function QuestDetail({ id: idFromProps }) {
                   />
                 </a>
               </Box>
-              <Typography variant="caption">{t("Quest sponsor")}</Typography>
+              <Typography variant="caption">{t("Quest partner")}</Typography>
             </Box>
           )}
 
