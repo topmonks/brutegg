@@ -175,7 +175,7 @@ function ConnectedButton() {
     }
 
     const tokenImage =
-      "https://res.cloudinary.com/brutegg/image/upload/v1658258662/brutegg-swell/helmet-token-logo_cq9pce.png";
+      "https://res.cloudinary.com/brutegg/image/upload/v1658926189/brutegg-swell/helmet-token-logo_gwvlpe.png";
 
     const { address, decimals, symbol } = brute.contents.public;
     addToken(address, symbol, parseInt(decimals), tokenImage);

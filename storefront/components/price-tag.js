@@ -35,9 +35,9 @@ export default function PriceTag({
       {displayLogo && (
         <img
           alt="Brutecoin logo"
-          height={20}
-          src="https://res.cloudinary.com/brutegg/image/upload/v1658208358/brutegg-swell/helmet-price-tag_hbucpm.svg"
-          width={20}
+          height={21}
+          src="https://res.cloudinary.com/brutegg/image/upload/v1658926193/brutegg-swell/helmet-price-tag_uqgpy3.svg"
+          width={21}
         />
       )}
       {displayLetter && (

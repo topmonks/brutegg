@@ -22,9 +22,10 @@ export default function Document() {
           type="image/png"
         />
         <link href="/site.webmanifest" rel="manifest" />
-        <link color="#5bbad5" href="/safari-pinned-tab.svg" rel="mask-icon" />
-        <meta content="#b91d47" name="msapplication-TileColor" />
-        <meta content="#000" name="theme-color" />
+        <link color="#ea2122" href="/safari-pinned-tab.svg" rel="mask-icon" />
+        <meta content="#000000" name="msapplication-TileColor" />
+        <meta content="#000000" name="theme-color" />
+
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link
           crossOrigin="true"
