@@ -59,9 +59,7 @@ export default function Quests() {
   useEventTarget(QUESTS_ITEM_CHANGE, onStoreItemChange);
 
   const displaySkeleton = selectedQuestIdOnClick !== firstQuestId;
-  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"), {
-    noSsr: true,
-  });
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const { t } = useTranslation();
 

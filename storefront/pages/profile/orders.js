@@ -22,6 +22,7 @@ import { POLYGON_EXPLORER } from "../../libs/constants";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Box } from "@mui/system";
+import { withLocale } from "../../libs/router";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;
@@ -68,7 +69,7 @@ export const getServerSideProps = withSessionSsr(async (context) => {
  * @param {{orders: import("../../types/swell").Order[]}} param
  * @returns
  */
-export default function ListOrders({ address, orders }) {
+export default function ListOrders({ address, orders = [] }) {
   const { t } = useTranslation("Profile.Orders");
   useUpdateSession(address, "address");
 
@@ -126,7 +127,22 @@ export default function ListOrders({ address, orders }) {
                         return (
                           <Box
                             key={ix}
-                            sx={{ display: "flex", alignItems: "center" }}
+                            onClick={() => {
+                              router.push(
+                                withLocale(
+                                  router.locale,
+                                  "/store/item/" +
+                                    i.product.id +
+                                    "/" +
+                                    i.product.slug
+                                )
+                              );
+                            }}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              cursor: "pointer",
+                            }}
                           >
                             {thumbnail && (
                               <Box
