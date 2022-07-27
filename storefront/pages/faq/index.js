@@ -1,14 +1,13 @@
-import { alpha, Typography } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import AnchoredHeaders from "../../components/anchored-headers";
-import { style } from "../../components/double-border-box";
 import FAQLayout from "../../components/faq/faq-layout";
 import { getFAQQuery } from "../../libs/swell";
 import _window from "../../libs/window";
 import { ProductPropTypes } from "../../types/swell";
 import Head from "next/head";
 import { useTranslation } from "react-i18next";
+import StyledDescription from "../../components/styled-description";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -35,42 +34,14 @@ export default function FAQ() {
 
   const content = useMemo(
     () => (
-      <Typography
-        component="div"
+      <StyledDescription
         dangerouslySetInnerHTML={{ __html: faq.description }}
         sx={{
           "& h1,h2,h3,h4": {
             scrollMarginTop: "16px",
           },
-          a: (theme) => ({
-            color: theme.palette.primary.main,
-            background: alpha(theme.palette.primary.main, 0.1),
-            padding: 0.5,
-            lineHeight: 2,
-            textShadow: "0 0 5px black",
-            fontWeight: "bold",
-            textDecoration: "underline",
-            borderRadius: 2,
-          }),
-          "& img": (theme) => ({
-            maxWidth: "100%",
-            my: 2,
-            [theme.breakpoints.up("sm")]: {
-              ...style,
-            },
-            [theme.breakpoints.down("sm")]: {
-              boxShadow: `0 0 0 1px  ${alpha(
-                theme.palette.primary.main,
-                0.4
-              )}, 0 0 15px 0 #000`,
-              mx: "auto",
-              my: 1,
-              display: "block",
-            },
-            padding: "5px !important",
-          }),
         }}
-      ></Typography>
+      />
     ),
     [faq]
   );
