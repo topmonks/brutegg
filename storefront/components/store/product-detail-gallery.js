@@ -9,9 +9,11 @@ import {
 } from "@mui/material";
 import { alpha, Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import { Fragment, useRef, useState } from "react";
+import { SWELL_GALLERY_TYPES } from "../../libs/constants";
 
 const ImageList = styled(Box)({
   width: "100%",
@@ -100,7 +102,6 @@ export default function ProductDetailGallery({ name, images = [] }) {
           sx: [
             {
               height: "100vh",
-
               maxHeight: "100vh",
               background: alpha("#000", 0.7),
               backdropFilter: "blur(10px)",
@@ -131,22 +132,43 @@ export default function ProductDetailGallery({ name, images = [] }) {
           onClick={handleClose}
           onTouchEnd={(e) => {
             touchendX.current = e.changedTouches[0].screenX;
+            if (Math.abs(touchendX.current - touchstartX.current) < 20) {
+              return;
+            }
             const inc = touchendX.current < touchstartX.current ? 1 : -1;
             swipeNavigation(inc);
           }}
           onTouchStart={(e) => {
             touchstartX.current = e.changedTouches[0].screenX;
           }}
-          sx={{ position: "relative", cursor: "crosshair" }}
+          sx={{
+            position: "relative",
+            cursor: "crosshair",
+            "& iframe": {
+              display: "block",
+              margin: "auto",
+              height: "100%",
+              width: { xs: "100%", sm: "80%" },
+            },
+          }}
         >
-          {selectedImage && (
-            <Image
-              alt={`detail image of ${name}`}
-              layout="fill"
-              objectFit="contain"
-              src={selectedImage.file.url}
-            />
-          )}
+          {selectedImage &&
+            (selectedImage.type === SWELL_GALLERY_TYPES.YOUTUBE ? (
+              <iframe
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                frameBorder="0"
+                src={`https://www.youtube-nocookie.com/embed/${selectedImage.file.youtubeId}`}
+                title="YouTube video player"
+              ></iframe>
+            ) : (
+              <Image
+                alt={`detail image of ${name}`}
+                layout="fill"
+                objectFit="contain"
+                src={selectedImage.file.url}
+              />
+            ))}
         </DialogContent>
         <DialogActions>
           <ImageList
@@ -172,9 +194,25 @@ export default function ProductDetailGallery({ name, images = [] }) {
                     boxShadow: (theme) =>
                       "0 0 0 1px " + theme.palette.primary.main,
                   },
+                  item.type === SWELL_GALLERY_TYPES.YOUTUBE && {
+                    cursor: "pointer !important",
+                  },
                 ]}
                 tabIndex={0}
               >
+                {item.type === SWELL_GALLERY_TYPES.YOUTUBE && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      zIndex: 1,
+                    }}
+                  >
+                    <PlayCircleIcon color="primary" sx={{ fontSize: 60 }} />
+                  </Box>
+                )}
                 <Image
                   alt={`${ix} image of ${name}`}
                   layout="fill"
@@ -192,14 +230,32 @@ export default function ProductDetailGallery({ name, images = [] }) {
             key={item.file.md5}
             onClick={() => handleClickOpen(item)}
             onKeyDown={(e) => e.key === "Enter" && handleClickOpen(item)}
-            sx={{
-              mr: 1,
-              mt: 1,
-              width: { xs: "45%", sm: "28%" },
-              height: { xs: "100px", sm: "130px" },
-            }}
+            sx={[
+              {
+                mr: 1,
+                mt: 1,
+                width: { xs: "45%", sm: "28%" },
+                height: { xs: "100px", sm: "130px" },
+              },
+              item.type === SWELL_GALLERY_TYPES.YOUTUBE && {
+                cursor: "pointer !important",
+              },
+            ]}
             tabIndex={0}
           >
+            {item.type === SWELL_GALLERY_TYPES.YOUTUBE && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 1,
+                }}
+              >
+                <PlayCircleIcon color="primary" sx={{ fontSize: 60 }} />
+              </Box>
+            )}
             <Image
               alt={`${ix} image of ${name}`}
               layout="fill"

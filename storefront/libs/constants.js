@@ -52,3 +52,7 @@ export const SWELL_STOCK_STATUS = {
 export const SWELL_OPTIONS_TYPES = {
   SELECT: "select",
 };
+
+export const SWELL_GALLERY_TYPES = {
+  YOUTUBE: "youtube",
+};

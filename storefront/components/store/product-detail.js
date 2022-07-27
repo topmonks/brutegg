@@ -29,7 +29,7 @@ import PriceTag from "../price-tag";
 import { USER_LINKS } from "../navbar";
 import ProductDetailGallery from "./product-detail-gallery";
 import BruteDivider from "../divider";
-import { SWELL_OPTIONS_TYPES } from "../../libs/constants";
+import { SWELL_GALLERY_TYPES, SWELL_OPTIONS_TYPES } from "../../libs/constants";
 import ProductVariantSelect from "./product-variant-select";
 import { productOptionsState, productVariantState } from "../../state/product";
 
@@ -106,6 +106,23 @@ export function ProductDetail() {
   const stockNotTracked = isStockNotTracked(product);
 
   const isSm = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
+  const brute_youtube_videos_ids =
+    product.attributes.brute_youtube_videos_ids?.value?.split("\n");
+
+  const youtubeVideos = brute_youtube_videos_ids?.map((id) => ({
+    type: SWELL_GALLERY_TYPES.YOUTUBE,
+    file: {
+      md5: id,
+      youtubeId: id,
+      url: `https://img.youtube.com/vi/${id}/0.jpg`,
+    },
+  }));
+
+  const gallery = []
+    .concat(youtubeVideos || [])
+    .concat(productVariant?.images || [])
+    .concat(product.images || []);
 
   return (
     <Fragment>
@@ -303,10 +320,7 @@ export function ProductDetail() {
         </Box>
         <Divider sx={{ borderBottomWidth: "medium" }} />
         <Box sx={{ flexGrow: 1, pl: 1 }}>
-          <ProductDetailGallery
-            images={product.images?.concat(productVariant?.images || [])}
-            name={product.name}
-          />
+          <ProductDetailGallery images={gallery} name={product.name} />
         </Box>
       </Box>
     </Fragment>
