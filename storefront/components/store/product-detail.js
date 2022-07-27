@@ -46,6 +46,8 @@ export function ProductDetail() {
   const productVariant = useRecoilValue(productVariantState(product.id));
   const productOptions = useRecoilValue(productOptionsState(product.id));
 
+  const variantNotSelected = product.variants.count > 0 && !productVariant;
+
   const options = useMemo(() => {
     return (product.options || []).filter(
       (o) => o.active && o.input_type === SWELL_OPTIONS_TYPES.SELECT
@@ -249,8 +251,8 @@ export function ProductDetail() {
               key={ix}
               sx={{
                 display: { xs: "none", md: "block" },
-                width: "100%",
                 textAlign: "right",
+                flexGrow: 2,
               }}
             >
               <ProductVariantSelect
@@ -265,7 +267,7 @@ export function ProductDetail() {
           ))}
           <Button
             disableElevation
-            disabled={cartIsUpdating || !inStock}
+            disabled={cartIsUpdating || !inStock || variantNotSelected}
             onClick={() => addToCart().then(redirectToCheckout)}
             size="large"
             startIcon={cartIsUpdating && <CircularProgress size={20} />}
@@ -273,7 +275,9 @@ export function ProductDetail() {
             variant="contained"
           >
             {inStock
-              ? t("Get", { ns: "Common" })
+              ? variantNotSelected
+                ? t("Choose variant", { ns: "Common" })
+                : t("Get", { ns: "Common" })
               : t("Sold out", { ns: "Common" })}
           </Button>
         </Box>

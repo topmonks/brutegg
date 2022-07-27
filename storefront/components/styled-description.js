@@ -57,4 +57,5 @@ export default function StyledDescription({ children, rarity, sx, ...props }) {
 StyledDescription.propTypes = {
   children: PropTypes.node,
   rarity: PropTypes.string,
+  sx: PropTypes.object,
 };

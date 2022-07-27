@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { style } from "../double-border-box";
 import { ProductPropTypes } from "../../types/swell";
 import { useRecoilState } from "recoil";
@@ -28,14 +28,6 @@ export default function ProductVariantSelect({
     },
     [product, setProductVariant, options, setProductOptions]
   );
-
-  useEffect(() => {
-    if (productOptions?.[options.name]) {
-      return;
-    }
-
-    handleChange({ target: { value: options.values[0].id } });
-  }, [options, productOptions, handleChange]);
 
   return (
     <FormControl fullWidth size="small" {...FormControlOpts}>
