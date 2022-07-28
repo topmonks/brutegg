@@ -120,6 +120,10 @@ export default function ListOrders({ address, orders = [] }) {
                     </TableCell>
                     <TableCell>
                       {o.items.map((i, ix) => {
+                        if (!i.product) {
+                          return null;
+                        }
+
                         const thumbnail =
                           i.product?.attributes.brute_thumbnail?.file ||
                           i.product.images?.[0]?.file;
