@@ -124,6 +124,7 @@ export const LINKS = {
   QUESTS: "/quests",
   STORE: "/store",
   FAQ: "/faq",
+  TERMS: "/terms",
 };
 
 export const USER_LINKS = {

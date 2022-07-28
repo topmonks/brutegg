@@ -7,6 +7,7 @@ import useEventTarget from "../hooks/use-event-target";
 
 import Skeletons from "./page-skeleton";
 import { useTheme } from "@emotion/react";
+import Footer from "./footer";
 
 export default function Layout({ children, displayNavbar = true }) {
   const [SkeletonComponent, setSkeletonComponent] = useState();
@@ -76,6 +77,9 @@ export default function Layout({ children, displayNavbar = true }) {
           ) : (
             children
           )}
+        </Box>
+        <Box sx={{ mt: 2, mb: 4 }}>
+          <Footer />
         </Box>
       </Container>
     </Fragment>

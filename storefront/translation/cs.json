@@ -34,7 +34,11 @@
     "Wallet": "Peněženka",
     "Quests": "Questy",
     "Checkout": "Dokončit objednávku",
-    "List Orders": "Předchozí objednávky"
+    "List Orders": "Předchozí objednávky",
+    "General terms and conditions": "Všeobecné obchodní podmínky"
+  },
+  "Terms": {
+    "General terms and conditions": "Všeobecné obchodní podmínky"
   },
   "FAQ": {
     "FAQ": "Nápověda",

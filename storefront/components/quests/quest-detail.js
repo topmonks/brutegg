@@ -69,6 +69,10 @@ export function QuestDetail({ id: idFromProps }) {
           height: "100%",
           overflowY: "auto",
           alignContent: "flex-start",
+          msOverflowStyle: "none",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
         }}
       >
         <Box
@@ -217,8 +221,8 @@ export function QuestDetail({ id: idFromProps }) {
           </Box>
           <StyledDescription
             dangerouslySetInnerHTML={{ __html: quest.description }}
-            sx={{ overflowY: "auto" }}
-          ></StyledDescription>
+            sx={{ mt: 2 }}
+          />
         </Box>
         <Box
           sx={{

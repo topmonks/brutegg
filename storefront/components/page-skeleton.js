@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Box, Grid, Skeleton, useMediaQuery } from "@mui/material";
+import { Fragment } from "react";
 
 import { LINKS, USER_LINKS } from "./navbar";
 import {
@@ -7,16 +8,16 @@ import {
   FULL_STORE_LIST_GRID,
   STRETCHED_STORE_LIST_GRID,
 } from "./store/product-list";
-import { Fragment } from "react";
 import { ProductsHeadline } from "./store/products-headline";
 import ProfileLayout from "./profile/profile-layout";
 import CheckoutLayout from "./checkout/checkout-layout";
 import { CheckoutHeadline } from "./checkout/checkout-headline";
 import DoubleBorderBox from "./double-border-box";
-import FAQLayout from "./faq/faq-layout";
 import QuestsLayout from "./quests/quests-layout";
 import { ProductDetailStickyWrapper } from "./store/product-detail-sticky-wrapper";
 import { QuestDetailSkeleton } from "./quests/quest-detail-skeleton";
+import FAQLayout from "./faq/faq-layout";
+import TermsLayout from "./terms/terms-layout";
 
 function QuestsSkeleton({
   stretched: _stretched,
@@ -108,9 +109,18 @@ StoreSkeleton.propTypes = {
 function FaqSkeleton() {
   return (
     <FAQLayout>
-      <Skeleton height={30} sx={{ mb: 2 }} variant="rectangular"></Skeleton>
+      <Skeleton height={40} sx={{ mb: 3 }} variant="rectangular"></Skeleton>
       <Skeleton height={500} variant="rectangular"></Skeleton>
     </FAQLayout>
+  );
+}
+
+function TermsSkeleton() {
+  return (
+    <TermsLayout>
+      <Skeleton height={40} sx={{ mb: 3 }} variant="rectangular"></Skeleton>
+      <Skeleton height={500} variant="rectangular"></Skeleton>
+    </TermsLayout>
   );
 }
 
@@ -281,6 +291,7 @@ export default {
   [LINKS.QUESTS]: QuestsSkeleton,
   [LINKS.STORE]: StoreSkeleton,
   [LINKS.FAQ]: FaqSkeleton,
+  [LINKS.TERMS]: TermsSkeleton,
   [USER_LINKS.PROFILE]: ProfileSkeleton,
   [USER_LINKS.CHECKOUT]: CheckoutSkeleton,
 };

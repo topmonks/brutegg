@@ -105,3 +105,7 @@ export function getQuestsQuery() {
 export function getFAQQuery() {
   return getProduct("faq");
 }
+
+export function getTermsQuery() {
+  return getProduct("vseobecne-obchodni-podminky");
+}

@@ -12,7 +12,6 @@ export default function StyledDescription({ children, rarity, sx, ...props }) {
     <Typography
       component="div"
       sx={{
-        mt: 2,
         "& h1, & h2, & h3, & h4": {
           mb: 1,
           // textShadow: () => `0px 0px 12px ${color}`,

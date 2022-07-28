@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { useTranslation } from "react-i18next";
 import deburr from "lodash.deburr";
 import { Box } from "@mui/material";
+import _window from "../libs/window";
 
 function Anchor({ children, href }) {
   const { t } = useTranslation("Common");
@@ -77,6 +78,24 @@ function AnchoredHeaders({ children, onGenerateHeadings = () => {} }) {
 
     onGenerateHeadings(headingsHrefs);
   }, [headingsHrefs, onGenerateHeadings]);
+
+  const scrolledTo = useRef(false);
+  useEffect(() => {
+    if (!headingsHrefs?.length) {
+      return;
+    }
+    if (scrolledTo.current) {
+      return;
+    }
+
+    if (!_window.location.hash) {
+      return;
+    }
+
+    _window.document.querySelector(_window.location.hash)?.scrollIntoView();
+
+    scrolledTo.current = true;
+  }, [headingsHrefs]);
 
   return <Box ref={localRef}>{children}</Box>;
 }

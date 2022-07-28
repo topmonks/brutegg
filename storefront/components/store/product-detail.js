@@ -316,7 +316,8 @@ export function ProductDetail() {
           <StyledDescription
             dangerouslySetInnerHTML={{ __html: product.description }}
             rarity={rarity}
-          ></StyledDescription>
+            sx={{ mt: 2 }}
+          />
         </Box>
         <Divider sx={{ borderBottomWidth: "medium" }} />
         <Box sx={{ flexGrow: 1, pl: 1 }}>
