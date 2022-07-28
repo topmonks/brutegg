@@ -27,6 +27,7 @@ import useHasEnoughFunds from "../../hooks/use-has-enough-funds";
 import useCartPrice from "../../hooks/use-cart-price";
 import { bruteState } from "../../state/brute-token";
 import PriceTag from "../price-tag";
+import { style as doubleBorderBoxStyle } from "../double-border-box";
 
 const helmetAnimation = keyframes`
   0%   {opacity: 1}
@@ -40,19 +41,7 @@ function DialogLayout({ children, open, handleClose }) {
     <Dialog
       PaperProps={{
         sx: {
-          borderRadius: 0,
-          border: "3px solid #101112",
-          boxShadow: `inset 0 0 20px 0 ${alpha(
-            "#000",
-            0.8
-          )}, inset 0 0 0 1px ${alpha("#fff", 0.3)}, 0 0 0 1px ${alpha(
-            "#fff",
-            0.3
-          )}`,
-          background: `linear-gradient(0deg, ${alpha("#101112", 1)} 0%, ${alpha(
-            "#111214",
-            1
-          )} 100%)`,
+          ...doubleBorderBoxStyle,
         },
       }}
       fullWidth
