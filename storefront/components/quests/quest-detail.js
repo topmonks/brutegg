@@ -129,7 +129,7 @@ export function QuestDetail({ id: idFromProps }) {
             }}
           >
             <img
-              alt="Brute helmet logo"
+              alt="BRUTE helmet logo"
               src="https://res.cloudinary.com/brutegg/image/upload/v1657626779/brutegg-swell/chest_tf2blb.png"
             />
             <Typography component="div" sx={{ fontWeight: "bold" }}>

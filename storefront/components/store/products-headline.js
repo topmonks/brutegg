@@ -11,7 +11,7 @@ export function ProductsHeadline({ center }) {
       faqText={t("How to?")}
       headlineText={t("Get rewards")}
       paragraph={t(
-        "For Brute Coins from completed quests, you can indulge in any of the rewards offered."
+        "For BRUTE Coins from completed quests, you can indulge in any of the rewards offered."
       )}
     />
   );

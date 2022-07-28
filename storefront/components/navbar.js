@@ -213,7 +213,7 @@ export default function Navbar() {
           }}
         >
           <img
-            alt="Brute gg logo"
+            alt="BRUTE gg logo"
             height={32}
             onClick={() => handleChange(null, LINKS.STORE)}
             src="https://res.cloudinary.com/brutegg/image/upload/v1657234745/brutegg-swell/brute-logo_qwbsfz.svg"

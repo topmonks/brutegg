@@ -72,7 +72,7 @@
     "Install MetaMask": "Nainstalujte Metamask",
     "Connect wallet": "Propojte Metamask",
     "Wallet successfully connected": "Peněženka úspěšně propojena",
-    "Add Brute token to Metamask": "Zobrazit Brute token v MetaMask"
+    "Add BRUTE token to Metamask": "Zobrazit BRUTE token v MetaMask"
   },
   "UnlockButton": {
     "Account successfully unlocked": "Metamask účet úspěšně odemknut",
@@ -133,7 +133,7 @@
   },
   "Store": {
     "Get rewards": "Získejte odměny",
-    "For Brute Coins from completed quests, you can indulge in any of the rewards offered.": "Za Brute Coiny ze splněných úkolů si můžeš dopřát některou z nabízených odměn.",
+    "For BRUTE Coins from completed quests, you can indulge in any of the rewards offered.": "Za BRUTE Coiny ze splněných úkolů si můžeš dopřát některou z nabízených odměn.",
     "How to?": "Jak na to?"
   },
   "Rarity": {
@@ -156,7 +156,7 @@
     "We are in the process of extracting your bounty, it may take some time.": "Právě těžíme vaši odměnu, může to chvíli trvat.",
     "Done! Check your email for further instructions.": "Hotovo! Mrkni do e-mailu pro další instrukce.",
     "Check the transaction on polygonscan.com": "Zkontrolujte transakci na polygonscan.com",
-    "Not enough Brute tokens": "Nemáte dostatek BRUTE",
+    "Not enough BRUTE tokens": "Nemáte dostatek BRUTE",
     "In your account you have": "Na účtě máte",
     "Purchased items cost": "Objednané itemy stojí",
     "Earn BRUTE for Quests": "Získejte BRUTE za splnění Questů"

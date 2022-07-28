@@ -113,7 +113,7 @@ export default function PaymentButton() {
           {t("Pay")} <PriceTag amount={totalPrice?.toString()} sx={{ ml: 1 }} />
         </Fragment>
       ) : (
-        t("Not enough Brute tokens")
+        t("Not enough BRUTE tokens")
       )}
     </Button>
   );

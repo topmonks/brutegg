@@ -225,13 +225,13 @@ function ConnectedButton() {
           >
             <ListItemIcon>
               <img
-                alt="Brutecoin logo"
+                alt="BRUTE token logo"
                 height={18}
                 src="https://res.cloudinary.com/brutegg/image/upload/v1657558525/brutegg-swell/helmet_pldqf4.svg"
                 width={18}
               />
             </ListItemIcon>
-            <ListItemText>{t("Add Brute token to Metamask")}</ListItemText>
+            <ListItemText>{t("Add BRUTE token to Metamask")}</ListItemText>
           </MenuItem>
           <MenuItem onClick={disconnect}>
             <ListItemIcon>

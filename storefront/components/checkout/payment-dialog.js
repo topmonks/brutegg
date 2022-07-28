@@ -182,7 +182,7 @@ function PaymentSuccess({ open }) {
           }}
         >
           <img
-            alt="Brute helmet logo"
+            alt="BRUTE helmet logo"
             height={120}
             src="https://res.cloudinary.com/brutegg/image/upload/v1657626779/brutegg-swell/chest_tf2blb.png"
           />
@@ -238,7 +238,7 @@ function PaymentNotInitialized({ handleClose, open }) {
           }}
         >
           <img
-            alt="Brute helmet logo"
+            alt="BRUTE helmet logo"
             height={130}
             src="https://res.cloudinary.com/brutegg/image/upload/v1657558525/brutegg-swell/helmet_pldqf4.svg"
           />
@@ -281,12 +281,12 @@ function PaymentNotEnoughFunds({ handleClose, open }) {
           }}
         >
           <img
-            alt="Brute helmet logo"
+            alt="BRUTE helmet logo"
             height={130}
             src="https://res.cloudinary.com/brutegg/image/upload/v1657558525/brutegg-swell/helmet_pldqf4.svg"
           />
         </Box>
-        <Typography variant="h5">{t("Not enough Brute tokens")}</Typography>
+        <Typography variant="h5">{t("Not enough BRUTE tokens")}</Typography>
         <Typography variant="subtitle1">
           {t("In your account you have")}{" "}
           <PriceTag

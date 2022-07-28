@@ -1,1 +1,1 @@
-# Brute Storefront
+# BRUTE Storefront

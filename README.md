@@ -1,4 +1,4 @@
-# Brute 
+# BRUTE 
 
 ## Frontend development (`storefront`)
 
