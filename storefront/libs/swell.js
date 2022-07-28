@@ -107,5 +107,5 @@ export function getFAQQuery() {
 }
 
 export function getTermsQuery() {
-  return getProduct("vseobecne-obchodni-podminky");
+  return getProduct("terms");
 }
