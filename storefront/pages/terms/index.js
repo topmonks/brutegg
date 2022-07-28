@@ -26,14 +26,14 @@ export async function getStaticProps() {
   };
 }
 
-export default function VOP() {
+export default function Terms() {
   const { data: terms } = useQuery(["terms"], getTermsQuery);
   const [headings, setHeadings] = useState([]);
 
   const content = useMemo(
     () => (
       <StyledDescription
-        dangerouslySetInnerHTML={{ __html: terms.description }}
+        dangerouslySetInnerHTML={{ __html: terms?.description }}
         sx={{
           "& h1,h2,h3,h4": {
             scrollMarginTop: "16px",

@@ -26,7 +26,7 @@ export async function getStaticProps() {
   };
 }
 
-export default function VOP() {
+export default function PrivacyPolicy() {
   const { data: privacyPolicy } = useQuery(
     ["privacy-policy"],
     getPrivacyPolicyQuery
