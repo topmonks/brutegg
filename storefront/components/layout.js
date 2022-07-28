@@ -9,7 +9,11 @@ import Skeletons from "./page-skeleton";
 import { useTheme } from "@emotion/react";
 import Footer from "./footer";
 
-export default function Layout({ children, displayNavbar = true }) {
+export default function Layout({
+  children,
+  displayNavbar = true,
+  displayFooter = true,
+}) {
   const [SkeletonComponent, setSkeletonComponent] = useState();
 
   const onNavbarChange = useCallback((event) => {
@@ -78,9 +82,11 @@ export default function Layout({ children, displayNavbar = true }) {
             children
           )}
         </Box>
-        <Box sx={{ my: 5 }}>
-          <Footer />
-        </Box>
+        {displayFooter && (
+          <Box sx={{ my: 5 }}>
+            <Footer />
+          </Box>
+        )}
       </Container>
     </Fragment>
   );
@@ -88,5 +94,6 @@ export default function Layout({ children, displayNavbar = true }) {
 
 Layout.propTypes = {
   children: PropTypes.node,
+  displayFooter: PropTypes.bool,
   displayNavbar: PropTypes.bool,
 };

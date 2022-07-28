@@ -15,6 +15,7 @@ import { defaultFormState } from "../../state/checkout";
 import BackToStoreButton from "./back-to-store-button";
 import PhoneNumber from "./form/phone-number";
 import Email from "./form/email";
+import AgreeTerms from "./form/agree-terms";
 
 export default function Form({
   onSubmit,
@@ -86,6 +87,7 @@ export default function Form({
             <Zip formData={formData} onChange={onChange} />
           </Box>
           <CountrySelect formData={formData} onChange={setFormData} />
+          <AgreeTerms formData={formData} onChange={onChange} />
           <Box
             sx={[
               {

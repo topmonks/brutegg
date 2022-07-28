@@ -7,9 +7,9 @@ export default function useFormData(initial, parsers = {}) {
   const [formState, setFormState] = useState(Map(initial));
 
   const onChange = useCallback(
-    (e) => {
+    (e, getValue = (target) => target.value) => {
       const target = e.target;
-      setFormState((x) => x.setIn(target.name.split("."), target.value));
+      setFormState((x) => x.setIn(target.name.split("."), getValue(target)));
     },
     [setFormState]
   );

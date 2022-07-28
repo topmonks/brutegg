@@ -8,4 +8,6 @@ export const defaultFormState = {
   city: "",
   zip: "",
   country: "CZ",
+  agreeTerms: false,
+  agreePrivacyPolicy: false,
 };

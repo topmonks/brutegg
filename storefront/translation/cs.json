@@ -18,7 +18,8 @@
     "Join reddit": "Připojte se na r/brute",
     "Copy link to paragraph": "Zkopírovat odkaz na odstavec",
     "Sold out": "Vyprodáno",
-    "Choose variant": "Vyberte z možností"
+    "Choose variant": "Vyberte z možností",
+    "Display": "Zobrazit"
   },
   "Navbar": {
     "Quests": "Questy",
@@ -109,7 +110,9 @@
     "Balance after purchase": "Zůstatek po nákupu",
     "Total price": "Celková cena",
     "Let us know who you are so we can send you your reward safely": "Dej vědět, kdo jsi, abychom ti mohli odměnu bezpečně poslat",
-    "You need to choose any item from the store firstly": "Nejprve si musíte vybrat libovolnou položku z obchodu."
+    "You need to choose any item from the store firstly": "Nejprve si musíte vybrat libovolnou položku z obchodu.",
+    "Agree with terms of conditions": "Souhlasím s všeobecnými obchodními podmínkami",
+    "Agree with privacy policy": "Souhlasím se zpracování osobních údajů"
   },
   "Validations": {
     "Input is not allowed to be empty": "Pole musí být vyplněno",

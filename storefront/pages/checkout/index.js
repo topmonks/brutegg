@@ -201,7 +201,11 @@ function AppLayout({ children }) {
     }
   }, [cart, isFetched, setSnackbar, t, router, paymentTx]);
 
-  return <Layout displayNavbar={false}>{children}</Layout>;
+  return (
+    <Layout displayFooter={false} displayNavbar={false}>
+      {children}
+    </Layout>
+  );
 }
 
 AppLayout.propTypes = {
