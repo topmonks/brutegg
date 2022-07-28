@@ -82,7 +82,7 @@ export default function Layout({
             children
           )}
         </Box>
-        {displayFooter && (
+        {displayFooter && !SkeletonComponent?.hideFooter && (
           <Box sx={{ my: 5 }}>
             <Footer />
           </Box>

@@ -124,6 +124,15 @@ function TermsSkeleton() {
   );
 }
 
+function PrivacyPolicySkeleton() {
+  return (
+    <TermsLayout>
+      <Skeleton height={40} sx={{ mb: 3 }} variant="rectangular"></Skeleton>
+      <Skeleton height={500} variant="rectangular"></Skeleton>
+    </TermsLayout>
+  );
+}
+
 function ProfileSkeleton() {
   return (
     <ProfileLayout>
@@ -286,12 +295,14 @@ function CheckoutSkeleton() {
 }
 
 CheckoutSkeleton.hideNavbar = true;
+CheckoutSkeleton.hideFooter = true;
 
 export default {
   [LINKS.QUESTS]: QuestsSkeleton,
   [LINKS.STORE]: StoreSkeleton,
   [LINKS.FAQ]: FaqSkeleton,
   [LINKS.TERMS]: TermsSkeleton,
+  [LINKS.PRIVACY_POLICY]: PrivacyPolicySkeleton,
   [USER_LINKS.PROFILE]: ProfileSkeleton,
   [USER_LINKS.CHECKOUT]: CheckoutSkeleton,
 };

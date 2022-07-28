@@ -14,6 +14,7 @@ export const cityValidator = Joi.string();
 export const zipValidatior = Joi.string();
 export const countryValidator = Joi.string();
 export const agreeTermsValidator = Joi.bool().disallow(false);
+export const agreePrivacyPolicyValidator = Joi.bool().disallow(false);
 
 export const checkoutValidator = Joi.object({
   firstName: firstNameValidator,
@@ -26,4 +27,5 @@ export const checkoutValidator = Joi.object({
   zip: zipValidatior,
   country: countryValidator,
   agreeTerms: agreeTermsValidator,
+  agreePrivacyPolicy: agreePrivacyPolicyValidator,
 }).unknown(true);
