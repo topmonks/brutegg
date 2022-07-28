@@ -16,6 +16,7 @@ import BackToStoreButton from "./back-to-store-button";
 import PhoneNumber from "./form/phone-number";
 import Email from "./form/email";
 import AgreeTerms from "./form/agree-terms";
+import AgreePrivacyPolicy from "./form/agree-privacy-policy";
 
 export default function Form({
   onSubmit,
@@ -88,6 +89,8 @@ export default function Form({
           </Box>
           <CountrySelect formData={formData} onChange={setFormData} />
           <AgreeTerms formData={formData} onChange={onChange} />
+          <Box sx={{ mb: { sm: -2, lg: -4 } }}></Box>
+          <AgreePrivacyPolicy formData={formData} onChange={onChange} />
           <Box
             sx={[
               {

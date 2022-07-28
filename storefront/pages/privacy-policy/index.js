@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
   const content = useMemo(
     () => (
       <StyledDescription
-        dangerouslySetInnerHTML={{ __html: privacyPolicy.description }}
+        dangerouslySetInnerHTML={{ __html: privacyPolicy?.description }}
         sx={{
           "& h1,h2,h3,h4": {
             scrollMarginTop: "16px",
