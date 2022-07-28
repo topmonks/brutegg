@@ -125,6 +125,7 @@ export const LINKS = {
   STORE: "/store",
   FAQ: "/faq",
   TERMS: "/terms",
+  PRIVACY_POLICY: "/privacy-policy",
 };
 
 export const USER_LINKS = {

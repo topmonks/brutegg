@@ -109,3 +109,7 @@ export function getFAQQuery() {
 export function getTermsQuery() {
   return getProduct("terms");
 }
+
+export function getPrivacyPolicyQuery() {
+  return getProduct("privacy-policy");
+}

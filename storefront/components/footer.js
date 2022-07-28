@@ -15,7 +15,6 @@ export default function Footer() {
 
   const handleChange = (event, newValue) => {
     if (eventTarget && window.CustomEvent) {
-      console.log("FOOO");
       eventTarget.dispatchEvent(
         new window.CustomEvent(NAVBAR_CHANGE, {
           detail: {
@@ -32,7 +31,10 @@ export default function Footer() {
         display: "flex",
         width: "100%",
         justifyContent: "center",
+        alignItems: "center",
         gap: 2,
+        flexWrap: "wrap-reverse",
+        textAlign: "center",
       }}
     >
       <Typography
@@ -43,6 +45,42 @@ export default function Footer() {
           {t("General terms and conditions", { ns: "Terms" })}
         </Link>
       </Typography>
+
+      <Typography
+        onClick={(e) => handleChange(e, LINKS.PRIVACY_POLICY)}
+        variant="caption"
+      >
+        <Link href={withLocale(router.locale, LINKS.PRIVACY_POLICY)}>
+          {t("Privacy policy", { ns: "Privacy Policy" })}
+        </Link>
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: { xs: "center", sm: "normal" },
+          gap: 2,
+          ml: { xs: 0, sm: 4 },
+          width: { xs: "300px", sm: "auto" },
+        }}
+      >
+        <a href="https://discord.gg/B6JDmrFJ" rel="noreferrer" target="_blank">
+          <img
+            height={20}
+            src="https://res.cloudinary.com/brutegg/image/upload/v1657804667/brutegg-swell/discord-icon_vuz4qp.svg"
+          />
+        </a>
+        <a
+          href="https://www.reddit.com/r/brute/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            height={20}
+            src="https://res.cloudinary.com/brutegg/image/upload/v1657894505/brutegg-swell/reddit-icon_otxd5s.svg"
+          />
+        </a>
+      </Box>
     </Box>
   );
 }

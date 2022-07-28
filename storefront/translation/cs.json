@@ -35,10 +35,14 @@
     "Quests": "Questy",
     "Checkout": "Dokončit objednávku",
     "List Orders": "Předchozí objednávky",
-    "General terms and conditions": "Všeobecné obchodní podmínky"
+    "General terms and conditions": "Všeobecné obchodní podmínky",
+    "Privacy policy": "Zásady zpracování osobních údajů"
   },
   "Terms": {
     "General terms and conditions": "Všeobecné obchodní podmínky"
+  },
+  "Privacy Policy": {
+    "Privacy policy": "Zásady zpracování osobních údajů"
   },
   "FAQ": {
     "FAQ": "Nápověda",

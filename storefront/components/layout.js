@@ -78,7 +78,7 @@ export default function Layout({ children, displayNavbar = true }) {
             children
           )}
         </Box>
-        <Box sx={{ mt: 2, mb: 4 }}>
+        <Box sx={{ my: 5 }}>
           <Footer />
         </Box>
       </Container>
