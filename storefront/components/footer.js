@@ -35,6 +35,19 @@ export default function Footer() {
         gap: 2,
         flexWrap: "wrap-reverse",
         textAlign: "center",
+        "& a": {
+          transition: "color 0.2s ease",
+          "& img": {
+            transition: "filter 0.2s ease",
+          },
+        },
+        "& a:hover": (theme) => ({
+          color: theme.palette.primary.main,
+          "& img": {
+            filter:
+              "grayscale(100%) brightness(30%) sepia(100%) hue-rotate(-50deg) saturate(800%) contrast(1)",
+          },
+        }),
       }}
     >
       <Typography
@@ -78,6 +91,16 @@ export default function Footer() {
           <img
             height={20}
             src="https://res.cloudinary.com/brutegg/image/upload/v1657894505/brutegg-swell/reddit-icon_otxd5s.svg"
+          />
+        </a>
+        <a
+          href="https://github.com/topmonks/brutegg"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            height={20}
+            src="https://res.cloudinary.com/brutegg/image/upload/v1659002418/brutegg-swell/github-icon_uqjtgo.svg"
           />
         </a>
       </Box>
