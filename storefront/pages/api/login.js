@@ -1,5 +1,6 @@
-import { withSessionRoute } from "../../libs/with-session";
 import { recoverPersonalSignature } from "@metamask/eth-sig-util";
+
+import { withSessionRoute } from "../../libs/with-session";
 import { composeNonce } from "../../libs/web3";
 import { log } from "../../libs/logger";
 

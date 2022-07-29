@@ -3,6 +3,9 @@ import { Box } from "@mui/system";
 import { Fragment, Suspense, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
+import Head from "next/head";
+import { useRouter } from "next/router";
+
 import Form from "../../components/checkout/form";
 import { swellNodeClient } from "../../libs/swell-node";
 import { withSessionSsr } from "../../libs/with-session";
@@ -14,7 +17,6 @@ import CartSummary from "../../components/checkout/cart-summary";
 import { CheckoutHeadline } from "../../components/checkout/checkout-headline";
 import Layout from "../../components/layout";
 import useGetCart from "../../hooks/use-get-cart";
-import { useRouter } from "next/router";
 import { withLocale } from "../../libs/router";
 import { LINKS } from "../../components/navbar";
 import useWatchPayment from "../../hooks/use-watch-payment";
@@ -25,7 +27,6 @@ import { removeEmpty } from "../../libs/util";
 import { defaultFormState } from "../../state/checkout";
 import { composeVirtualEmailFromAddress } from "../../libs/web3";
 import SkipOnSSR from "../../components/skip-on-ssr";
-import Head from "next/head";
 
 export const getServerSideProps = withSessionSsr(async (context) => {
   const publicAddress = context.req.session.user?.address;

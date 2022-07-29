@@ -1,13 +1,17 @@
 import PropTypes from "prop-types";
-import "../styles/globals.css";
-import "../libs/swell";
-import "../translation/i18n";
-
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { RecoilRoot } from "recoil";
 import { Fragment, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import swell from "swell-js";
+import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
+import Head from "next/head";
+
+import "../styles/globals.css";
+import "../libs/swell";
+import "../translation/i18n";
+
 import theme from "../libs/theme";
 import DefaultAppLayout from "../components/layout";
 import QueryClientProvider from "../components/query-client-provider";
@@ -16,11 +20,8 @@ import Snackbar from "../components/snackbar";
 import PendingTxsWatcher from "../components/web3/pending-txs-watcher";
 import SessionWatcher from "../components/session-watcher";
 import Web3Loader from "../components//web3/web3-loader";
-import Head from "next/head";
 import ErrorFallback from "../components/error-fallback";
 import window from "../libs/window";
-import { useTranslation } from "react-i18next";
-import { useRouter } from "next/router";
 
 const myErrorHandler = (error) => {
   window.Rollbar?.error(error);

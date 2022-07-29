@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useState } from "react";
 import Head from "next/head";
+import { useMediaQuery } from "@mui/material";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+
 import StoreLayout from "../../components/store/store-layout";
 import useEventTarget from "../../hooks/use-event-target";
 import { ProductDetailSkeleton } from "../../components/store/product-detail-skeleton";
@@ -10,9 +14,6 @@ import { getProductsQuery } from "../../libs/swell";
 import ProductList, {
   scrollToProductId,
 } from "../../components/store/product-list";
-import { useMediaQuery } from "@mui/material";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
 import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";
 
 export const getStaticProps = withSwellLanguageStaticProps(

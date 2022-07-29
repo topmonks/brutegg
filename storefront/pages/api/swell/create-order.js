@@ -1,6 +1,7 @@
+import Web3 from "web3";
+
 import { swellNodeClient } from "../../../libs/swell-node";
 import { withSessionRoute } from "../../../libs/with-session";
-import Web3 from "web3";
 import {
   BRUTE_TREASURY_ADDRESS,
   INFURA_ENDPOINTS,

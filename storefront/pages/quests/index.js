@@ -3,6 +3,8 @@ import Head from "next/head";
 import PropTypes from "prop-types";
 import { Fragment, useCallback, useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+
 import { QuestDetail } from "../../components/quests/quest-detail";
 import { QuestDetailSkeleton } from "../../components/quests/quest-detail-skeleton";
 import QuestList from "../../components/quests/quest-list";
@@ -12,7 +14,6 @@ import { scrollToProductId } from "../../components/store/product-list";
 import useEventTarget from "../../hooks/use-event-target";
 import { getQuestsQuery } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
-import { useTranslation } from "react-i18next";
 import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";
 
 export const getStaticProps = withSwellLanguageStaticProps(

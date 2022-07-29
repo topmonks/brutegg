@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import Head from "next/head";
+import { useTranslation } from "react-i18next";
+
 import AnchoredHeaders from "../../components/anchored-headers";
 import { getPrivacyPolicyQuery } from "../../libs/swell";
 import _window from "../../libs/window";
-import Head from "next/head";
-import { useTranslation } from "react-i18next";
 import StyledDescription from "../../components/styled-description";
 import PrivacyPolicyLayout from "../../components/privacy-policy/privacy-policy-layout";
 import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";

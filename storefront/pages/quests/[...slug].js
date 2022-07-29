@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useState } from "react";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+
 import useEventTarget from "../../hooks/use-event-target";
 import { getProduct, getProducts } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
@@ -9,7 +11,6 @@ import { QuestDetailSkeleton } from "../../components/quests/quest-detail-skelet
 import { QuestDetail } from "../../components/quests/quest-detail";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
 import QuestsLayout from "../../components/quests/quests-layout";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";
 
 export async function getStaticPaths() {

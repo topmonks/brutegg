@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { useMutation } from "@tanstack/react-query";
+import Head from "next/head";
 
 import Form from "../../components/profile/form";
 import ProfileLayout from "../../components/profile/profile-layout";
@@ -14,7 +15,6 @@ import { withSessionSsr } from "../../libs/with-session";
 import { defaultFormState } from "../../state/profile";
 import { snackbarState } from "../../state/snackbar";
 import { composeVirtualEmailFromAddress } from "../../libs/web3";
-import Head from "next/head";
 
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps(context) {

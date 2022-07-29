@@ -1,5 +1,8 @@
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useState } from "react";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { useMediaQuery } from "@mui/material";
+
 import StoreLayout from "../../../components/store/store-layout";
 import ProductList, {
   scrollToProductId,
@@ -10,9 +13,7 @@ import { ProductDetailStickyWrapper } from "../../../components/store/product-de
 import useEventTarget from "../../../hooks/use-event-target";
 import { getProduct, getStoreProducts } from "../../../libs/swell";
 import { STORE_ITEM_CHANGE } from "../../../state/event-target";
-import { useMediaQuery } from "@mui/material";
 import window from "../../../libs/window";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { withSwellLanguageStaticProps } from "../../../libs/with-swell-language";
 
 export async function getStaticPaths() {
