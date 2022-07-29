@@ -9,6 +9,8 @@ import { LINKS } from "../../components/navbar";
 import { getProductsQuery } from "../../libs/swell";
 import window from "../../libs/window";
 import { useQuery } from "@tanstack/react-query";
+import { useRecoilValue } from "recoil";
+import { productRarityFilterState } from "../../state/product";
 
 export const STRETCHED_STORE_LIST_GRID = {
   lg: 15,
@@ -49,10 +51,11 @@ export default function ProductList({
   selectedProductId,
   displayHeadline = true,
 }) {
-  const { data: products, isLoading: productsLoading } = useQuery(
+  const { data: _products, isLoading: productsLoading } = useQuery(
     ["products"],
     getProductsQuery
   );
+  const productRarityFilter = useRecoilValue(productRarityFilterState);
 
   const [_selectedProductId, setSelectedProductId] =
     useState(selectedProductId);
@@ -75,6 +78,14 @@ export default function ProductList({
     );
   }
 
+  let products = _products.results;
+
+  if (productRarityFilter.length > 0) {
+    products = products.filter((p) =>
+      productRarityFilter.includes(p.attributes.brute_rarity?.value)
+    );
+  }
+
   return (
     <Fragment>
       <Grid
@@ -83,7 +94,7 @@ export default function ProductList({
         spacing={1}
         sx={{ marginBottom: -1 }}
       >
-        {products.results.map((p) => {
+        {products.map((p) => {
           const isSelectedProduct = p.id === _selectedProductId;
           return (
             <Grid

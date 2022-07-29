@@ -25,11 +25,6 @@ export function ProductsHeadline({ center }) {
           display: "flex",
           gap: 3,
           flexWrap: "wrap",
-          opacity: 0.4,
-          transition: "opacity 0.2s ease",
-          "&:hover": {
-            opacity: 0.9,
-          },
         }}
       >
         {Object.values(RARITY).map((rarity) => (
