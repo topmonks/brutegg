@@ -24,45 +24,48 @@ import Image from "next/image";
 import { Box } from "@mui/system";
 import { withLocale } from "../../libs/router";
 
-export const getServerSideProps = withSessionSsr(async (context) => {
-  const publicAddress = context.req.session.user?.address;
-  const resultProps = {};
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps(context) {
+    const publicAddress = context.req.session.user?.address;
+    const resultProps = {};
 
-  if (!publicAddress) {
-    return { props: resultProps };
-  }
+    if (!publicAddress) {
+      return { props: resultProps };
+    }
 
-  resultProps.address = publicAddress;
+    resultProps.address = publicAddress;
 
-  let {
-    results: [user],
-  } = await swellNodeClient.get("/accounts", {
-    where: {
-      public_address: {
-        $eq: publicAddress,
+    let {
+      results: [user],
+    } = await swellNodeClient.get("/accounts", {
+      where: {
+        public_address: {
+          $eq: publicAddress,
+        },
       },
-    },
-    limit: 1,
-  });
+      limit: 1,
+    });
 
-  if (!user) {
-    resultProps.orders = [];
-    return { props: resultProps };
+    if (!user) {
+      resultProps.orders = [];
+      return { props: resultProps };
+    }
+
+    let { results: orders } = await swellNodeClient.get("/orders", {
+      where: {
+        account_id: user.id,
+      },
+      $locale: context.locale,
+      expand: ["items.product", "items.variant"],
+    });
+
+    resultProps.orders = orders;
+
+    return {
+      props: resultProps,
+    };
   }
-
-  let { results: orders } = await swellNodeClient.get("/orders", {
-    where: {
-      account_id: user.id,
-    },
-    expand: ["items.product", "items.variant"],
-  });
-
-  resultProps.orders = orders;
-
-  return {
-    props: resultProps,
-  };
-});
+);
 
 /**
  *

@@ -10,6 +10,7 @@ import { QuestDetail } from "../../components/quests/quest-detail";
 import { ProductDetailStickyWrapper } from "../../components/store/product-detail-sticky-wrapper";
 import QuestsLayout from "../../components/quests/quests-layout";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";
 
 export async function getStaticPaths() {
   const quests = await getProducts({ category: "quests" });
@@ -24,29 +25,31 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
-  const {
-    slug: [id, slug],
-  } = context.params;
+export const getStaticProps = withSwellLanguageStaticProps(
+  async function getStaticProps(context) {
+    const {
+      slug: [id, slug],
+    } = context.params;
 
-  const queryClient = new QueryClient();
+    const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["quests", id || slug], () =>
-    getProduct(id || slug)
-  );
+    await queryClient.prefetchQuery(["quests", id || slug], () =>
+      getProduct(id || slug)
+    );
 
-  if (!queryClient.getQueryData(["quests", id || slug])) {
+    if (!queryClient.getQueryData(["quests", id || slug])) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
-      notFound: true,
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
     };
   }
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+);
 
 export default function Item() {
   const router = useRouter();

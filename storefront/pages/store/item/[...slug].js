@@ -13,6 +13,7 @@ import { STORE_ITEM_CHANGE } from "../../../state/event-target";
 import { useMediaQuery } from "@mui/material";
 import window from "../../../libs/window";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { withSwellLanguageStaticProps } from "../../../libs/with-swell-language";
 
 export async function getStaticPaths() {
   const products = await getStoreProducts({ category: "store" });
@@ -27,29 +28,31 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
-  const {
-    slug: [id, slug],
-  } = context.params;
+export const getStaticProps = withSwellLanguageStaticProps(
+  async function getStaticProps(context) {
+    const {
+      slug: [id, slug],
+    } = context.params;
 
-  const queryClient = new QueryClient();
+    const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["products", id || slug], () =>
-    getProduct(id || slug)
-  );
+    await queryClient.prefetchQuery(["products", id || slug], () =>
+      getProduct(id || slug)
+    );
 
-  if (!queryClient.getQueryData(["products", id || slug])) {
+    if (!queryClient.getQueryData(["products", id || slug])) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
-      notFound: true,
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
     };
   }
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+);
 
 export default function Item() {
   const router = useRouter();

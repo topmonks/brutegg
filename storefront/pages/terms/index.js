@@ -7,24 +7,27 @@ import Head from "next/head";
 import { useTranslation } from "react-i18next";
 import StyledDescription from "../../components/styled-description";
 import TermsLayout from "../../components/terms/terms-layout";
+import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";
 
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
+export const getStaticProps = withSwellLanguageStaticProps(
+  async function getStaticProps() {
+    const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["terms"], getTermsQuery);
+    await queryClient.prefetchQuery(["terms"], getTermsQuery);
 
-  if (!queryClient.getQueryData(["terms"])) {
+    if (!queryClient.getQueryData(["terms"])) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
-      notFound: true,
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
     };
   }
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+);
 
 export default function Terms() {
   const { data: terms } = useQuery(["terms"], getTermsQuery);

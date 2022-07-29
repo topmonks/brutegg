@@ -13,27 +13,30 @@ import useEventTarget from "../../hooks/use-event-target";
 import { getQuestsQuery } from "../../libs/swell";
 import { QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import { useTranslation } from "react-i18next";
+import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";
 
-export async function getStaticProps(_context) {
-  const queryClient = new QueryClient();
+export const getStaticProps = withSwellLanguageStaticProps(
+  async function getStaticProps(_context) {
+    const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["quests"], getQuestsQuery);
+    await queryClient.prefetchQuery(["quests"], getQuestsQuery);
 
-  const firstQuest = queryClient.getQueryData(["quests"]).results[0];
+    const firstQuest = queryClient.getQueryData(["quests"]).results[0];
 
-  if (firstQuest) {
-    await queryClient.prefetchQuery(
-      ["quests", firstQuest?.id],
-      () => firstQuest
-    );
+    if (firstQuest) {
+      await queryClient.prefetchQuery(
+        ["quests", firstQuest?.id],
+        () => firstQuest
+      );
+    }
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
   }
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+);
 
 export default function Quests() {
   const { data: quests } = useQuery(["quests"], getQuestsQuery);

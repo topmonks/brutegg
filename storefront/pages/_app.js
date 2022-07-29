@@ -7,6 +7,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { RecoilRoot } from "recoil";
 import { Fragment, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import swell from "swell-js";
 import theme from "../libs/theme";
 import DefaultAppLayout from "../components/layout";
 import QueryClientProvider from "../components/query-client-provider";
@@ -18,6 +19,8 @@ import Web3Loader from "../components//web3/web3-loader";
 import Head from "next/head";
 import ErrorFallback from "../components/error-fallback";
 import window from "../libs/window";
+import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
 
 const myErrorHandler = (error) => {
   window.Rollbar?.error(error);
@@ -25,6 +28,17 @@ const myErrorHandler = (error) => {
 
 function MyApp({ Component, pageProps }) {
   const Layout = Component.AppLayout ?? DefaultAppLayout;
+
+  const { i18n } = useTranslation();
+  const router = useRouter();
+
+  if (i18n.language !== router.locale) {
+    i18n.changeLanguage(router.locale);
+  }
+
+  if (swell.locale.selected() !== router.locale) {
+    swell.locale.select(router.locale);
+  }
 
   return (
     <Fragment>
@@ -38,22 +52,20 @@ function MyApp({ Component, pageProps }) {
           FallbackComponent={ErrorFallback}
           onError={myErrorHandler}
         >
-          <Suspense fallback="Loading">
-            <QueryClientProvider state={pageProps.dehydratedState}>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Suspense>
-                  <MetamaskWatcher />
-                  <PendingTxsWatcher />
-                  <SessionWatcher />
-                </Suspense>
-                <Snackbar />
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </ThemeProvider>
-            </QueryClientProvider>
-          </Suspense>
+          <QueryClientProvider state={pageProps.dehydratedState}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Suspense>
+                <MetamaskWatcher />
+                <PendingTxsWatcher />
+                <SessionWatcher />
+              </Suspense>
+              <Snackbar />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </ThemeProvider>
+          </QueryClientProvider>
         </ErrorBoundary>
       </RecoilRoot>
     </Fragment>

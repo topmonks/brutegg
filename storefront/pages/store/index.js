@@ -13,18 +13,21 @@ import ProductList, {
 import { useMediaQuery } from "@mui/material";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";
 
-export async function getStaticProps(_context) {
-  const queryClient = new QueryClient();
+export const getStaticProps = withSwellLanguageStaticProps(
+  async function getStaticProps(_context) {
+    const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["products"], getProductsQuery);
+    await queryClient.prefetchQuery(["products"], getProductsQuery);
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  }
+);
 
 export default function Store() {
   const [productSkeletonDisplayed, setProductSkeletonDisplayed] =

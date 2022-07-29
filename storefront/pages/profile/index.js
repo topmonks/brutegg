@@ -16,56 +16,58 @@ import { snackbarState } from "../../state/snackbar";
 import { composeVirtualEmailFromAddress } from "../../libs/web3";
 import Head from "next/head";
 
-export const getServerSideProps = withSessionSsr(async (context) => {
-  const publicAddress = context.req.session.user?.address;
-  const resultProps = {};
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps(context) {
+    const publicAddress = context.req.session.user?.address;
+    const resultProps = {};
 
-  if (!publicAddress) {
-    return { props: resultProps };
-  }
+    if (!publicAddress) {
+      return { props: resultProps };
+    }
 
-  resultProps.address = publicAddress;
+    resultProps.address = publicAddress;
 
-  let {
-    results: [user],
-  } = await swellNodeClient.get("/accounts", {
-    where: {
-      public_address: {
-        $eq: publicAddress,
+    let {
+      results: [user],
+    } = await swellNodeClient.get("/accounts", {
+      where: {
+        public_address: {
+          $eq: publicAddress,
+        },
       },
-    },
-    limit: 1,
-  });
+      limit: 1,
+    });
 
-  if (!user) {
-    resultProps.user = defaultFormState;
-    return { props: resultProps };
+    if (!user) {
+      resultProps.user = defaultFormState;
+      return { props: resultProps };
+    }
+
+    const email =
+      user.email === composeVirtualEmailFromAddress(publicAddress)
+        ? ""
+        : user.email;
+
+    resultProps.user = removeEmpty({
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: email,
+      phone: user.phone,
+      discord: user.discord_username,
+      reddit: user.reddit_username,
+      instagram: user.instagram_username,
+      address1: user.shipping.address1,
+      city: user.shipping.city,
+      zip: user.shipping.zip,
+      country: user.shipping.country,
+    });
+
+    return {
+      props: resultProps,
+    };
   }
-
-  const email =
-    user.email === composeVirtualEmailFromAddress(publicAddress)
-      ? ""
-      : user.email;
-
-  resultProps.user = removeEmpty({
-    id: user.id,
-    firstName: user.first_name,
-    lastName: user.last_name,
-    email: email,
-    phone: user.phone,
-    discord: user.discord_username,
-    reddit: user.reddit_username,
-    instagram: user.instagram_username,
-    address1: user.shipping.address1,
-    city: user.shipping.city,
-    zip: user.shipping.zip,
-    country: user.shipping.country,
-  });
-
-  return {
-    props: resultProps,
-  };
-});
+);
 
 export default function Profile({ address, user }) {
   const { t } = useTranslation("Profile");

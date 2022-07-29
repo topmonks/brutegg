@@ -7,24 +7,27 @@ import Head from "next/head";
 import { useTranslation } from "react-i18next";
 import StyledDescription from "../../components/styled-description";
 import PrivacyPolicyLayout from "../../components/privacy-policy/privacy-policy-layout";
+import { withSwellLanguageStaticProps } from "../../libs/with-swell-language";
 
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
+export const getStaticProps = withSwellLanguageStaticProps(
+  async function getStaticProps() {
+    const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["privacy-policy"], getPrivacyPolicyQuery);
+    await queryClient.prefetchQuery(["privacy-policy"], getPrivacyPolicyQuery);
 
-  if (!queryClient.getQueryData(["privacy-policy"])) {
+    if (!queryClient.getQueryData(["privacy-policy"])) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
-      notFound: true,
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
     };
   }
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+);
 
 export default function PrivacyPolicy() {
   const { data: privacyPolicy } = useQuery(
