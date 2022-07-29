@@ -19,7 +19,7 @@
     "@mui/icons-material": "5.8.4",
     "@mui/material": "5.9.2",
     "@tanstack/react-query": "4.0.10",
-    "firebase-admin": "11.0.0",
+    "firebase-admin": "11.0.1",
     "firebase-functions": "3.22.0",
     "i18next": "21.8.14",
     "immutable": "4.1.0",
