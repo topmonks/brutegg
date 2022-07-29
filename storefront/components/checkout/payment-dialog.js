@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import {
-  alpha,
   Box,
   Button,
   Dialog,
@@ -18,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import PaymentButton from "./payment-button";
 import useWatchPayment from "../../hooks/use-watch-payment";
 import { withLocale } from "../../libs/router";
-import { LINKS } from "../navbar";
+import { LINKS, USER_LINKS } from "../navbar";
 import { useRouter } from "next/router";
 import { POLYGON_EXPLORER } from "../../libs/constants";
 import { useRecoilValue } from "recoil";
@@ -165,7 +164,9 @@ function PaymentSuccess({ open }) {
   const router = useRouter();
 
   const onClose = useCallback(() => {
-    router.push(withLocale(router.locale, LINKS.STORE)).then(removeWatcherTxs);
+    router
+      .push(withLocale(router.locale, USER_LINKS.LIST_ORDERS))
+      .then(removeWatcherTxs);
   }, [router, removeWatcherTxs]);
 
   return (
