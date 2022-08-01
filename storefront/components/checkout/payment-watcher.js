@@ -33,7 +33,7 @@ export default function PaymentWatcher() {
       }),
     {
       onSuccess: () => {
-        if (isTxSuccess && wasTxPending.current) {
+        if (isTxSuccess) {
           createOrder.mutate();
         }
       },
