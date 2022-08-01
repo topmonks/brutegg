@@ -31,7 +31,7 @@
     "screenfull": "6.0.2",
     "swell-js": "3.17.4",
     "swell-node": "4.0.10",
-    "web3": "1.7.4"
+    "web3": "1.7.5"
   },
   "devDependencies": {
     "eslint": "8.20.0",
