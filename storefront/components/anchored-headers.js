@@ -9,10 +9,23 @@ import _window from "../libs/window";
 function Anchor({ children, href }) {
   const { t } = useTranslation("Common");
   return (
-    <span style={{ display: "flex", alignItems: "baseline" }}>
+    <span
+      className="anchor_wrapper"
+      style={{
+        display: "flex",
+        alignItems: "baseline",
+      }}
+    >
+      <span>{children}</span>
       <a
+        className="anchor_link"
         href={href}
-        style={{ display: "flex", marginRight: "8px" }}
+        style={{
+          display: "flex",
+          opacity: 0,
+          transition: "opacity 0.2s ease",
+          marginLeft: "8px",
+        }}
         title={t("Copy link to paragraph")}
       >
         <svg
@@ -28,7 +41,6 @@ function Anchor({ children, href }) {
           />
         </svg>
       </a>
-      <span>{children}</span>
     </span>
   );
 }
@@ -97,7 +109,20 @@ function AnchoredHeaders({ children, onGenerateHeadings = () => {} }) {
     scrolledTo.current = true;
   }, [headingsHrefs]);
 
-  return <Box ref={localRef}>{children}</Box>;
+  return (
+    <Box
+      ref={localRef}
+      sx={{
+        "& .anchor_wrapper:hover": {
+          "& .anchor_link": {
+            opacity: "1 !important",
+          },
+        },
+      }}
+    >
+      {children}
+    </Box>
+  );
 }
 
 AnchoredHeaders.propTypes = {
