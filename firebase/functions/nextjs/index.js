@@ -14,6 +14,7 @@ const excludeCache = [
   (req) => req.path.startsWith("/api"),
   (req) => /\/checkout(.json)?$/.test(req.path),
   (req) => /\/profile(.json)?$/.test(req.path),
+  (req) => /\/profile\/orders(.json)?$/.test(req.path),
 ];
 
 export const server = onRequest(
