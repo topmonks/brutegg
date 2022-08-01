@@ -331,7 +331,7 @@ export function ProductDetail() {
           <StyledDescription
             dangerouslySetInnerHTML={{ __html: product.description }}
             rarity={rarity}
-            sx={{ mt: 2 }}
+            sx={{ my: 2 }}
           />
         </Box>
         <Divider sx={{ borderBottomWidth: "medium" }} />
