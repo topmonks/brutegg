@@ -5,12 +5,18 @@ import { emailValidator } from "../../../validations/checkout";
 import { MemoTextField } from "../../memo-textfield";
 import useFormValidation from "../../../hooks/use-form-validation";
 import { common } from "../../../validations/i18n";
-export default function Email({ formData, onChange }) {
+export default function Email({ formData, onChange, allowEmpty }) {
   const { t } = useTranslation("Checkout");
+
+  let validator = emailValidator;
+
+  if (allowEmpty) {
+    validator = validator.allow("");
+  }
 
   const [invalidEmail, setEmailBlurred] = useFormValidation(
     formData.get("email"),
-    emailValidator.messages({
+    validator.messages({
       ...common(t),
     })
   );
@@ -28,6 +34,7 @@ export default function Email({ formData, onChange }) {
         name="email"
         onBlur={setEmailBlurred}
         onChange={onChange}
+        required={!allowEmpty}
         type="text"
         value={value}
         variant="outlined"
@@ -37,6 +44,7 @@ export default function Email({ formData, onChange }) {
 }
 
 Email.propTypes = {
+  allowEmpty: PropTypes.bool,
   formData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };
