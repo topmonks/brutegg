@@ -142,6 +142,9 @@ function PaymentInProgress({ createdAt, open }) {
             "We are in the process of extracting your bounty, it may take some time."
           )}
         </Typography>
+        <Typography sx={{ mt: 1 }} variant="body1">
+          {t("You can close the page and return later")}
+        </Typography>
       </Box>
 
       <Fragment>

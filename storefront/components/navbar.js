@@ -15,6 +15,7 @@ import { withLocale } from "../libs/router";
 import window from "../libs/window";
 import MetamaskButton from "./web3/metamask-button";
 import { ethereumState } from "../state/ethereum";
+import NavbarTransaction from "./navbar-transaction";
 
 const backgroundAnimation = keyframes`
   from {
@@ -202,6 +203,7 @@ export default function Navbar() {
         container
         direction="row"
         justifyContent="space-between"
+        spacing={0}
       >
         <Grid
           item
@@ -244,9 +246,13 @@ export default function Navbar() {
           </Tabs>
         </Grid>
 
+        <Grid item lg={1} sx={{ display: { xs: "none", lg: "block" } }}>
+          <NavbarTransaction />
+        </Grid>
+
         <Grid
           item
-          lg={3}
+          lg={2}
           md={3}
           sx={{ display: { xs: "none", md: "block" }, textAlign: "right" }}
         >

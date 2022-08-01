@@ -32,6 +32,7 @@ import BruteDivider from "../divider";
 import { SWELL_GALLERY_TYPES, SWELL_OPTIONS_TYPES } from "../../libs/constants";
 import ProductVariantSelect from "./product-variant-select";
 import { productOptionsState, productVariantState } from "../../state/product";
+import useWatchPayment from "../../hooks/use-watch-payment";
 
 export function ProductDetail() {
   const { t } = useTranslation("StoreItem");
@@ -123,6 +124,8 @@ export function ProductDetail() {
     .concat(youtubeVideos || [])
     .concat(productVariant?.images || [])
     .concat(product.images || []);
+
+  const [, isTxPending, isTxSuccess] = useWatchPayment();
 
   return (
     <Fragment>
@@ -282,21 +285,33 @@ export function ProductDetail() {
               />
             </Box>
           ))}
-          <Button
-            disableElevation
-            disabled={cartIsUpdating || !inStock || variantNotSelected}
-            onClick={() => addToCart().then(redirectToCheckout)}
-            size="large"
-            startIcon={cartIsUpdating && <CircularProgress size={20} />}
-            sx={{ width: { sm: "250px" } }}
-            variant="contained"
-          >
-            {inStock
-              ? variantNotSelected
-                ? t("Choose variant", { ns: "Common" })
-                : t("Get", { ns: "Common" })
-              : t("Sold out", { ns: "Common" })}
-          </Button>
+          {isTxPending || isTxSuccess ? (
+            <Button
+              disableElevation
+              onClick={redirectToCheckout}
+              size="large"
+              sx={{ width: { sm: "250px" }, textTransform: "none" }}
+              variant="outlined"
+            >
+              {t("Reward from previous order is being mined")}
+            </Button>
+          ) : (
+            <Button
+              disableElevation
+              disabled={cartIsUpdating || !inStock || variantNotSelected}
+              onClick={() => addToCart().then(redirectToCheckout)}
+              size="large"
+              startIcon={cartIsUpdating && <CircularProgress size={20} />}
+              sx={{ width: { sm: "250px" } }}
+              variant="contained"
+            >
+              {inStock
+                ? variantNotSelected
+                  ? t("Choose variant", { ns: "Common" })
+                  : t("Get", { ns: "Common" })
+                : t("Sold out", { ns: "Common" })}
+            </Button>
+          )}
         </Box>
         <Divider sx={{ borderBottomWidth: "medium" }} />
         <Box

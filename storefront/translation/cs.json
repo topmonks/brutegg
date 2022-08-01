@@ -26,7 +26,9 @@
     "Store": "Obchod",
     "Rewards": "Odměny",
     "FAQ": "Nápověda",
-    "Profile": "Profil"
+    "Profile": "Profil",
+    "Reward mining in progress": "Těžíme odměnu",
+    "Reward mined": "Odměna vytěžena!"
   },
   "Titles": {
     "Rewards": "Odměny",
@@ -144,7 +146,8 @@
     "legendary": "Legendary"
   },
   "StoreItem": {
-    "Remaining rewards": "Zbývá odměn"
+    "Remaining rewards": "Zbývá odměn",
+    "Reward from previous order is being mined": "Težíme odměnu s předchozí objednávky"
   },
   "PaymentDialog": {
     "Order summary": "Shrnutí objednávky",
@@ -159,7 +162,8 @@
     "Not enough BRUTE tokens": "Nemáte dostatek BRUTE",
     "In your account you have": "Na účtě máte",
     "Purchased items cost": "Objednané itemy stojí",
-    "Earn BRUTE for Quests": "Získejte BRUTE za splnění Questů"
+    "Earn BRUTE for Quests": "Získejte BRUTE za splnění Questů",
+    "You can close the page and return later": "Stránku můžete zavřít a vrátit se později"
   },
   "MetamaskErrors": {
     "4001": "Transakce byla odmítnuta uživatelem",

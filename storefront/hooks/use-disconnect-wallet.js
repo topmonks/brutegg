@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { ethereumState } from "../state/ethereum";
 import { sessionState } from "../state/session";
 import { snackbarState } from "../state/snackbar";
+import useWatchPayment from "./use-watch-payment";
 
 function clearAccountLocalStorage(account) {
   const items = { ...window.localStorage };
@@ -20,6 +21,7 @@ export default function useDisconnectWallet() {
   const [ethereum, setEthereum] = useRecoilState(ethereumState);
   const [, setSnackbar] = useRecoilState(snackbarState);
   const [, setSession] = useRecoilState(sessionState);
+  const [, , , , , removeWatcherTxs] = useWatchPayment();
 
   const disconnect = useCallback(() => {
     clearAccountLocalStorage(ethereum.account);
@@ -31,7 +33,8 @@ export default function useDisconnectWallet() {
       method: "POST",
     });
     setSession(null);
-  }, [setEthereum, setSnackbar, setSession, ethereum, t]);
+    removeWatcherTxs();
+  }, [setEthereum, setSnackbar, setSession, ethereum, t, removeWatcherTxs]);
 
   return disconnect;
 }
