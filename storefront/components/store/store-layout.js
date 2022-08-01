@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { Grid } from "@mui/material";
 import { Fragment } from "react";
 import { ProductsHeadline } from "./products-headline";
+import { Box } from "@mui/system";
 
 export default function StoreLayout({
   children,
@@ -12,6 +13,8 @@ export default function StoreLayout({
   return (
     <Fragment>
       {displayHeadline && <ProductsHeadline center={centerHeadline} />}
+      {!displayHeadline && <Box sx={[{ mb: { xs: 2, sm: 0 } }]} />}
+
       <Grid container>
         <Grid
           item

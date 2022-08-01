@@ -9,14 +9,14 @@ export function ProductDetailStickyWrapper({ children }) {
         top: (theme) => ({
           sm: theme.spacing(2),
         }),
-        mt: {
-          xs: 2,
-          sm: 0,
-        },
         ml: { sm: 2 },
         height: (theme) => ({
           sm: `calc(100vh - ${theme.spacing(4)})`,
         }),
+        minHeight: {
+          xs: "70vh",
+          sm: "auto",
+        },
         border: "1px solid white",
       }}
     >
@@ -27,4 +27,5 @@ export function ProductDetailStickyWrapper({ children }) {
 
 ProductDetailStickyWrapper.propTypes = {
   children: PropTypes.node,
+  sx: PropTypes.object,
 };
