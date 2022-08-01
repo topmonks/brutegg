@@ -31,7 +31,7 @@ export default function ProfileLayout({ children }) {
       href: USER_LINKS.WALLET,
     },
     {
-      textPrimary: t("List Orders", { ns: "Titles" }),
+      textPrimary: t("List Rewards", { ns: "Titles" }),
       href: USER_LINKS.LIST_ORDERS,
     },
   ];

@@ -81,7 +81,7 @@ export default function ListOrders({ address, orders = [] }) {
   return (
     <ProfileLayout>
       <Head>
-        <title>{t("List Orders", { ns: "Titles" })} | Brute</title>
+        <title>{t("List Rewards", { ns: "Titles" })} | Brute</title>
       </Head>
       <UnlockMetamaskLayout
         AlignProps={{
@@ -97,7 +97,7 @@ export default function ListOrders({ address, orders = [] }) {
         }}
       >
         <TableContainer component={DoubleBorderBox}>
-          <Table aria-label={t("List Orders", { ns: "Titles" })}>
+          <Table aria-label={t("List Rewards", { ns: "Titles" })}>
             <TableHead>
               <TableRow>
                 <TableCell>{t("Created at")}</TableCell>
