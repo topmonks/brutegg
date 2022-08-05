@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useState } from "react";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 
 import useEventTarget from "../../hooks/use-event-target";
 import { getProduct, getProducts } from "../../libs/swell";
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
   const quests = await getProducts({ category: "quests" });
 
   const paths = quests.results.map((q) => ({
-    params: { slug: [q.id, q.slug] },
+    params: { slug: [q.slug] },
   }));
 
   return {
@@ -55,8 +55,13 @@ export const getStaticProps = withSwellLanguageStaticProps(
 export default function Item() {
   const router = useRouter();
   const {
-    slug: [id],
+    slug: [slugOrId],
   } = router.query;
+  const { data: quest } = useQuery(["quests", slugOrId], () =>
+    getProduct(slugOrId)
+  );
+  const id = quest?.id;
+
   const [questDisplayed, setQuestDisplayed] = useState(true);
 
   const [selectedQuestIdOnClick, setSelectedQuestIdOnClick] = useState(id);

@@ -11,6 +11,7 @@ import { ProductPropTypes } from "../../types/swell";
 import { useTranslation } from "react-i18next";
 import PriceTag from "../price-tag";
 import Image from "next/image";
+import { LINKS } from "../navbar";
 
 /**
  *
@@ -33,7 +34,7 @@ export default function QuestListItem({ quest, selected, ix = 0 }) {
       );
     }
     router.push(
-      withLocale(router.locale, "/quests/" + quest.id + "/" + quest.slug),
+      withLocale(router.locale, LINKS.QUESTS + "/" + quest.slug),
       undefined,
       { scroll: false }
     );
