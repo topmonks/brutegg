@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useState } from "react";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "@mui/material";
 
 import StoreLayout from "../../../components/store/store-layout";
@@ -20,7 +20,7 @@ export async function getStaticPaths() {
   const products = await getStoreProducts({ category: "store" });
 
   const paths = products.results.map((p) => ({
-    params: { slug: [p.id, p.slug] },
+    params: { slug: [p.slug] },
   }));
 
   return {
@@ -58,10 +58,15 @@ export const getStaticProps = withSwellLanguageStaticProps(
 export default function Item() {
   const router = useRouter();
   const {
-    slug: [id],
+    slug: [slugOrId],
   } = router.query;
   const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [productDisplayed, setProductDisplayed] = useState(true);
+  const { data: product } = useQuery(["products", slugOrId], () =>
+    getProduct(slugOrId)
+  );
+
+  const id = product?.id;
 
   const [selectedProductIdOnClick, setSelectedProductIdOnClick] = useState(id);
 

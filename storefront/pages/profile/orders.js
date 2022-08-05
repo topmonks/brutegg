@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { Box } from "@mui/system";
 import { withLocale } from "../../libs/router";
+import { LINKS } from "../../components/navbar";
 
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps(context) {
@@ -138,10 +139,7 @@ export default function ListOrders({ address, orders = [] }) {
                               router.push(
                                 withLocale(
                                   router.locale,
-                                  "/store/item/" +
-                                    i.product.id +
-                                    "/" +
-                                    i.product.slug
+                                  LINKS.STORE_ITEM + "/" + i.product.slug
                                 )
                               );
                             }}

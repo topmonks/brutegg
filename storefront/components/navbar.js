@@ -124,6 +124,7 @@ const FullscreenTab = () => {
 export const LINKS = {
   QUESTS: "/quests",
   STORE: "/store",
+  STORE_ITEM: "/store/item",
   FAQ: "/faq",
   TERMS: "/terms",
   PRIVACY_POLICY: "/privacy-policy",

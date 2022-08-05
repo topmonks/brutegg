@@ -14,6 +14,7 @@ import { ProductPropTypes } from "../../types/swell";
 import BruteDivider from "../divider";
 import PriceTag from "../price-tag";
 import { isInStock, isStockNotTracked } from "../../libs/swell";
+import { LINKS } from "../navbar";
 
 /**
  *
@@ -36,10 +37,7 @@ export default function ProductListItem({ product, selected }) {
       );
     }
     router.push(
-      withLocale(
-        router.locale,
-        "/store/item/" + product.id + "/" + product.slug
-      ),
+      withLocale(router.locale, LINKS.STORE_ITEM + "/" + product.slug),
       undefined,
       { scroll: false }
     );
@@ -47,10 +45,7 @@ export default function ProductListItem({ product, selected }) {
 
   useEffect(() => {
     router.prefetch(
-      withLocale(
-        router.locale,
-        "/store/item/" + product.id + "/" + product.slug
-      )
+      withLocale(router.locale, LINKS.STORE_ITEM + "/" + product.slug)
     );
   }, [router, product]);
 
