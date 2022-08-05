@@ -72,7 +72,6 @@ export default function ProductListItem({ product, selected }) {
           height: "300px",
           cursor: "pointer",
           p: 1,
-          mb: 1,
           border: () => "1px solid " + alpha("#fff", 0.2),
           background: (theme) =>
             `linear-gradient(-180deg, ${alpha(
@@ -96,7 +95,7 @@ export default function ProductListItem({ product, selected }) {
           border: (theme) =>
             "1px solid " + alpha(theme.palette[rarity]?.main, 1),
           boxShadow: (theme) =>
-            `0 0 0 3px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
+            `inset 0 0 0 3px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
         },
         !inStock && {
           filter: "grayscale(1)",
@@ -199,7 +198,7 @@ export default function ProductListItem({ product, selected }) {
             height: "30%",
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "flex-end",
             flexWrap: "wrap",
           }}
         >
@@ -207,6 +206,7 @@ export default function ProductListItem({ product, selected }) {
             component="h3"
             display="block"
             sx={{
+              minHeight: "50px",
               textAlign: "center",
               fontWeight: "bold",
               textShadow: (theme) =>
@@ -216,41 +216,43 @@ export default function ProductListItem({ product, selected }) {
           >
             {product.name}
           </Typography>
-          <BruteDivider rarity={rarity} />
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-              px: 1,
-            }}
-          >
-            <Typography
+          <Box sx={{ width: "100%" }}>
+            <BruteDivider mb={0.5} rarity={rarity} />
+            <Box
               sx={{
-                textShadow: (theme) =>
-                  `0 0 10px ${alpha(
-                    theme.palette[rarity]?.main,
-                    0.8
-                  )}, 0 0 2px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                px: 1,
               }}
             >
-              {inStock ? (
-                stockNotTracked ? (
-                  "∞"
+              <Typography
+                sx={{
+                  textShadow: (theme) =>
+                    `0 0 10px ${alpha(
+                      theme.palette[rarity]?.main,
+                      0.8
+                    )}, 0 0 2px ${alpha(theme.palette[rarity]?.main, 0.8)}`,
+                }}
+              >
+                {inStock ? (
+                  stockNotTracked ? (
+                    "∞"
+                  ) : (
+                    <Fragment>
+                      {product.stock_level}
+                      {initialSupply && "/" + initialSupply}
+                    </Fragment>
+                  )
                 ) : (
-                  <Fragment>
-                    {product.stock_level}
-                    {initialSupply && "/" + initialSupply}
-                  </Fragment>
-                )
-              ) : (
-                t("Sold out", { ns: "Common" })
-              )}
-            </Typography>
-            <Typography component="div" sx={{ fontWeight: "bold" }}>
-              {price && <PriceTag amount={price} />}
-            </Typography>
+                  t("Sold out", { ns: "Common" })
+                )}
+              </Typography>
+              <Typography component="div" sx={{ fontWeight: "bold" }}>
+                {price && <PriceTag amount={price} />}
+              </Typography>
+            </Box>
           </Box>
         </Grid>
       </Grid>
