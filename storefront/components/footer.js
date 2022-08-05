@@ -52,6 +52,7 @@ export default function Footer() {
     >
       <Typography
         onClick={(e) => handleChange(e, LINKS.TERMS)}
+        sx={{ lineHeight: 1 }}
         variant="caption"
       >
         <Link href={withLocale(router.locale, LINKS.TERMS)}>
@@ -61,6 +62,7 @@ export default function Footer() {
 
       <Typography
         onClick={(e) => handleChange(e, LINKS.PRIVACY_POLICY)}
+        sx={{ lineHeight: 1 }}
         variant="caption"
       >
         <Link href={withLocale(router.locale, LINKS.PRIVACY_POLICY)}>
