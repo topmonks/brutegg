@@ -88,12 +88,7 @@ export default function ProductList({
 
   return (
     <Fragment>
-      <Grid
-        columns={COLUMNS_COUNT}
-        container
-        spacing={1}
-        sx={{ marginBottom: -1 }}
-      >
+      <Grid columns={COLUMNS_COUNT} container spacing={1}>
         {products.map((p) => {
           const isSelectedProduct = p.id === _selectedProductId;
           return (
