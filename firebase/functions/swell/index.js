@@ -57,6 +57,7 @@ export const recalculatespent = onMessagePublished(
       await swellNodeClient.put("/accounts/{id}", {
         id: userId,
         order_value: spent.toNumber(),
+        spent_brute: spent.toNumber(),
       });
     }
   }
