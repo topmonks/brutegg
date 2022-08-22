@@ -2,5 +2,6 @@
 // initializeApp();
 
 import * as nextjs from "./nextjs/index.js";
+import * as swell from "./swell/index.js";
 
-export { nextjs };
+export { nextjs, swell };
