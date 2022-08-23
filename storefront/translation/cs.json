@@ -57,7 +57,9 @@
     "User information": "Uživatelské údaje",
     "Socials": "Sociální sítě",
     "Save profile": "Uložit profil",
-    "Your account settings": "Nastavení vašeho účtu"
+    "Your account settings": "Nastavení vašeho účtu",
+    "Wallet balance": "Stav peněženky",
+    "Total spending": "Celková útrata"
   },
   "Profile.Wallet": {
     "MetaMask wallet settings": "Nastavení peněženky MetaMask",

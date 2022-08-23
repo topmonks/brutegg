@@ -54,7 +54,6 @@ export default function Form({
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            width: { md: "60%" },
           }}
         >
           <Typography component="h3" sx={{ fontWeight: "bold" }} variant="h6">

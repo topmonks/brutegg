@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { useMutation } from "@tanstack/react-query";
+import { alpha, Grid } from "@mui/material";
 import Head from "next/head";
 
 import Form from "../../components/profile/form";
@@ -15,6 +16,8 @@ import { withSessionSsr } from "../../libs/with-session";
 import { defaultFormState } from "../../state/profile";
 import { snackbarState } from "../../state/snackbar";
 import { composeVirtualEmailFromAddress } from "../../libs/web3";
+import { ProfileLevel } from "../../components/profile/profile-level";
+import { Suspense } from "react";
 
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps(context) {
@@ -126,11 +129,31 @@ export default function Profile({ address, user }) {
           },
         }}
       >
-        <Form
-          initialFormState={user}
-          onSubmit={upsertCustomer.mutate}
-          onSubmitIsLoading={upsertCustomer.isLoading}
-        />
+        <Grid container direction="row-reverse">
+          <Grid item md={5} xs={12}>
+            <Suspense>
+              <ProfileLevel user={user} />
+            </Suspense>
+          </Grid>
+          <Grid
+            item
+            md={7}
+            sx={{
+              pr: { xs: 0, md: 5 },
+              borderRight: {
+                xs: "none",
+                md: `2px solid ${alpha("#fff", 0.2)}`,
+              },
+            }}
+            xs={12}
+          >
+            <Form
+              initialFormState={user}
+              onSubmit={upsertCustomer.mutate}
+              onSubmitIsLoading={upsertCustomer.isLoading}
+            />
+          </Grid>
+        </Grid>
       </UnlockMetamaskLayout>
     </ProfileLayout>
   );
