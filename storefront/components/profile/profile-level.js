@@ -1,14 +1,19 @@
-import PropTypes from "prop-types";
-import { Fragment } from "react";
-import { Box, Typography } from "@mui/material";
+import { Fragment, useMemo } from "react";
+import {
+  alpha,
+  Box,
+  LinearProgress,
+  linearProgressClasses,
+  Typography,
+} from "@mui/material";
 import { bruteState } from "../../state/brute-token";
-import { useRecoilValueLoadable } from "recoil";
+import { useRecoilValue, useRecoilValueLoadable } from "recoil";
 import PriceTag from "../price-tag";
 import styled from "@emotion/styled";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import fetchThrowHttpError from "../../libs/fetch-throw-http-error.mjs";
-import { maxWidth } from "@mui/system";
+import { sessionState } from "../../state/session";
 
 const BalanceItem = styled(Box)({
   display: "flex",
@@ -16,9 +21,22 @@ const BalanceItem = styled(Box)({
   alignItems: "center",
 });
 
-export function ProfileLevel({ user }) {
+const LevelProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 12,
+  borderRadius: 6,
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 6,
+    boxShadow: `0 0 10px 0 ${alpha(theme.palette.primary.main, 1)}`,
+  },
+}));
+
+export function ProfileLevel() {
   const { t } = useTranslation("Profile");
   const brute = useRecoilValueLoadable(bruteState);
+  const session = useRecoilValue(sessionState);
+  const firstName = session?.user?.firstName;
+  const lastName = session?.user?.lastName;
+
   const { data: customer } = useQuery(
     ["/api/swell/get-customer/"],
     /**
@@ -38,17 +56,14 @@ export function ProfileLevel({ user }) {
         })
   );
 
-  const { data: level } = useQuery(
+  const { data: levels } = useQuery(
     ["/api/swell/get-profile-levels/"],
     /**
      * @returns {Promise<import("../types/swell")>}
      */
     () =>
       window
-        ?.fetch(
-          "/api/swell/get-profile-levels?spentBrute=" +
-            (customer.spent_brute || 0)
-        )
+        ?.fetch("/api/swell/get-profile-levels")
         .then(fetchThrowHttpError)
         .then((res) => res.json())
         .catch((e) => {
@@ -61,16 +76,63 @@ export function ProfileLevel({ user }) {
     { enabled: Boolean(customer) }
   );
 
-  console.log({ customer, level });
+  const level = useMemo(() => {
+    if (!levels) {
+      return null;
+    }
+
+    if (!customer) {
+      return null;
+    }
+
+    const spentBrute = customer.spent_brute || 0;
+
+    let currentLevel = null;
+
+    for (const level of levels) {
+      if (level.required_spent <= spentBrute) {
+        currentLevel = level;
+      } else {
+        continue;
+      }
+    }
+
+    return currentLevel;
+  }, [levels, customer]);
+
+  console.log({ level, customer, levels });
+
+  const levelIx = useMemo(() => {
+    if (!level) {
+      return null;
+    }
+
+    return levels.findIndex((l) => l.id === level.id);
+  }, [levels, level]);
+
+  const nextLevel = useMemo(() => {
+    if (levelIx == null) {
+      return;
+    }
+
+    return levels[levelIx + 1];
+  }, [levelIx, levels]);
+
+  const spentBrute = customer?.spent_brute || 0;
+  const remaining = nextLevel?.required_spent - spentBrute;
+  const remainingPercent = nextLevel
+    ? spentBrute / (nextLevel.required_spent / 100)
+    : 100;
 
   return (
     <Fragment>
       <Box
         sx={{
-          pl: { xs: 0, md: 8 },
-          pr: { xs: 0, md: 3 },
+          px: { xs: 1, md: 4 },
+          py: { xs: 1, md: 6 },
           position: { sm: "sticky" },
-          top: { sm: 24 },
+          top: { sm: 0 },
+          mb: { xs: 5, sm: 0 },
         }}
       >
         <Typography
@@ -87,10 +149,10 @@ export function ProfileLevel({ user }) {
           }}
           variant="h5"
         >
-          {user.firstName} {user.lastName}
+          {firstName} {lastName}
         </Typography>
         {level?.avatar_url && (
-          <Box sx={{ my: 1 }}>
+          <Box sx={{ my: 1, textAlign: "center" }}>
             <img
               src={level.avatar_url}
               style={{
@@ -99,16 +161,62 @@ export function ProfileLevel({ user }) {
                 display: "block",
               }}
             />
+            <LevelProgress
+              sx={{ mt: 2 }}
+              value={remainingPercent}
+              variant="determinate"
+            />
+            {nextLevel && (
+              <Typography sx={{ mt: 1, display: "block" }} variant="caption">
+                <PriceTag
+                  amount={spentBrute + ""}
+                  displayLetter={false}
+                  displayLogo={false}
+                  sx={{ fontWeight: "bold" }}
+                />{" "}
+                /{" "}
+                <PriceTag
+                  amount={nextLevel.required_spent}
+                  displayLetter
+                  displayLogo={false}
+                  sx={{ fontWeight: "bold" }}
+                />
+              </Typography>
+            )}
+
+            <Typography
+              component="span"
+              sx={{ mt: 2, display: "block" }}
+              variant="h6"
+            >
+              {t("Level")} {levelIx + 1} <b>{level.label}</b>
+            </Typography>
+            <Box
+              sx={{
+                position: "absolute",
+                width: "50%",
+                left: 0,
+                right: 0,
+                margin: "auto",
+                top: "25%",
+                aspectRatio: "1/1",
+                borderRadius: "50%",
+                zIndex: -1,
+                border: "2px solid " + alpha("#fff", 0.1),
+                background: alpha("#fff", 0.05),
+                boxShadow: "0 0 20px 2px " + alpha("#fff", 0.1),
+              }}
+            />
           </Box>
         )}
-        <BalanceItem sx={{ mb: { xs: 0.5, sm: 2 } }}>
+        <BalanceItem sx={{ mb: { xs: 0.5, sm: 2 }, mt: { xs: 2, sm: 6 } }}>
           <Typography>{t("Wallet balance")}</Typography>
           <PriceTag
             amount={brute.contents?.account?.balance || ""}
             displayLetter
             displayLogo={false}
             sx={{ fontWeight: "bold" }}
-          ></PriceTag>
+          />
         </BalanceItem>
         <BalanceItem sx={{ mb: { xs: 0.5, sm: 2 } }}>
           <Typography>{t("Total spending")}</Typography>
@@ -117,13 +225,22 @@ export function ProfileLevel({ user }) {
             displayLetter
             displayLogo={false}
             sx={{ fontWeight: "bold" }}
-          ></PriceTag>
+          />
         </BalanceItem>
+        {nextLevel && (
+          <BalanceItem sx={{ mb: { xs: 0.5, sm: 2 } }}>
+            <Typography>{t("To progress to the next level")}</Typography>
+            <PriceTag
+              amount={remaining || "0"}
+              displayLetter
+              displayLogo={false}
+              sx={{ fontWeight: "bold" }}
+            />
+          </BalanceItem>
+        )}
       </Box>
     </Fragment>
   );
 }
 
-ProfileLevel.propTypes = {
-  user: PropTypes.object,
-};
+ProfileLevel.propTypes = {};

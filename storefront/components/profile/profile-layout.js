@@ -62,8 +62,6 @@ export default function ProfileLayout({ children }) {
             lg={10}
             sm={9}
             sx={{
-              px: { xs: 1, md: 5 },
-              py: { xs: 1, md: 4 },
               minHeight: "80vh",
               borderLeft: { xs: "none", sm: `2px solid ${alpha("#fff", 0.2)}` },
             }}

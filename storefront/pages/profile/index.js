@@ -122,6 +122,8 @@ export default function Profile({ address, user }) {
             justifyContent: "flex-start !important",
             alignItems: "flex-start !important",
             "& .inner": {
+              px: { xs: 1, md: 5 },
+              py: { xs: 1, md: 4 },
               width: {
                 md: "60%",
               },
@@ -132,14 +134,15 @@ export default function Profile({ address, user }) {
         <Grid container direction="row-reverse">
           <Grid item md={5} xs={12}>
             <Suspense>
-              <ProfileLevel user={user} />
+              <ProfileLevel />
             </Suspense>
           </Grid>
           <Grid
             item
             md={7}
             sx={{
-              pr: { xs: 0, md: 5 },
+              px: { xs: 1, md: 5 },
+              py: { xs: 1, md: 4 },
               borderRight: {
                 xs: "none",
                 md: `2px solid ${alpha("#fff", 0.2)}`,

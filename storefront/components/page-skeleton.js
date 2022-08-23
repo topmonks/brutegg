@@ -142,6 +142,8 @@ function ProfileSkeleton() {
           flexDirection: "column",
           gap: 2,
           width: { md: "60%" },
+          px: { xs: 1, md: 5 },
+          py: { xs: 1, md: 4 },
         }}
       >
         <Skeleton

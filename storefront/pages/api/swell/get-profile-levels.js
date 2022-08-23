@@ -8,27 +8,6 @@ async function getProfileLevels(req, res) {
     sort: "required_spent asc",
   });
 
-  let { spentBrute } = req.query;
-
-  spentBrute = parseInt(spentBrute);
-
-  if (spentBrute == null) {
-    res.send(levels);
-    return;
-  }
-
-  console.log(levels, spentBrute);
-
-  let currentLevel;
-
-  for (const level of levels) {
-    if (level.required_spent <= spentBrute) {
-      currentLevel = level;
-    } else {
-      continue;
-    }
-  }
-
-  res.send(currentLevel);
+  res.send(levels);
   return;
 }
