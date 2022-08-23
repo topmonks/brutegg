@@ -45,6 +45,10 @@ export default function useWatchTx(account, contractAddress, method) {
   const removeTx = useRecoilCallback(
     ({ reset }) =>
       () => {
+        if (watchingTxs == null) {
+          return;
+        }
+
         const tx = watchingTxs.transactionHash;
         reset(metadataTxState(tx));
         reset(txLastState(tx));
