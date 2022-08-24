@@ -135,12 +135,28 @@ async function createOrder(req, res) {
     return;
   }
 
+  // account is fetched before order is created
+  // swell updates the account balance after order, but since
+  // all items are priced 0$ (we use custom brute attribute)
+  // swell resets order_value to 0
+  const account = await swellNodeClient.get("/accounts/{id}", {
+    id: cart.account_id,
+  });
+
   const order = await swellNodeClient.post("/orders", {
     cart_id: cartId,
     billing: {
       method: "brute_token",
     },
   });
+
+  if (account) {
+    await swellNodeClient.put("/accounts/{id}", {
+      id: account.id,
+      order_value: (account.order_value || 0) + cost.toNumber(),
+      spent_brute: (account.spent_brute || 0) + cost.toNumber(),
+    });
+  }
 
   res.send(order);
 }
