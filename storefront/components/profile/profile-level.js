@@ -100,8 +100,6 @@ export function ProfileLevel() {
     return currentLevel;
   }, [levels, customer]);
 
-  console.log({ level, customer, levels });
-
   const levelIx = useMemo(() => {
     if (!level) {
       return null;
@@ -169,7 +167,7 @@ export function ProfileLevel() {
             {nextLevel && (
               <Typography sx={{ mt: 1, display: "block" }} variant="caption">
                 <PriceTag
-                  amount={spentBrute + ""}
+                  amount={spentBrute}
                   displayLetter={false}
                   displayLogo={false}
                   sx={{ fontWeight: "bold" }}

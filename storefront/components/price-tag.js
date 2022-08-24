@@ -13,7 +13,9 @@ export default function PriceTag({
   const router = useRouter();
 
   try {
-    amount = amount ? parseFloat(amount).toLocaleString(router.locale) : null;
+    amount = amount
+      ? parseFloat(amount.toString()).toLocaleString(router.locale)
+      : null;
   } catch (e) {
     console.error(e);
   }
@@ -53,7 +55,7 @@ export default function PriceTag({
 }
 
 PriceTag.propTypes = {
-  amount: PropTypes.string,
+  amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.node,
   displayLogo: PropTypes.bool,
   displayLetter: PropTypes.bool,
