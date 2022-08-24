@@ -151,6 +151,9 @@ async function createOrder(req, res) {
   });
 
   if (account) {
+    // swell does postprocessing of orders
+    // wait before updates the account
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     await swellNodeClient.put("/accounts/{id}", {
       id: account.id,
       order_value: (account.order_value || 0) + cost.toNumber(),
