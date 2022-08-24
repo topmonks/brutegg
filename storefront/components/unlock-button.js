@@ -43,7 +43,11 @@ export default function UnlockButton(props) {
           await refreshProps();
 
           const session = await res.json();
-          setSession({ address: session?.user?.address });
+
+          setSession({
+            address: session?.user?.address,
+            user: session?.user,
+          });
         })
         .catch((e) => {
           setSnackbar({

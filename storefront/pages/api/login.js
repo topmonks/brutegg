@@ -3,6 +3,7 @@ import { recoverPersonalSignature } from "@metamask/eth-sig-util";
 import { withSessionRoute } from "../../libs/with-session";
 import { composeNonce } from "../../libs/web3";
 import { log } from "../../libs/logger";
+import { swellNodeClient } from "../../libs/swell-node";
 
 function checkSignature(nonce, signature) {
   const msgParams = {
@@ -63,5 +64,23 @@ async function loginRoute(req, res) {
       .send({ error: "failed to save the session", message: e.message });
     return;
   }
-  res.send({ ...req.session });
+
+  let {
+    results: [user],
+  } = await swellNodeClient.get("/accounts", {
+    where: {
+      public_address: {
+        $eq: address,
+      },
+    },
+    limit: 1,
+  });
+
+  res.send({
+    user: {
+      ...req.session.user,
+      firstName: user.first_name,
+      lastName: user.last_name,
+    },
+  });
 }
