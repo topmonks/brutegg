@@ -93,106 +93,108 @@ export default function ListOrders({ address, orders = [] }) {
               width: {
                 md: "60%",
               },
+              px: { xs: 1, md: 5 },
+              py: { xs: 1, md: 4 },
             },
           },
         }}
       >
-        <TableContainer component={DoubleBorderBox}>
-          <Table aria-label={t("List Rewards", { ns: "Titles" })}>
-            <TableHead>
-              <TableRow>
-                <TableCell>{t("Created at")}</TableCell>
-                <TableCell>{t("Items")}</TableCell>
-                <TableCell>{t("Transaction")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders.map((o) => {
-                return (
-                  <TableRow
-                    key={o.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {new Date(o.date_created).toLocaleDateString(
-                        router.locale
-                      )}
-                      ,{" "}
-                      {new Date(o.date_created).toLocaleTimeString(
-                        router.locale
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {o.items.map((i, ix) => {
-                        if (!i.product) {
-                          return null;
-                        }
-
-                        const thumbnail =
-                          i.product?.attributes.brute_thumbnail?.file ||
-                          i.product.images?.[0]?.file;
-
-                        return (
-                          <Box
-                            key={ix}
-                            onClick={() => {
-                              router.push(
-                                withLocale(
-                                  router.locale,
-                                  LINKS.STORE_ITEM + "/" + i.product.slug
-                                )
-                              );
-                            }}
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "pointer",
-                            }}
-                          >
-                            {thumbnail && (
-                              <Box
-                                sx={{
-                                  position: "relative",
-                                  width: "40px",
-                                  height: "40px",
-                                  mr: 1,
-                                }}
-                              >
-                                <Image
-                                  height={thumbnail.height}
-                                  layout="fill"
-                                  objectFit="contain"
-                                  src={thumbnail.url}
-                                  width={thumbnail.width}
-                                />
-                              </Box>
-                            )}
-                            {i.product.name}
-                          </Box>
-                        );
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="link">
-                        <a
-                          href={
-                            (POLYGON_EXPLORER[o.metadata?.chainId] ||
-                              "https://polygonscan.com/tx/") +
-                            o.metadata?.transactionHash
+        <Box sx={{ px: { xs: 1, md: 5 }, py: { xs: 1, md: 4 } }}>
+          <TableContainer component={DoubleBorderBox}>
+            <Table aria-label={t("List Rewards", { ns: "Titles" })}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t("Created at")}</TableCell>
+                  <TableCell>{t("Items")}</TableCell>
+                  <TableCell>{t("Transaction")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orders.map((o) => {
+                  return (
+                    <TableRow
+                      key={o.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {new Date(o.date_created).toLocaleDateString(
+                          router.locale
+                        )}
+                        ,{" "}
+                        {new Date(o.date_created).toLocaleTimeString(
+                          router.locale
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {o.items.map((i, ix) => {
+                          if (!i.product) {
+                            return null;
                           }
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          {o.metadata?.transactionHash}
-                        </a>
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                          const thumbnail =
+                            i.product?.attributes.brute_thumbnail?.file ||
+                            i.product.images?.[0]?.file;
+                          return (
+                            <Box
+                              key={ix}
+                              onClick={() => {
+                                router.push(
+                                  withLocale(
+                                    router.locale,
+                                    LINKS.STORE_ITEM + "/" + i.product.slug
+                                  )
+                                );
+                              }}
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {thumbnail && (
+                                <Box
+                                  sx={{
+                                    position: "relative",
+                                    width: "40px",
+                                    height: "40px",
+                                    mr: 1,
+                                  }}
+                                >
+                                  <Image
+                                    height={thumbnail.height}
+                                    layout="fill"
+                                    objectFit="contain"
+                                    src={thumbnail.url}
+                                    width={thumbnail.width}
+                                  />
+                                </Box>
+                              )}
+                              {i.product.name}
+                            </Box>
+                          );
+                        })}
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="link">
+                          <a
+                            href={
+                              (POLYGON_EXPLORER[o.metadata?.chainId] ||
+                                "https://polygonscan.com/tx/") +
+                              o.metadata?.transactionHash
+                            }
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {o.metadata?.transactionHash}
+                          </a>
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </UnlockMetamaskLayout>
     </ProfileLayout>
   );

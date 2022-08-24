@@ -27,7 +27,7 @@ export default function Wallet() {
       <Head>
         <title>{t("Wallet", { ns: "Titles" })} | Brute</title>
       </Head>
-      <Fragment>
+      <Box sx={{ px: { xs: 1, md: 5 }, py: { xs: 1, md: 4 } }}>
         <Typography component="h3" sx={{ fontWeight: "bold" }} variant="h6">
           {t("MetaMask wallet settings")}
         </Typography>
@@ -77,7 +77,7 @@ export default function Wallet() {
             </Box>
           </Box>
         )}
-      </Fragment>
+      </Box>
     </ProfileLayout>
   );
 }
