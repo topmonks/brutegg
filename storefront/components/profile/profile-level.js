@@ -227,7 +227,9 @@ export function ProfileLevel() {
         </BalanceItem>
         {nextLevel && (
           <BalanceItem sx={{ mb: { xs: 0.5, sm: 2 } }}>
-            <Typography>{t("To progress to the next level")}</Typography>
+            <Typography>
+              {t("To progress to the {{nextLevel.label}}", { nextLevel })}
+            </Typography>
             <PriceTag
               amount={remaining || "0"}
               displayLetter
