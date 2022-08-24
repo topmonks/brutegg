@@ -39,7 +39,7 @@ export function scrollToProductId(id, attrs) {
     if (element) {
       element.scrollIntoView({
         behavior: "smooth",
-        block: "center",
+        block: "end",
         ...attrs,
       });
     }
