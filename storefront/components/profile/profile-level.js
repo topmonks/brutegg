@@ -37,7 +37,7 @@ export function ProfileLevel() {
   const firstName = session?.user?.firstName;
   const lastName = session?.user?.lastName;
 
-  const { data: customer } = useQuery(
+  const { data: customer, isFetched: customerFetched } = useQuery(
     ["/api/swell/get-customer/"],
     /**
      * @returns {Promise<import("../types/swell")>}
@@ -72,8 +72,7 @@ export function ProfileLevel() {
           }
 
           return e;
-        }),
-    { enabled: Boolean(customer) }
+        })
   );
 
   const level = useMemo(() => {
@@ -81,11 +80,11 @@ export function ProfileLevel() {
       return null;
     }
 
-    if (!customer) {
+    if (!customerFetched) {
       return null;
     }
 
-    const spentBrute = customer.spent_brute || 0;
+    const spentBrute = customer?.spent_brute || 0;
 
     let currentLevel = null;
 
@@ -98,7 +97,7 @@ export function ProfileLevel() {
     }
 
     return currentLevel;
-  }, [levels, customer]);
+  }, [levels, customerFetched, customer]);
 
   const levelIx = useMemo(() => {
     if (!level) {
@@ -122,6 +121,7 @@ export function ProfileLevel() {
     ? spentBrute / (nextLevel.required_spent / 100)
     : 100;
 
+  console.log({ spentBrute });
   return (
     <Fragment>
       <Box

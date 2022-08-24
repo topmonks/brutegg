@@ -15,7 +15,7 @@ export default function PriceTag({
   try {
     amount = amount
       ? parseFloat(amount.toString()).toLocaleString(router.locale)
-      : null;
+      : amount;
   } catch (e) {
     console.error(e);
   }
