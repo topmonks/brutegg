@@ -79,8 +79,8 @@ async function loginRoute(req, res) {
   res.send({
     user: {
       ...req.session.user,
-      firstName: user.first_name,
-      lastName: user.last_name,
+      firstName: user?.first_name,
+      lastName: user?.last_name,
     },
   });
 }
