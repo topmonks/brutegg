@@ -50,6 +50,24 @@ export default function Footer() {
         }),
       }}
     >
+      {router.locale !== "cs" && (
+        <Typography
+          onClick={(e) => handleChange(e, LINKS.TERMS)}
+          sx={{ lineHeight: 1, cursor: "pointer" }}
+          variant="caption"
+        >
+          <Link href={withLocale("cs", router.asPath)} locale="cs">
+            <img
+              alt=""
+              loading="lazy"
+              src={`https://flagcdn.com/w20/cz.png`}
+              srcSet={`https://flagcdn.com/w40/cz.png 2x`}
+              width="20"
+            />
+          </Link>
+        </Typography>
+      )}
+
       <Typography
         onClick={(e) => handleChange(e, LINKS.TERMS)}
         sx={{ lineHeight: 1 }}
