@@ -39,7 +39,7 @@
     "web3": "1.7.5"
   },
   "devDependencies": {
-    "eslint": "8.22.0",
+    "eslint": "8.23.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.0.1",
