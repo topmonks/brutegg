@@ -40,7 +40,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react": "7.31.8",
     "eslint-plugin-react-hooks": "4.6.0",
-    "next-sitemap": "3.1.21",
+    "next-sitemap": "3.1.22",
     "prettier": "2.7.1"
   }
 }
