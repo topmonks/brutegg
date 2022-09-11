@@ -18,7 +18,7 @@
     "@metamask/eth-sig-util": "4.0.1",
     "@mui/icons-material": "5.10.3",
     "@mui/material": "5.10.4",
-    "@tanstack/react-query": "4.3.1",
+    "@tanstack/react-query": "4.3.3",
     "firebase-admin": "11.0.1",
     "firebase-functions": "3.23.0",
     "i18next": "21.9.1",
