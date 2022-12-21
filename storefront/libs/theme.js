@@ -2,7 +2,6 @@ import {
   alpha,
   createTheme,
   darkScrollbar,
-  experimental_sx,
   responsiveFontSizes,
 } from "@mui/material";
 import { RARITY } from "./constants";
@@ -62,7 +61,7 @@ const theme = responsiveFontSizes(
     components: {
       MuiButton: {
         styleOverrides: {
-          containedPrimary: experimental_sx(
+          containedPrimary: abstractTheme.unstable_sx(
             (() => {
               const sharedButtonAttrs = {
                 borderRadius: 0,
