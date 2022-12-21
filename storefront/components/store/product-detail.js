@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Box, alpha } from "@mui/system";
 import { useTheme } from "@emotion/react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useMemo, useState } from "react";

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Fragment, useMemo } from "react";
 import { Box } from "@mui/system";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import useGetCart from "../../hooks/use-get-cart";
 import { Typography } from "@mui/material";

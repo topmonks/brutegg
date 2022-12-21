@@ -10,7 +10,7 @@ import {
 import { alpha, Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import PropTypes from "prop-types";
 import { Fragment, useRef, useState } from "react";
 import { SWELL_GALLERY_TYPES } from "../../libs/constants";

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { keyframes } from "@emotion/react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Head from "next/head";
 import { useQuery } from "@tanstack/react-query";
 

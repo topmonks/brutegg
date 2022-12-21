@@ -4,7 +4,7 @@ import { Grid, Typography, alpha } from "@mui/material";
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useTranslation } from "react-i18next";
 
 import { withLocale } from "../../libs/router";

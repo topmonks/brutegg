@@ -10,7 +10,7 @@ import { eventTargetState, QUESTS_ITEM_CHANGE } from "../../state/event-target";
 import { ProductPropTypes } from "../../types/swell";
 import { useTranslation } from "react-i18next";
 import PriceTag from "../price-tag";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { LINKS } from "../navbar";
 
 /**

@@ -20,7 +20,7 @@ import {
 import DoubleBorderBox from "../../components/double-border-box";
 import { POLYGON_EXPLORER } from "../../libs/constants";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Box } from "@mui/system";
 import { withLocale } from "../../libs/router";
 import { LINKS } from "../../components/navbar";
