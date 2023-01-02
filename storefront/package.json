@@ -15,7 +15,7 @@
     "@emotion/styled": "11.10.5",
     "@metamask/eth-sig-util": "5.0.2",
     "@mui/icons-material": "5.11.0",
-    "@mui/material": "5.11.2",
+    "@mui/material": "5.11.3",
     "@tanstack/react-query": "4.20.4",
     "i18next": "22.4.6",
     "immutable": "4.2.1",
