@@ -22,7 +22,7 @@
     "firebase-admin": "11.4.1",
     "firebase-functions": "4.1.1",
     "i18next": "22.4.8",
-    "immutable": "4.2.1",
+    "immutable": "4.2.2",
     "iron-session": "6.3.1",
     "joi": "17.7.0",
     "lodash.deburr": "4.1.0",
