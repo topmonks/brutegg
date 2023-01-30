@@ -29,7 +29,7 @@
     "react-i18next": "12.1.4",
     "recoil": "0.7.6",
     "screenfull": "6.0.2",
-    "swell-js": "3.19.4",
+    "swell-js": "3.19.5",
     "swell-node": "4.0.11",
     "web3": "1.8.2"
   },
