@@ -33,7 +33,7 @@
   "homepage": "https://github.com/truffle-box/polygon-box#readme",
   "devDependencies": {
     "@maticnetwork/maticjs": "3.5.0",
-    "@truffle/hdwallet-provider": "2.1.5",
+    "@truffle/hdwallet-provider": "2.1.6",
     "abi-decoder": "2.4.0",
     "dotenv": "16.0.3",
     "eslint": "8.33.0",
