@@ -11,8 +11,8 @@
     "postinstall": "node scripts/copy-deps-to-firestore-functions.mjs && npm i --prefix ../firebase/functions"
   },
   "dependencies": {
-    "@emotion/react": "11.10.5",
-    "@emotion/styled": "11.10.5",
+    "@emotion/react": "11.10.6",
+    "@emotion/styled": "11.10.6",
     "@metamask/eth-sig-util": "5.0.2",
     "@mui/icons-material": "5.11.9",
     "@mui/material": "5.11.9",
