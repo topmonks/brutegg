@@ -18,7 +18,7 @@
     "@mui/material": "5.11.12",
     "@tanstack/react-query": "4.26.1",
     "i18next": "22.4.11",
-    "immutable": "4.2.4",
+    "immutable": "4.3.0",
     "iron-session": "6.3.1",
     "joi": "17.8.3",
     "lodash.deburr": "4.1.0",
