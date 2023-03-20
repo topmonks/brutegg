@@ -41,7 +41,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "ganache-time-traveler": "1.0.16",
     "multicall-decode": "1.0.2",
-    "prettier": "2.8.4",
+    "prettier": "2.8.5",
     "truffle-plugin-verify": "0.6.2",
     "truffle-token-test-utils": "1.0.0"
   },
