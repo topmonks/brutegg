@@ -24,7 +24,7 @@
     "i18next": "22.4.13",
     "immutable": "4.3.0",
     "iron-session": "6.3.1",
-    "joi": "17.9.0",
+    "joi": "17.9.1",
     "lodash.deburr": "4.1.0",
     "next": "13.2.4",
     "next-sitemap": "3.1.55",
