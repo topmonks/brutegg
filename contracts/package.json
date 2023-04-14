@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "4.8.3",
-    "@openzeppelin/contracts-upgradeable": "4.8.2",
+    "@openzeppelin/contracts-upgradeable": "4.8.3",
     "truffle-token-test-utils": "1.0.0",
     "web3": "1.9.0"
   }
