@@ -20,7 +20,7 @@
     "@mui/material": "5.12.3",
     "@tanstack/react-query": "4.29.5",
     "firebase-admin": "11.8.0",
-    "firebase-functions": "4.3.1",
+    "firebase-functions": "4.4.0",
     "i18next": "22.4.15",
     "immutable": "4.3.0",
     "iron-session": "6.3.1",
