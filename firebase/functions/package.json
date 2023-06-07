@@ -13,7 +13,7 @@
     "start": "npm run shell"
   },
   "dependencies": {
-    "@emotion/react": "11.11.0",
+    "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@metamask/eth-sig-util": "5.1.0",
     "@mui/icons-material": "5.11.16",
