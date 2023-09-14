@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "eslint": "8.49.0",
-    "eslint-config-prettier": "8.8.0",
+    "eslint-config-prettier": "8.10.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.1.1",
     "firebase-functions-test": "3.1.0",
