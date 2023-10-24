@@ -34,7 +34,7 @@
     "web3": "1.10.3"
   },
   "devDependencies": {
-    "eslint": "8.49.0",
+    "eslint": "8.52.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "4.2.1",
